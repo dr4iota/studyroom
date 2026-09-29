@@ -39,6 +39,7 @@ def main(argv: list[str] | None = None) -> int:
     errs, stats = audit(a.transcript, a.module)
     (own / "audit.yaml").write_text(yaml.safe_dump({"ok": not errs, "errors": errs, **stats}, sort_keys=False))
 
+    (own / "grade.yaml").unlink(missing_ok=True)  # never read a stale report
     r = subprocess.run([sys.executable, "-m", "harness", "grade", "--plugin", a.module, "--budget", a.budget,
                         "-o", str(own / "grade.yaml")], cwd=PYROOT, capture_output=True, text=True)
     try:

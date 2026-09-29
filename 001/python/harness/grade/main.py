@@ -116,7 +116,11 @@ def handle(args: argparse.Namespace) -> int:
             st["throughput"] = {c: (round(r) if (r := checks.throughput(algo, s)) is not None else "error")
                                 for c, s in perf.items() if c in cases}
         if not args.no_scaling:
-            sc, sc_errs = scaling.run(cat, algo, name, cases, args.budget)
+            try:
+                sc, sc_errs = scaling.run(cat, algo, name, cases, args.budget)
+            except Exception as ex:  # a harness bug must not abort the whole grade
+                sc, sc_errs = {}, [{"code": "GRADER", "where": {"algo": name},
+                                    "message": f"scaling suite failed: {type(ex).__name__}: {ex}"[:300]}]
             st["scaling"] = sc
             errors += sc_errs
             fails.update(e["code"] for e in sc_errs)

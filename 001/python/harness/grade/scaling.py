@@ -138,11 +138,12 @@ def run(cat: str, algo, name: str, cases: list[str], budget: str) -> tuple[dict,
                 times.append(time.perf_counter() - t0)
                 if cat == "solver":
                     errors += _solver_check(algo, name, case, level, s, out, cfg["samples"], rng)
-                elif cat == "lin-count" and "o" not in case:
-                    exact = count_linearizations(s)
-                    got = out.linearizations if out.linearizations is not None else out.feasible
-                    if got != exact:
-                        errors.append(_err("COUNT", name, case, level, f"{got}, exact {exact}"))
+                elif cat == "lin-count":
+                    if "o" not in case:  # no exact feasible count at scale: observed counters are only timed
+                        exact = count_linearizations(s)
+                        got = out.linearizations if out.linearizations is not None else out.feasible
+                        if got != exact:
+                            errors.append(_err("COUNT", name, case, level, f"{got}, exact {exact}"))
                 else:
                     errors += _enum_check(name, case, level, s, out)
             levels.append({"level": level, "shape": list(LADDER[level]), "cleared": ok,
