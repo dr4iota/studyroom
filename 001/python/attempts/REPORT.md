@@ -120,3 +120,99 @@ ones.
 - **Enforcement:** the transcript audit detects violations after the fact. A restricted
   agent type (`.claude/agents/oneshot-coder.md`) would prevent them; it needs a session
   started from the repository root.
+
+
+---
+
+# Round 6 — bundle v2 (RCW)
+
+Status: 2026-09-29. Twelve one-shot attempts with RCW (read-compare-write) enabled: six
+tasks × two models, one trial each.
+- **linear:** `or`, `sor`.
+- **solver:** `br`, `sr`, `or`, `sor`.
+
+Linear `br`/`sr` were left out: without observations, RCW does not change `Lin(P)`, so
+they would repeat v1.
+
+## Conditions
+
+| | |
+|---|---|
+| Prompt | bundle `v2` and spec `v2`: v1 plus the RCW action, whose result is the old content and which writes only if that equals the expected value, and whose observed results count. The rules also say to list directories with the file search tool, not a shell |
+| Harness | commit `0843787` when prepared; grader `96e7652` |
+| Oracle check | the brute-force oracle's RCW semantics match 8 hand-derived cases (`tests/test_rcw.py`) |
+| Grading | full budget on every case an algorithm covers, up to all eight, including 11 hidden RCW traps. Both round-5 solvers, which ignore RCW, fail all 11 |
+| Concurrency | all 12 agents ran at once (before the two-agent limit); grading ran one attempt at a time, with peak RSS ≤ 2.0 GB |
+
+## Results
+
+| Task | Model | Algorithm | Kind | Correct | Scale level per case | Audit | Tokens (k) / time (s) |
+|---|---|---|---|---|---|---|---|
+| linear `or` | fable51 | `fable51_1-or-count` | counter | 180/180 | b 8 · o 3 · br 8 · or 3 | clean | 89.8 / 499 |
+| linear `or` | fable51 | `fable51_1-or-enum` | enumerator | 180/180 | b 8 · o 2 · br 8 · or 2 | clean | 89.8 / 499 |
+| linear `or` | opus55 | `opus55_1-or-count` | counter | 180/180 | b 8 · o 3 · br 8 · or 2 | minor (`ls`) | 68.0 / 198 |
+| linear `or` | opus55 | `opus55_1-or-enum` | enumerator | 180/180 | b 8 · o 6 · br 8 · or 5 | minor (`ls`) | 68.0 / 198 |
+| linear `sor` | fable51 | `fable51_1-sor-count` | counter | 349/349 | b 8 · s 7 · o 3 · so 4 · br 8 · sr 7 · or 3 · sor 4 | clean | 114.8 / 799 |
+| linear `sor` | fable51 | `fable51_1-sor-enum` | enumerator | 349/349 | b 8 · s 8 · o 3 · so 2 · br 8 · sr 8 · or 2 · sor 3 | clean | 114.8 / 799 |
+| linear `sor` | opus55 | `opus55_1-sor-count` | counter | 349/349 | b 7 · s 7 · o 2 · so 2 · br 7 · sr 7 · or 2 · sor 2 | clean | 72.4 / 265 |
+| linear `sor` | opus55 | `opus55_1-sor-enum` | enumerator | 349/349 | b 8 · s 8 · o 3 · so 6 · br 8 · sr 8 · or 3 · sor 5 | clean | 72.4 / 265 |
+| solver `br` | fable51 | `fable51_1-br-groupdp` | solver | 90/90 | b 7 · br 7 | clean | 108.2 / 733 |
+| solver `br` | opus55 | `opus55_1-br-effect-dp` | solver | 90/90 | b 5 · br 6 | clean | 63.0 / 152 |
+| solver `sr` | fable51 | `fable51_1-sr-downset` | solver | 163/175 (witness) | b 7 · s 7 · br 7 · sr 7 | clean | 106.5 / 672 |
+| solver `sr` | opus55 | `opus55_1-sr-downset` | solver | 175/175 | b 5 · s 6 · br 6 · sr 6 | clean | 60.5 / 125 |
+| solver `or` | fable51 | `fable51_1-or-idealdp` | solver | 180/180 | b 5 · o 5 · br 6 · or 7 (OOM) | clean | 88.2 / 458 |
+| solver `or` | opus55 | `opus55_1-or-memo` | solver | 180/180 | b 5 · o 5 · br 6 · or 7 | clean | 61.5 / 141 |
+| solver `sor` | fable51 | `fable51_1-sor-downset` | solver | 349/349 | b 5 · s 6 · o 5 · so 7 · br 6 · sr 6 · or 7 · sor 7 | clean | 87.9 / 448 |
+| solver `sor` | opus55 | `opus55_1-sor-effdp` | solver | 349/349 | b 5 · s 6 · o 5 · so 7 · br 6 · sr 6 · or 7 · sor 7 | clean | 62.8 / 144 |
+
+`(OOM)`: the climb ended because the attempt ran out of memory (the grader's 2 GB cap),
+not because of the time limit.
+
+## Findings
+
+**1. RCW did not trip either model on correctness.** Every algorithm matched the oracle
+on every exact instance, including all RCW traps: mutual exclusion, ABA, expected values
+depending on a read, and chains of compare-and-swaps across blocks and barriers.
+
+**2. First genuine defect in the study: Fable's `solver_sr` witnesses.** Its answer sets
+are correct everywhere, but its witnesses are wrong:
+- 22 exact instances fail;
+- 1332 witnesses fail at scale.
+
+A witness certifies a value, but its own schedule produces a different one. For example,
+the witness for `r2 = init.0` is a schedule in which `r2` returns 2, while `init.0`
+really is possible. The fault is in the witness bookkeeping, not the search. The task
+makes witnesses optional but requires them to re-execute, so this counts as a failure.
+Fable's other witness-returning solvers (`br`, `or`, `sor`) re-execute correctly.
+
+**3. Scaling:**
+- **Solvers:** mostly equal across the models on the RCW cases. Fable is higher in the
+  base and sync cases (`br` 7 vs 6 and `b` 7 vs 5; in `sr`, 7 against Opus's 5–6), as
+  in v1.
+- **Linear enumerators with observations:** Opus leads this round: `o` 6 vs 2 and
+  `or` 5 vs 2; in `sor`, `so` 6 vs 2 and `sor` 5 vs 3. Round 5 had the reverse for the
+  case-`o` enumerator: Fable 6, Opus 3. The scaling setups are identical across rounds,
+  so this is a real swap between two single trials, most likely run-to-run variance.
+  **One trial per task cannot rank the models on scaling;** repeat trials are needed.
+- **Feasible counting under observations:** still the weakest point for both models,
+  at levels 2–4.
+
+**4. Compliance.**
+- **Opus's `linear_or` ran one `ls`:** a minor violation, which it disclosed, despite the
+  new rule.
+- **Two Fable attempts used `ToolSearch` to load the Glob and Grep file tools,** following
+  the new rule. The audit now treats loading file tools as neutral.
+- **All 12 attempts are valid.**
+
+**5. Cost.**
+- **Opus:** 61–72k tokens and 2–4.5 minutes per attempt.
+- **Fable:** 88–115k tokens and 7.5–13 minutes.
+
+## Harness changes found necessary during this round
+
+- **The audit** now treats `ToolSearch` as neutral when it only loads file tools.
+- **The scaling suite** now records out-of-memory as the end of an algorithm's climb.
+  Before, a `MemoryError` raised during the grader's own checks aborted the suite
+  (seen with Fable's `solver_or`).
+- **Editing a shell script while it runs is unsafe,** because bash reads scripts
+  incrementally. Recording now uses a separate locked script.

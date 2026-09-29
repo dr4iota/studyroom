@@ -1,0 +1,91 @@
+format: attempt
+version: 1
+task: linear_or
+kind: linear
+case: or
+model: opus55
+model_id: claude-opus-5-5
+trial: 1
+prefix: opus55_1-or-
+bundle: v2
+spec: spec/v2.md
+harness_commit: 084378703933e94905363553cb47e9717284a767
+prepared: '2026-09-29T16:53:05-04:00'
+conditions:
+  execution: none
+  web: none
+  tests: none
+  enforcement: transcript-audit
+transcript:
+  file: a380c1908d2b9d5e5.output
+  sha256: afc1cb431dacd365b2b24b080a058a12954bade5e0e5386e6e3b4a119931f9ae
+audit:
+  ok: true
+  errors:
+    TOOL-MINOR: 1
+  tools:
+    Read: 9
+    Bash: 1
+    Write: 3
+    SubagentHandback: 1
+grade:
+  ok: true
+  budget: full
+  grader_commit: 084378703933e94905363553cb47e9717284a767
+  errors: {}
+  algorithms:
+    opus55_1-or-count:
+      cases:
+      - b
+      - o
+      - br
+      - or
+      passed: 180
+      instances: 180
+      throughput: null
+      scale:
+        b:
+        - 6
+        - 6
+        - 3
+        o:
+        - 4
+        - 4
+        - 2
+        br:
+        - 6
+        - 6
+        - 3
+        or:
+        - 3
+        - 4
+        - 2
+    opus55_1-or-enum:
+      cases:
+      - b
+      - o
+      - br
+      - or
+      passed: 180
+      instances: 180
+      throughput:
+        b: 1254588
+        o: 56607
+      scale:
+        b:
+        - 6
+        - 6
+        - 3
+        o:
+        - 5
+        - 5
+        - 3
+        br:
+        - 6
+        - 6
+        - 3
+        or:
+        - 4
+        - 6
+        - 2
+discarded: false

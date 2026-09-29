@@ -1,0 +1,62 @@
+format: attempt
+version: 1
+task: solver_sr
+kind: solver
+case: sr
+model: fable51
+model_id: claude-fable-5-1
+trial: 1
+prefix: fable51_1-sr-
+bundle: v2
+spec: spec/v2.md
+harness_commit: 084378703933e94905363553cb47e9717284a767
+prepared: '2026-09-29T16:53:06-04:00'
+conditions:
+  execution: none
+  web: none
+  tests: none
+  enforcement: transcript-audit
+transcript:
+  file: a91c41b760799dc50.output
+  sha256: de464535633a8705321d506744a8f44fc1ef23288299800cc731e0d6d0152ce0
+audit:
+  ok: true
+  errors: {}
+  tools:
+    Read: 10
+    Write: 3
+    SubagentHandback: 1
+grade:
+  ok: false
+  budget: full
+  grader_commit: 084378703933e94905363553cb47e9717284a767
+  errors:
+    WITNESS: 1354
+  algorithms:
+    fable51_1-sr-downset:
+      cases:
+      - b
+      - s
+      - br
+      - sr
+      passed: 163
+      instances: 175
+      throughput: null
+      scale:
+        b:
+        - 5
+        - 6
+        - 3
+        s:
+        - 5
+        - 6
+        - 3
+        br:
+        - 5
+        - 6
+        - 3
+        sr:
+        - 5
+        - 6
+        - 3
+discarded: false

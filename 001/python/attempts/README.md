@@ -55,6 +55,12 @@ Fable 5.1, trial 1. Every algorithm passed every exact check. All 16 are valid. 
 command, read-only inspection of their own directory, which is recorded but allowed. Grades, scaling
 and findings are in [`REPORT.md`](REPORT.md).
 
+## Round 6 (bundle v2, RCW)
+
+12 attempts: linear `or`, `sor` and solver `br`, `sr`, `or`, `sor`, × both models, trial 1.
+All are valid and all answer sets are correct. Fable's `solver_sr` fails on its optional
+witnesses, the first genuine defect in the study. See [`REPORT.md`](REPORT.md).
+
 ## `_archive/`
 
 - `round1_4/` holds the four earlier comparison rounds. That code was self-tested by the

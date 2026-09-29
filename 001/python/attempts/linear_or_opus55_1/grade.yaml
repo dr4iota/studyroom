@@ -1,0 +1,296 @@
+format: report
+version: 2
+setup_id: grade:attempts.linear_or_opus55_1
+subject: grade
+ok: true
+errors: []
+stats:
+  opus55_1-or-count:
+    category: lin-count
+    cases: [b, o, br, or]
+    instances: 180
+    failed: 0
+    errors: {}
+    seconds: 1.7
+    scaling:
+      b:
+        max_level: 8
+        max_shape: [6, 6, 3]
+        levels:
+        - level: 0
+          shape: [2, 3, 2]
+          cleared: true
+          max_seconds: 0.0
+        - level: 1
+          shape: [3, 3, 2]
+          cleared: true
+          max_seconds: 0.0
+        - level: 2
+          shape: [3, 4, 2]
+          cleared: true
+          max_seconds: 0.0
+        - level: 3
+          shape: [4, 4, 2]
+          cleared: true
+          max_seconds: 0.0
+        - level: 4
+          shape: [4, 5, 2]
+          cleared: true
+          max_seconds: 0.0
+        - level: 5
+          shape: [4, 6, 2]
+          cleared: true
+          max_seconds: 0.0
+        - level: 6
+          shape: [5, 5, 3]
+          cleared: true
+          max_seconds: 0.0
+        - level: 7
+          shape: [5, 6, 3]
+          cleared: true
+          max_seconds: 0.0
+        - level: 8
+          shape: [6, 6, 3]
+          cleared: true
+          max_seconds: 0.0
+      o:
+        max_level: 3
+        max_shape: [4, 4, 2]
+        levels:
+        - level: 0
+          shape: [2, 3, 2]
+          cleared: true
+          max_seconds: 0.001
+        - level: 1
+          shape: [3, 3, 2]
+          cleared: true
+          max_seconds: 0.043
+        - level: 2
+          shape: [3, 4, 2]
+          cleared: true
+          max_seconds: 0.058
+        - level: 3
+          shape: [4, 4, 2]
+          cleared: true
+          max_seconds: 10.171
+        - level: 4
+          shape: [4, 5, 2]
+          cleared: false
+          max_seconds: null
+      br:
+        max_level: 8
+        max_shape: [6, 6, 3]
+        levels:
+        - level: 0
+          shape: [2, 3, 2]
+          cleared: true
+          max_seconds: 0.0
+        - level: 1
+          shape: [3, 3, 2]
+          cleared: true
+          max_seconds: 0.0
+        - level: 2
+          shape: [3, 4, 2]
+          cleared: true
+          max_seconds: 0.0
+        - level: 3
+          shape: [4, 4, 2]
+          cleared: true
+          max_seconds: 0.0
+        - level: 4
+          shape: [4, 5, 2]
+          cleared: true
+          max_seconds: 0.0
+        - level: 5
+          shape: [4, 6, 2]
+          cleared: true
+          max_seconds: 0.0
+        - level: 6
+          shape: [5, 5, 3]
+          cleared: true
+          max_seconds: 0.0
+        - level: 7
+          shape: [5, 6, 3]
+          cleared: true
+          max_seconds: 0.0
+        - level: 8
+          shape: [6, 6, 3]
+          cleared: true
+          max_seconds: 0.0
+      or:
+        max_level: 2
+        max_shape: [3, 4, 2]
+        levels:
+        - level: 0
+          shape: [2, 3, 2]
+          cleared: true
+          max_seconds: 0.001
+        - level: 1
+          shape: [3, 3, 2]
+          cleared: true
+          max_seconds: 0.142
+        - level: 2
+          shape: [3, 4, 2]
+          cleared: true
+          max_seconds: 0.678
+        - level: 3
+          shape: [4, 4, 2]
+          cleared: false
+          max_seconds: null
+  opus55_1-or-enum:
+    category: lin-enum
+    cases: [b, o, br, or]
+    instances: 180
+    failed: 0
+    errors: {}
+    seconds: 1.2
+    throughput: {b: 1254588, o: 56607}
+    scaling:
+      b:
+        max_level: 8
+        max_shape: [6, 6, 3]
+        levels:
+        - level: 0
+          shape: [2, 3, 2]
+          cleared: true
+          max_seconds: 0.001
+        - level: 1
+          shape: [3, 3, 2]
+          cleared: true
+          max_seconds: 0.019
+        - level: 2
+          shape: [3, 4, 2]
+          cleared: true
+          max_seconds: 0.025
+        - level: 3
+          shape: [4, 4, 2]
+          cleared: true
+          max_seconds: 0.027
+        - level: 4
+          shape: [4, 5, 2]
+          cleared: true
+          max_seconds: 0.028
+        - level: 5
+          shape: [4, 6, 2]
+          cleared: true
+          max_seconds: 0.038
+        - level: 6
+          shape: [5, 5, 3]
+          cleared: true
+          max_seconds: 0.033
+        - level: 7
+          shape: [5, 6, 3]
+          cleared: true
+          max_seconds: 0.027
+        - level: 8
+          shape: [6, 6, 3]
+          cleared: true
+          max_seconds: 0.032
+      o:
+        max_level: 6
+        max_shape: [5, 5, 3]
+        levels:
+        - level: 0
+          shape: [2, 3, 2]
+          cleared: true
+          max_seconds: 0.01
+        - level: 1
+          shape: [3, 3, 2]
+          cleared: true
+          max_seconds: 0.766
+        - level: 2
+          shape: [3, 4, 2]
+          cleared: true
+          max_seconds: 0.234
+        - level: 3
+          shape: [4, 4, 2]
+          cleared: true
+          max_seconds: 0.739
+        - level: 4
+          shape: [4, 5, 2]
+          cleared: true
+          max_seconds: 9.218
+        - level: 5
+          shape: [4, 6, 2]
+          cleared: true
+          max_seconds: 1.927
+        - level: 6
+          shape: [5, 5, 3]
+          cleared: true
+          max_seconds: 1.875
+        - level: 7
+          shape: [5, 6, 3]
+          cleared: false
+          max_seconds: 15.829
+      br:
+        max_level: 8
+        max_shape: [6, 6, 3]
+        levels:
+        - level: 0
+          shape: [2, 3, 2]
+          cleared: true
+          max_seconds: 0.003
+        - level: 1
+          shape: [3, 3, 2]
+          cleared: true
+          max_seconds: 0.017
+        - level: 2
+          shape: [3, 4, 2]
+          cleared: true
+          max_seconds: 0.018
+        - level: 3
+          shape: [4, 4, 2]
+          cleared: true
+          max_seconds: 0.019
+        - level: 4
+          shape: [4, 5, 2]
+          cleared: true
+          max_seconds: 0.021
+        - level: 5
+          shape: [4, 6, 2]
+          cleared: true
+          max_seconds: 0.023
+        - level: 6
+          shape: [5, 5, 3]
+          cleared: true
+          max_seconds: 0.023
+        - level: 7
+          shape: [5, 6, 3]
+          cleared: true
+          max_seconds: 0.046
+        - level: 8
+          shape: [6, 6, 3]
+          cleared: true
+          max_seconds: 0.032
+      or:
+        max_level: 5
+        max_shape: [4, 6, 2]
+        levels:
+        - level: 0
+          shape: [2, 3, 2]
+          cleared: true
+          max_seconds: 0.034
+        - level: 1
+          shape: [3, 3, 2]
+          cleared: true
+          max_seconds: 0.506
+        - level: 2
+          shape: [3, 4, 2]
+          cleared: true
+          max_seconds: 0.376
+        - level: 3
+          shape: [4, 4, 2]
+          cleared: true
+          max_seconds: 0.408
+        - level: 4
+          shape: [4, 5, 2]
+          cleared: true
+          max_seconds: 5.983
+        - level: 5
+          shape: [4, 6, 2]
+          cleared: true
+          max_seconds: 2.167
+        - level: 6
+          shape: [5, 5, 3]
+          cleared: false
+          max_seconds: 0.75

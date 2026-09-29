@@ -1,0 +1,6 @@
+ok: true
+errors: []
+tools:
+  Read: 10
+  Write: 3
+  SubagentHandback: 1

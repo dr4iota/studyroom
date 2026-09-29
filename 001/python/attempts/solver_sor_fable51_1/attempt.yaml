@@ -1,0 +1,81 @@
+format: attempt
+version: 1
+task: solver_sor
+kind: solver
+case: sor
+model: fable51
+model_id: claude-fable-5-1
+trial: 1
+prefix: fable51_1-sor-
+bundle: v2
+spec: spec/v2.md
+harness_commit: 084378703933e94905363553cb47e9717284a767
+prepared: '2026-09-29T16:53:06-04:00'
+conditions:
+  execution: none
+  web: none
+  tests: none
+  enforcement: transcript-audit
+transcript:
+  file: a10d0c62c0e381873.output
+  sha256: 4383e92036eb63ea8d1aaf759e6be429f5e68d709a060c55a356ab1a1d22ef6e
+audit:
+  ok: true
+  errors: {}
+  tools:
+    Read: 11
+    Write: 3
+    SubagentHandback: 1
+grade:
+  ok: true
+  budget: full
+  grader_commit: 084378703933e94905363553cb47e9717284a767
+  errors: {}
+  algorithms:
+    fable51_1-sor-downset:
+      cases:
+      - b
+      - s
+      - o
+      - so
+      - br
+      - sr
+      - or
+      - sor
+      passed: 349
+      instances: 349
+      throughput: null
+      scale:
+        b:
+        - 4
+        - 6
+        - 2
+        s:
+        - 5
+        - 5
+        - 3
+        o:
+        - 4
+        - 6
+        - 2
+        so:
+        - 5
+        - 6
+        - 3
+        br:
+        - 5
+        - 5
+        - 3
+        sr:
+        - 5
+        - 5
+        - 3
+        or:
+        - 5
+        - 6
+        - 3
+        sor:
+        - 5
+        - 6
+        - 3
+discarded: false

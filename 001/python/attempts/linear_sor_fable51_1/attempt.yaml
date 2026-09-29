@@ -1,0 +1,131 @@
+format: attempt
+version: 1
+task: linear_sor
+kind: linear
+case: sor
+model: fable51
+model_id: claude-fable-5-1
+trial: 1
+prefix: fable51_1-sor-
+bundle: v2
+spec: spec/v2.md
+harness_commit: 084378703933e94905363553cb47e9717284a767
+prepared: '2026-09-29T16:53:06-04:00'
+conditions:
+  execution: none
+  web: none
+  tests: none
+  enforcement: transcript-audit
+transcript:
+  file: a74dc8ffbe5ce85cb.output
+  sha256: 1be85cce29bc9184670a0566e9104c5fc33edfc32baad647960a81adda1ebed6
+audit:
+  ok: true
+  errors: {}
+  tools:
+    Read: 9
+    Write: 3
+    SubagentHandback: 1
+grade:
+  ok: true
+  budget: full
+  grader_commit: 084378703933e94905363553cb47e9717284a767
+  errors: {}
+  algorithms:
+    fable51_1-sor-count:
+      cases:
+      - b
+      - s
+      - o
+      - so
+      - br
+      - sr
+      - or
+      - sor
+      passed: 349
+      instances: 349
+      throughput: null
+      scale:
+        b:
+        - 6
+        - 6
+        - 3
+        s:
+        - 5
+        - 6
+        - 3
+        o:
+        - 4
+        - 4
+        - 2
+        so:
+        - 4
+        - 5
+        - 2
+        br:
+        - 6
+        - 6
+        - 3
+        sr:
+        - 5
+        - 6
+        - 3
+        or:
+        - 4
+        - 4
+        - 2
+        sor:
+        - 4
+        - 5
+        - 2
+    fable51_1-sor-enum:
+      cases:
+      - b
+      - s
+      - o
+      - so
+      - br
+      - sr
+      - or
+      - sor
+      passed: 349
+      instances: 349
+      throughput:
+        b: 469052
+        s: 475946
+        o: 190650
+        so: 313398
+      scale:
+        b:
+        - 6
+        - 6
+        - 3
+        s:
+        - 6
+        - 6
+        - 3
+        o:
+        - 4
+        - 4
+        - 2
+        so:
+        - 3
+        - 4
+        - 2
+        br:
+        - 6
+        - 6
+        - 3
+        sr:
+        - 6
+        - 6
+        - 3
+        or:
+        - 3
+        - 4
+        - 2
+        sor:
+        - 4
+        - 4
+        - 2
+discarded: false
