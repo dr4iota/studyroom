@@ -95,7 +95,7 @@ def handle(args: argparse.Namespace) -> int:
             errors.append({"code": "CRASH", "where": {"algo": name}, "message": f"constructor: {ex}"[:300]})
             continue
         caps = cls.capabilities
-        cases = covered_cases(caps.sync, caps.observed_reads)
+        cases = covered_cases(caps.sync, caps.observed_reads, caps.rcw)
         insts = instances(cases, args.budget, args.seed)
         check = checks.CHECKS.get(cat)
         if check is None:

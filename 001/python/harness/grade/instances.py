@@ -3,9 +3,10 @@
 Attempts never see this file. Instances are small enough for the brute-force oracles
 (``backtrack-feasible`` for linearizations, ``brute`` for solvers).
 
-Cases: ``b`` base, ``s`` base + sync, ``o`` observed, ``so`` observed + sync. An
-algorithm is graded on every case its capabilities cover, e.g. an algorithm declaring
-``sync`` and ``observed_reads`` gets all four.
+Cases: ``b`` base, ``s`` base + sync, ``o`` observed, ``so`` observed + sync, and the same
+four with RCW actions: ``br``, ``sr``, ``or``, ``sor``. An algorithm is graded on every case
+its capabilities cover, e.g. one declaring ``sync``, ``observed_reads`` and ``rcw`` gets all
+eight.
 """
 
 from __future__ import annotations
@@ -18,7 +19,8 @@ from ..gen import generate
 from ..lin.dp import count_linearizations
 from ..model import MalformedSetup, Setup
 
-CASES = ("b", "s", "o", "so")
+CASES = ("b", "s", "o", "so", "br", "sr", "or", "sor")
+RCW_MIX = {"read": 0.4, "write": 0.3, "rcw": 0.3}
 MIXES = [
     {"const": 1.0, "copy": 0.0, "combine": 0.0},
     {"const": 0.4, "copy": 0.3, "combine": 0.3},
@@ -34,8 +36,8 @@ class Instance:
     origin: str  # generated | suite | randomized
 
 
-def covered_cases(sync: bool, observed: bool) -> list[str]:
-    return [c for c in CASES if ("s" not in c or sync) and ("o" not in c or observed)]
+def covered_cases(sync: bool, observed: bool, rcw: bool = False) -> list[str]:
+    return [c for c in CASES if ("s" not in c or sync) and ("o" not in c or observed) and ("r" not in c or rcw)]
 
 
 def _fits(s: Setup, max_lin: int, max_actions: int) -> bool:
@@ -68,7 +70,7 @@ def generated(case: str, n: int, seed: int, max_lin: int, max_actions: int) -> l
         hp = {
             "seed": rng.randrange(10**6), "threads": rng.choice([1, 2, 2, 3]), "blocks": rng.choice([1, 2]),
             "actions_per_thread": rng.choice([1, 2, 3]), "max_in_flight": rng.choice([1, 1, 2, 3]),
-            "kind_mix": {"read": 0.55, "write": 0.45},
+            "kind_mix": dict(RCW_MIX) if "r" in case else {"read": 0.55, "write": 0.45},
             "content": {"classes": rng.choice(MIXES), "max_depth": 2, "value_pool": rng.choice([1, 2, 3])},
             "knowledge": {"p_w": rng.choice([1.0, 0.7]), "p_r": 0.0, "init_known": 0.5},
         }
@@ -85,6 +87,8 @@ def generated(case: str, n: int, seed: int, max_lin: int, max_actions: int) -> l
         if not _fits(s, max_lin, max_actions):
             continue
         if "o" in case and not s.features().observed_reads:
+            continue
+        if "r" in case and not s.features().rcw:
             continue
         out.append(Instance(f"{case}-gen-{len(out)}", case, s, "generated"))
         if "o" in case and len(out) < n and rng.random() < 0.4:
@@ -109,6 +113,11 @@ def R(i, b, obs=None):
 
 def W(i, b, data):
     return [{"write": b, "id": i, "data": data}, {"done": i}]
+
+
+def C(i, b, expect, data, obs=None):
+    d = {"done": i} if obs is None else {"done": i, "data": obs}
+    return [{"rcw": b, "id": i, "expect": expect, "data": data}, d]
 
 
 def suite() -> list[Instance]:
@@ -147,6 +156,21 @@ def suite() -> list[Instance]:
         ("so", _doc("so-cross-barrier-obs", 2, 1, [("t0", W("w1", 0, 1) + [{"at": 0}] + R("r1", 1, "3~2")),
                                                    ("t1", R("r2", 0) + [{"at": 0}] + W("w2", 1, "r2~2")),
                                                    ("t2", W("w3", 0, 3) + [{"at": 0}])], init=[0, 0])),
+        # --- RCW: success depends on the value found; data flows back into the block
+        ("br", _doc("br-mutex", 1, 0, [("t0", C("c1", 0, 0, 1)), ("t1", C("c2", 0, 0, 2)), ("t2", R("r1", 0))], init=[0])),
+        ("br", _doc("br-aba", 1, 0, [("t0", W("w1", 0, 1) + W("w2", 0, 0)), ("t1", C("c1", 0, 0, 9) + R("r1", 0))], init=[0])),
+        ("br", _doc("br-expect-from-read", 1, 0, [("t0", R("r1", 0) + C("c1", 0, "r1", 8)), ("t1", W("w1", 0, 3))], init=[0])),
+        ("br", _doc("br-chain", 2, 0, [("t0", R("r9", 1) + C("c1", 0, 0, "r9~1")),
+                                       ("t1", C("c2", 1, 0, 5)), ("t2", C("c3", 0, "5~1", 7) + R("r1", 0))], init=[0, 0])),
+        ("br", _doc("br-unknown", 1, 0, [("t0", W("w1", 0, "*")), ("t1", C("c1", 0, 0, 4)), ("t2", R("r1", 0))], init=[0])),
+        ("sr", _doc("sr-barrier-cas", 1, 1, [("t0", C("c1", 0, 0, 1) + [{"at": 0}]), ("t1", C("c2", 0, 0, 2) + [{"at": 0}] + R("r1", 0))], init=[0])),
+        ("or", _doc("or-cas-observed", 1, 0, [("t0", C("c1", 0, 0, 1, obs=2)), ("t1", C("c2", 0, 0, 2))], init=[0])),
+        ("or", _doc("or-cas-failed-observed", 1, 0, [("t0", W("w1", 0, 1)), ("t1", C("c1", 0, 0, 5, obs=1) + R("r1", 0, 1))], init=[0])),
+        ("or", _doc("or-cas-impossible", 1, 0, [("t0", C("c1", 0, 0, 1, obs=7))], init=[0])),
+        ("or", _doc("or-read-sees-cas", 1, 0, [("t0", C("c1", 0, 0, 3)), ("t1", W("w1", 0, 1)), ("t2", R("r1", 0, 3) + R("r2", 0, 1))], init=[0])),
+        ("sor", _doc("sor-cross-barrier-cas", 2, 1, [("t0", C("c1", 0, 0, 1) + [{"at": 0}] + R("r1", 1, "1~2")),
+                                                     ("t1", R("r2", 0) + [{"at": 0}] + C("c2", 1, 0, "r2~2")),
+                                                     ("t2", C("c3", 0, 0, 3) + [{"at": 0}])], init=[0, 0])),
         ("so", _doc("so-sync-infeasible", 1, 1, [("t0", W("w1", 0, 1) + [{"before": 0}]), ("t1", [{"after": 0}] + R("r1", 0, 0))], init=[0])),
     ]
     out = []

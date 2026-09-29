@@ -49,6 +49,8 @@ def setups(case: str, level: int, seeds: int):
                       content={"classes": MIX, "max_depth": 2, "value_pool": 2})
             if "s" in case:
                 hp.update(sync_points=2, events_per_thread=2)
+            if "r" in case:
+                hp["kind_mix"] = {"read": 0.4, "write": 0.3, "rcw": 0.3}
             if "o" in case:
                 hp["knowledge"] = {"p_r": 0.5}
             try:

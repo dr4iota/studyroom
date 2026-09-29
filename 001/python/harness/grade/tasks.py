@@ -6,7 +6,7 @@ derives the task from that name and checks that the attempt delivers what the ta
 
 - ``linear``: exactly one ``lin-enum``, at most one ``lin-count``, nothing else;
 - ``solver``: exactly one ``solver``, with ``"all"`` among its modes;
-- every algorithm declares exactly the case's capabilities (``rcw`` False);
+- every algorithm declares exactly the case's capabilities (``r`` in the case means ``rcw``);
 - every name starts with ``<model><version>_<trial>-<case>-``;
 - the directory has an ``__init__.py`` and a ``SOURCES.md``.
 """
@@ -17,8 +17,8 @@ import pathlib
 import re
 from dataclasses import dataclass
 
-NAME_RE = re.compile(r"^attempts\.(linear|solver)_(b|s|o|so)_([a-z]+[0-9]+)_([0-9]+)$")
-CASE_CAPS = {"b": (False, False), "s": (True, False), "o": (False, True), "so": (True, True)}
+NAME_RE = re.compile(r"^attempts\.(linear|solver)_(b|s|o|so|br|sr|or|sor)_([a-z]+[0-9]+)_([0-9]+)$")
+CASE_CAPS = {c: ("s" in c, "o" in c, "r" in c) for c in ("b", "s", "o", "so", "br", "sr", "or", "sor")}
 ALLOWED_CATS = {"linear": {"lin-enum": (1, 1), "lin-count": (0, 1)}, "solver": {"solver": (1, 1)}}
 
 
@@ -55,7 +55,7 @@ def conformance(task: Task, root: pathlib.Path, algos: list[tuple[str, str, type
             e(f"missing {f}")
     want = ALLOWED_CATS[task.kind]
     counts = {c: 0 for c in want}
-    sync, obs = CASE_CAPS[task.case]
+    sync, obs, rcw = CASE_CAPS[task.case]
     for cat, name, cls in algos:
         if cat not in want:
             e(f"registers a {cat}, which task {task.kind} does not ask for", algo=name)
@@ -64,9 +64,9 @@ def conformance(task: Task, root: pathlib.Path, algos: list[tuple[str, str, type
         if not name.startswith(task.prefix):
             e(f"name must start with {task.prefix!r}", algo=name)
         caps = cls.capabilities
-        if (caps.rcw, caps.sync, caps.observed_reads) != (False, sync, obs):
+        if (caps.rcw, caps.sync, caps.observed_reads) != (rcw, sync, obs):
             e(f"capabilities rcw={caps.rcw} sync={caps.sync} observed_reads={caps.observed_reads}; "
-              f"task wants rcw=False sync={sync} observed_reads={obs}", algo=name)
+              f"task wants rcw={rcw} sync={sync} observed_reads={obs}", algo=name)
         if cat == "solver" and "all" not in getattr(caps, "modes", ()):
             e("solver modes must include 'all'", algo=name)
     for cat, (lo, hi) in want.items():

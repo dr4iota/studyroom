@@ -1,0 +1,25 @@
+# Prompt bundle v2 (v1 plus RCW actions). Frozen once any attempt has used it: change nothing here; make v3.
+format: prompt-bundle
+version: 1
+bundle: v2
+created: 2026-09-29
+spec: spec/v2.md                       # relative to the study root (001/)
+prompt: python/tasks/v2/prompt.md      # template; placeholders in {braces}
+common: python/tasks/v2/common.md
+tasks: [linear_or, linear_sor, solver_br, solver_sr, solver_or, solver_sor]
+reads:                                 # files an attempt may read, besides its own directory
+  all:
+    - spec/v2.md
+    - python/tasks/v2/common.md
+    - python/tasks/v2/{task}.md
+    - python/harness/model.py
+    - python/harness/poset.py
+    - python/harness/terms.py
+    - python/harness/capabilities.py
+    - python/harness/registry.py
+  linear: [python/harness/lin/api.py]
+  solver: [python/harness/solve/api.py]
+conditions:
+  execution: none                      # file tools only
+  web: none                            # closed book
+  tests: none                          # the model writes no tests
