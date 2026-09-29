@@ -136,6 +136,9 @@ machine by materializing millions of results.
 - Check a count before enumerating; stream results and never `list()` a large
   enumeration.
 - Stop benchmarks on a wall-clock limit as well as an output limit.
+- Run at most **two** attempt-writing agents at a time; start the next as one finishes.
+- Grade **one attempt at a time** (the grader caps itself at 2 GB); check free memory
+  before starting heavy runs.
 
 ## Commit conventions
 

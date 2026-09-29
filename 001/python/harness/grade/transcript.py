@@ -113,6 +113,11 @@ def audit(transcript: str, module: str) -> tuple[list[dict], dict]:
         tools[name] += 1
         if name in NEUTRAL_TOOLS:
             continue
+        if name == "ToolSearch":  # loading deferred tools: neutral only if it loads file tools
+            q = str(inp.get("query", ""))
+            wanted = {t.strip() for t in q[len("select:"):].split(",")} if q.startswith("select:") else None
+            if wanted and wanted <= FILE_TOOLS:
+                continue
         if name not in FILE_TOOLS:
             detail = inp.get("command") or inp.get("query") or inp.get("url") or ""
             code = "TOOL-MINOR" if name == "Bash" and minor_shell(str(detail), own) else "TOOL"

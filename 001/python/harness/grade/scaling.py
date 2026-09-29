@@ -119,7 +119,7 @@ def run(cat: str, algo, name: str, cases: list[str], budget: str) -> tuple[dict,
             ss = setups(case, level, cfg["seeds"])
             if not ss:
                 continue
-            times, ok = [], True
+            times, ok, oom = [], True, False
             for s in ss:
                 t0 = time.perf_counter()
                 try:
@@ -133,22 +133,31 @@ def run(cat: str, algo, name: str, cases: list[str], budget: str) -> tuple[dict,
                 except Timeout:
                     ok = False
                     break
+                except MemoryError:
+                    ok, oom = False, True
+                    break
                 except Exception as ex:
                     errors.append(_err("CRASH", name, case, level, f"{type(ex).__name__}: {ex}"[:200]))
                     ok = False
                     break
                 times.append(time.perf_counter() - t0)
-                if cat == "solver":
-                    errors += _solver_check(algo, name, case, level, s, out, cfg["samples"], rng)
-                elif cat == "lin-count":
-                    if "o" not in case:  # no exact feasible count at scale: observed counters are only timed
-                        exact = count_linearizations(s)
-                        got = out.linearizations if out.linearizations is not None else out.feasible
-                        if got != exact:
-                            errors.append(_err("COUNT", name, case, level, f"{got}, exact {exact}"))
-                else:
-                    errors += _enum_check(name, case, level, s, out)
-            levels.append({"level": level, "shape": list(LADDER[level]), "cleared": ok,
+                try:
+                    if cat == "solver":
+                        errors += _solver_check(algo, name, case, level, s, out, cfg["samples"], rng)
+                    elif cat == "lin-count":
+                        if "o" not in case:  # no exact feasible count at scale: observed counters are only timed
+                            exact = count_linearizations(s)
+                            got = out.linearizations if out.linearizations is not None else out.feasible
+                            if got != exact:
+                                errors.append(_err("COUNT", name, case, level, f"{got}, exact {exact}"))
+                    else:
+                        errors += _enum_check(name, case, level, s, out)
+                except MemoryError:  # the attempt's retained memory left no room for the checks
+                    ok, oom = False, True
+                    break
+                finally:
+                    out = None
+            levels.append({"level": level, "shape": list(LADDER[level]), "cleared": ok, "out_of_memory": oom,
                            "max_seconds": round(max(times), 3) if times else None})
             if not ok:
                 break
