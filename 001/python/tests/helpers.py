@@ -6,9 +6,9 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, ROOT)
 EXAMPLES = os.path.join(ROOT, "examples")
 
-import abio.lin  # noqa: E402,F401  (register algorithms)
-import abio.solve  # noqa: E402,F401
-from abio.gen import generate  # noqa: E402
+import harness.lin  # noqa: E402,F401  (register algorithms)
+import harness.solve  # noqa: E402,F401
+from harness.gen import generate  # noqa: E402
 
 
 def example(name: str) -> str:

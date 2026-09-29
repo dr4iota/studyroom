@@ -6,11 +6,11 @@ import unittest
 
 from helpers import example, small_setups
 
-from abio import terms as T
-from abio.cli import main
-from abio.formats import load_document, to_string
-from abio.gen import generate
-from abio.gen.exprgen import combine_expr, copy_expr, random_expr
+from harness import terms as T
+from harness.cli import main
+from harness.formats import load_document, to_string
+from harness.gen import generate
+from harness.gen.exprgen import combine_expr, copy_expr, random_expr
 
 
 def run(*argv):
@@ -76,7 +76,7 @@ class CLITests(unittest.TestCase):
         self.assertEqual(run("lin", "count", example("formats-example.setup.yaml"), "--ignore-observed")[0], 0)
 
     def test_plugin_spec(self):
-        code, out, _ = run("lin", "count", example("base.setup.yaml"), "--algo", "abio.lin.feasible:EnumerationCounter")
+        code, out, _ = run("lin", "count", example("base.setup.yaml"), "--algo", "harness.lin.feasible:EnumerationCounter")
         self.assertEqual(code, 0)
         self.assertEqual(load_document_from(out)["linearizations"], 924)
 

@@ -4,12 +4,12 @@ from collections import Counter
 
 from helpers import example, small_setups
 
-from abio.formats import load_setup
-from abio.lin.backtrack import Backtrack
-from abio.lin.dp import PositionsDPCounter, PositionsDPSampler
-from abio.lin.feasible import EnumerationCounter, FeasibleBacktrack, RejectionSampler
-from abio.lin.random_topo import RandomTopo
-from abio.semantics import is_feasible
+from harness.formats import load_setup
+from harness.lin.backtrack import Backtrack
+from harness.lin.dp import PositionsDPCounter, PositionsDPSampler
+from harness.lin.feasible import EnumerationCounter, FeasibleBacktrack, RejectionSampler
+from harness.lin.random_topo import RandomTopo
+from harness.semantics import is_feasible
 
 # Keep instances tiny: |Lin(P)| is exponential (3 threads x 6 steps is ~17M orders).
 SYNC = {"sync_points": 2, "events_per_thread": 2, "threads": 2}
@@ -65,7 +65,7 @@ class LinTests(unittest.TestCase):
 
     def test_observations_reduce_linearizations(self):
         # t1 reads 1 only if it sees t0's write: forces w.start < r.done.
-        from abio.model import Setup
+        from harness.model import Setup
         doc = {"format": "setup", "version": 2, "id": "x", "blocks": 1, "sync_points": 0, "init": [0], "threads": [
             {"id": "t0", "steps": [{"write": 0, "id": "w", "data": 1}, {"done": "w"}]},
             {"id": "t1", "steps": [{"read": 0, "id": "r"}, {"done": "r", "data": 1}]}]}

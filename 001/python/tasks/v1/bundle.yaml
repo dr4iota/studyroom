@@ -1,0 +1,25 @@
+# Prompt bundle v1. Frozen once any attempt has used it: change nothing here; make v2.
+format: prompt-bundle
+version: 1
+bundle: v1
+created: 2026-09-29
+spec: spec/v1.md                       # relative to the study root (001/)
+prompt: python/tasks/v1/prompt.md      # template; placeholders in {braces}
+common: python/tasks/v1/common.md
+tasks: [linear_b, linear_s, linear_o, linear_so, solver_b, solver_s, solver_o, solver_so]
+reads:                                 # files an attempt may read, besides its own directory
+  all:
+    - spec/v1.md
+    - python/tasks/v1/common.md
+    - python/tasks/v1/{task}.md
+    - python/harness/model.py
+    - python/harness/poset.py
+    - python/harness/terms.py
+    - python/harness/capabilities.py
+    - python/harness/registry.py
+  linear: [python/harness/lin/api.py]
+  solver: [python/harness/solve/api.py]
+conditions:
+  execution: none                      # file tools only
+  web: none                            # closed book
+  tests: none                          # the model writes no tests

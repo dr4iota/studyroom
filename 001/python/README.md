@@ -1,4 +1,4 @@
-# abio — Python reference implementation
+# harness — Python reference implementation
 
 This is the Python scaffold for the problem class in `../premise.md`, using the documents
 of `../formats.md` (v2). Other languages go in their own sibling directories
@@ -9,7 +9,7 @@ Requirements: Python ≥ 3.10 and PyYAML. No install is needed:
 
 ```sh
 cd python
-python3 -m abio --help                       # or: pip install -e .  →  abio --help
+python3 -m harness --help                       # or: pip install -e .  →  harness --help
 (cd tests && python3 -m unittest)            # 31 tests, a few seconds
 ```
 
@@ -17,20 +17,21 @@ python3 -m abio --help                       # or: pip install -e .  →  abio -
 
 | Path | Contents |
 |---|---|
-| `abio/terms.py` | Terms and expressions (`a~b`, non-commutative), parse/print canonical form, `substitute`, `seq` builder |
-| `abio/model.py` | `Setup`, `Thread`, `Step`, derived `Action`; parsing and validation (formats.md §1 rules 1–5); `features()` |
-| `abio/poset.py` | Trace poset (quotient by `at`), `Linearization = tuple[int, ...]`, VAL-LIN `check()` |
-| `abio/semantics.py` | Atomic-register interpreter, effect-order check, brute-force full-schedule enumeration, `is_feasible` |
-| `abio/capabilities.py` | `Features` (what a setup uses) vs. `Capabilities` (what an algorithm supports) |
-| `abio/registry.py` | Plugin registry and `Algorithm` base (name, description, capabilities, options) |
-| `abio/formats.py` | All document readers and writers (YAML / JSON / JSON Lines streams) |
-| `abio/gen/` | **(1)** GEN: `hyperparams.py` (defaults = base problem), `exprgen.py` (expression helpers), `generator.py`, `main.py` |
-| `abio/lin/` | **(2)(3)** Linearization APIs `api.py` + algorithms + `main.py` |
-| `abio/solve/` | **(4)** Solver API `api.py` + algorithms + `main.py` |
-| `abio/validate.py` | Minimal VAL-LIN and differential VAL-SOLVE |
+| `harness/terms.py` | Terms and expressions (`a~b`, non-commutative), parse/print canonical form, `substitute`, `seq` builder |
+| `harness/model.py` | `Setup`, `Thread`, `Step`, derived `Action`; parsing and validation (formats.md §1 rules 1–5); `features()` |
+| `harness/poset.py` | Trace poset (quotient by `at`), `Linearization = tuple[int, ...]`, VAL-LIN `check()` |
+| `harness/semantics.py` | Atomic-register interpreter, effect-order check, brute-force full-schedule enumeration, `is_feasible` |
+| `harness/capabilities.py` | `Features` (what a setup uses) vs. `Capabilities` (what an algorithm supports) |
+| `harness/registry.py` | Plugin registry and `Algorithm` base (name, description, capabilities, options) |
+| `harness/formats.py` | All document readers and writers (YAML / JSON / JSON Lines streams) |
+| `harness/gen/` | **(1)** GEN: `hyperparams.py` (defaults = base problem), `exprgen.py` (expression helpers), `generator.py`, `main.py` |
+| `harness/lin/` | **(2)(3)** Linearization APIs `api.py` + algorithms + `main.py` |
+| `harness/solve/` | **(4)** Solver API `api.py` + algorithms + `main.py` |
+| `harness/validate.py` | Minimal VAL-LIN and differential VAL-SOLVE |
+| `harness/grade/` | The grader for attempts: import policy, per-case instances with an adversarial suite, checks against the oracles |
 | `examples/` | `formats-example.setup.yaml` (formats.md §1, all features), `base.setup.yaml`, `base/full.hyperparams.yaml` |
 | `tests/` | `unittest` suite: terms/model, linearizers, solvers vs. oracle, generator and CLI |
-| `contrib/` | Plugin linearizers written by Fable 5.1 and Opus 5.5 (`linear_<model>_<trial>/`, one subpackage per case); map in [`contrib/README.md`](contrib/README.md), comparison in [`contrib/REPORT.md`](contrib/REPORT.md) |
+| `attempts/` | One-shot model attempts, graded by `harness grade`; see [`attempts/README.md`](attempts/README.md). Earlier work in `attempts/_archive/round1_4/`. |
 
 ## The base problem and capabilities
 
@@ -72,11 +73,11 @@ instead.
 | `rejection` | sampler | ✓ | ✓ | ✓ | `uniform-feasible` |
 | `brute` | solver | ✓ | ✓ | ✓ | oracle; modes all/fixed; witnesses |
 
-`abio lin list` and `abio solve list` print this table from the code.
+`harness lin list` and `harness solve list` print this table from the code.
 
 ## The APIs (full contracts are in the docstrings)
 
-**Linearization, all permutations** (`abio/lin/api.py`, `LinEnumerator`):
+**Linearization, all permutations** (`harness/lin/api.py`, `LinEnumerator`):
 `enumerate(setup) -> Iterator[Linearization]` yields every element of `Lin(P)`, or of the
 feasible subset when there are observations. Each element appears exactly once. The
 iterator is lazy and deterministic. `gray_code = True` promises that consecutive outputs
@@ -90,7 +91,7 @@ feasible, method, error)`. `error` is set only for estimates. A counter with
 Override `samples` to reuse precomputation. `distribution` is one of `any`, `uniform` or
 `uniform-feasible`. All randomness comes from `rng`.
 
-**Solver** (`abio/solve/api.py`, `Solver`): `solve(setup, linearization=None) -> Outcomes`.
+**Solver** (`harness/solve/api.py`, `Solver`): `solve(setup, linearization=None) -> Outcomes`.
 The answer must be exact ("no more, no less"). It gives `Poss` for every read/RCW id and
 every block, plus `consistent` (CHECK). `linearization` is given only in mode `fixed`.
 `SolverCapabilities` adds `modes` and `witnesses` to the capabilities above. `Collector`
@@ -103,9 +104,9 @@ A linearization is a tuple of node indices into `setup.poset.names`. The poset g
 ### Adding an algorithm
 
 ```python
-from abio.capabilities import Capabilities
-from abio.lin.api import CountResult, LinCounter
-from abio.registry import register
+from harness.capabilities import Capabilities
+from harness.lin.api import CountResult, LinCounter
+from harness.registry import register
 
 @register
 class MyCounter(LinCounter):
@@ -119,22 +120,23 @@ class MyCounter(LinCounter):
         return CountResult(n, None, "my-count")
 ```
 
-Put it in `abio/lin/` or `abio/solve/` and import it from that package's `__init__.py`.
+Put it in `harness/lin/` or `harness/solve/` and import it from that package's `__init__.py`.
 Out-of-tree code can instead use `--plugin mypkg.mymod` or `--algo mypkg.mymod:MyCounter`.
 Differential-test it against `enum-count` / `brute` (see `tests/test_solve.py`).
 
 ## CLI
 
 ```sh
-abio gen examples/base.hyperparams.yaml --set threads=3 --seed 4 -o s.yaml --truth t.yaml
-abio gen examples/full.hyperparams.yaml --count 20 --out-dir corpus/
-abio lin enum   s.yaml [--algo backtrack] [--limit N | --count-only] -o lins.yaml
-abio lin count  s.yaml [--algo dp-positions]
-abio lin sample s.yaml [--algo dp-uniform] -n 10 --seed 1
-abio solve run  s.yaml [--algo brute] [--witnesses w.yaml]           # mode all
-abio solve run  s.yaml --algo brute --lin lins.yaml --index 3        # mode fixed
-abio validate lin   s.yaml lins.yaml
-abio validate solve s.yaml outcomes.yaml [--oracle brute] [--lin lins.yaml --index 3]
+harness gen examples/base.hyperparams.yaml --set threads=3 --seed 4 -o s.yaml --truth t.yaml
+harness gen examples/full.hyperparams.yaml --count 20 --out-dir corpus/
+harness lin enum   s.yaml [--algo backtrack] [--limit N | --count-only] -o lins.yaml
+harness lin count  s.yaml [--algo dp-positions]
+harness lin sample s.yaml [--algo dp-uniform] -n 10 --seed 1
+harness solve run  s.yaml [--algo brute] [--witnesses w.yaml]           # mode all
+harness solve run  s.yaml --algo brute --lin lins.yaml --index 3        # mode fixed
+harness validate lin   s.yaml lins.yaml
+harness validate solve s.yaml outcomes.yaml [--oracle brute] [--lin lins.yaml --index 3]
+harness grade --plugin attempts.linear_so_opus55_1 [--budget full] -o report.yaml
 ```
 
 `--json` switches output to JSON (streams become JSON Lines). `-` means stdin/stdout.

@@ -1,9 +1,131 @@
 # Visions: What We Could Build and Study
 
-Status: v0.1, 2026-09-28. Companion to `premise.md` (definitions) and `surveys.md`
+Status: v0.2, 2026-09-29. Companion to `premise.md` (formal definitions) and `surveys.md`
 (literature). This is a menu, not a plan: each item is a candidate sub-project with its
 inputs, outputs, dependencies, and the questions it would answer. §7 proposes how to
-cut the menu into separately-owned pieces with shared code.
+cut the menu into separately-owned pieces with shared code. §10 lists problems for
+testing AI models on questions the literature does not answer.
+
+The section "Terms" below defines everything this document uses, so it can be read
+without the code. `premise.md` gives the same definitions formally.
+
+---
+
+## Terms (read first)
+
+### The setting
+
+- **Threads, blocks, sync points.** There are `N` threads, `M` storage blocks and `K`
+  sync points.
+- **Action.** A `Read` of one block, or a `Write` of one block with some data (and,
+  as an extension, an `RCW`: an atomic compare-and-write, see
+  [compare-and-swap](https://en.wikipedia.org/wiki/Compare-and-swap)).
+  - Every action has a **start** and an **end** endpoint.
+  - I/O is asynchronous: a thread may start several actions before any of them
+    ends, so one thread's actions can overlap in time.
+- **Event.** A step that refers to a sync point `h`:
+  - `before(h)`: this step happens before `h`;
+  - `after(h)`: this step happens after `h`;
+  - `at(h)`: this step happens at the same instant as `h`. Several threads doing
+    `at(h)` form a barrier.
+- **Step.** Anything that gets a timestamp: an endpoint or an event. Each thread's
+  steps are totally ordered, which is its **program order**.
+- **Trace poset `P`.** The steps, ordered by program order plus the sync edges. Each
+  sync point is a virtual step `ĥ`: `before(h)` steps precede it, `after(h)` steps
+  follow it, and `at(h)` steps are merged into it. `P` is a
+  [partially ordered set](https://en.wikipedia.org/wiki/Partially_ordered_set).
+- **Width** of `P`. The size of its largest set of pairwise unordered steps. Here it
+  is at most `N + K`, because `P` is covered by `N` thread chains plus `K` virtual
+  steps ([Dilworth's theorem](https://en.wikipedia.org/wiki/Dilworth%27s_theorem)).
+  Many problems that are hard in general become polynomial when the width is fixed,
+  by dynamic programming over *down-sets*: sets of steps closed under "earlier than"
+  (a [lower set](https://en.wikipedia.org/wiki/Upper_set)).
+
+### Orders and effects
+
+- **Linearization `L`.** A total order of all steps that respects `P`: a
+  [linear extension](https://en.wikipedia.org/wiki/Linear_extension) of `P`, or a
+  [topological sort](https://en.wikipedia.org/wiki/Topological_sorting). Read it as
+  timestamps.
+  - **`Lin(P)`** is the set of all linearizations.
+  - Counting `|Lin(P)|` is [#P](https://en.wikipedia.org/wiki/%E2%99%AFP)-complete for
+    general posets (Brightwell–Winkler 1991), but polynomial for fixed width.
+- **Interval.** Under `L`, an action `a` occupies the interval `I_L(a)` from its start
+  to its end. Two actions are *concurrent* if their intervals overlap; otherwise one
+  *precedes* the other. This precedence relation is an
+  [interval order](https://en.wikipedia.org/wiki/Interval_order).
+- **Effect point `π(a)`.** The instant inside `I_L(a)` at which the action takes
+  effect; different actions get different instants. Each block behaves as an
+  **atomic register**: a read returns the content written by the latest write whose
+  effect point precedes the read's (or the initial content). This is the standard
+  notion of [linearizability](https://en.wikipedia.org/wiki/Linearizability) for a
+  single register.
+- **Full schedule `(L, π)`.** A linearization plus effect points. There are two
+  sources of nondeterminism: the interleaving `L` and the effect points `π` within it.
+- **Reads-from.** In a full schedule, `rf(r)` is the write whose content read `r`
+  returned, or "initial".
+
+### Data
+
+- **Term.** A block's content.
+  - A term is a constant (`7`), the unknown initial content of block `b` (`init.b`),
+    the unknown content of write `w` (the symbol `w`), or a pair `a~b`.
+  - `~` is an ordered pair with no algebra: `a~b ≠ b~a`, and two terms are equal only
+    if they are identical trees (a
+    [term algebra](https://en.wikipedia.org/wiki/Term_algebra)).
+- **Write data.** An expression over constants and the values returned by *earlier,
+  completed* reads of the same thread. `w = r1~7` writes "what `r1` returned,
+  paired with 7".
+  - Because `r1` must have ended before `w` starts, read-dependent data never changes
+    `Lin(P)`.
+  - It does change which values are possible.
+
+### Observations and possibility sets
+
+- **Observation.** A read whose result is known.
+- **Feasible.** A full schedule is feasible if, when executed, every observed read
+  returns its observed value. `L` is feasible if some `π` makes `(L, π)` feasible.
+  **`LinFeas(P)`** is the set of feasible linearizations.
+- **`Poss(r)`.** The set of values read `r` returns across all feasible full
+  schedules.
+  - **`Poss_L(r)`** is the same with `L` fixed.
+  - **`Poss(b)`** is the set of possible final contents of block `b`.
+  - A solver must output these sets **exactly**, "no more, no less": every value it
+    lists needs a feasible schedule as a witness, and every value that some feasible
+    schedule produces must be listed.
+- **Joint possibility `Poss(r₁, …, r_k)`.** The set of *tuples* `(v₁, …, v_k)` that
+  the reads return *together*, in one feasible schedule. It is usually smaller than
+  the product `Poss(r₁) × … × Poss(r_k)`.
+
+  **Example.** Thread A writes 1, then (after that write ends) writes 2, to a block
+  that starts at 0. Thread B reads it twice in sequence, `r₁` then `r₂`.
+  - Individually `Poss(r₁) = Poss(r₂) = {0, 1, 2}`.
+  - But `(r₁, r₂) = (2, 1)` is impossible, because the block's value only moves
+    forward. The joint set has 6 of the 9 pairs.
+- **CHECK.** Deciding whether any feasible schedule exists at all. This is
+  linearizability checking of a register history, which is NP-complete in general
+  (Gibbons–Korach 1997; [NP-completeness](https://en.wikipedia.org/wiki/NP-completeness)).
+
+### The four cases
+
+Every problem here comes in four cases: observations (none / some) × sync (no / yes).
+
+| | no sync (`K = 0`) | sync |
+|---|---|---|
+| **base**: no observations; data constant or read-dependent | `b` | `s` |
+| **observed**: some read results known | `o` | `so` |
+
+RCW, weaker registers and torn writes are later extensions.
+
+### Complexity and enumeration words
+
+- **FPT.** Fixed-parameter tractable: polynomial once a parameter, such as the number
+  of threads, is fixed
+  ([parameterized complexity](https://en.wikipedia.org/wiki/Parameterized_complexity)).
+- **CAT.** Constant amortized time per output of an enumeration.
+- **[Gray code](https://en.wikipedia.org/wiki/Gray_code).** An enumeration in which
+  consecutive outputs differ by a small, fixed kind of change (here, one or two
+  adjacent swaps).
 
 ---
 
@@ -95,6 +217,10 @@ block is *forced strictly between* them (`ts(end(w)) < ts(start(w'))` and
 before `r`. This is `O(#writes on the block)` per read. First deliverable of the solver
 track; prove it and differential-test it against §3.1.
 
+*Status:* this was implemented as the `window` solver and matched §3.1 on every test.
+It was removed once read-dependent data became part of the base problem, because the
+characterization holds for constant data only.
+
 ### 3.3 Level-1+2 solver, constants only
 - `Poss(r)` over all linearizations. Condition (b) above becomes a disjunction per
   competing write (`w'` placed before `w` **or** after `r`), i.e. a linear extension
@@ -152,6 +278,10 @@ optionally an SMT solver binding (Z3).
   small instances; metamorphic tests on large ones (adding a sync edge can only shrink
   sets; renaming blocks/threads/sync points is a symmetry; reversing all program orders and swapping
   start/end endpoints maps the problem to a dual instance).
+  *The dual-instance claim is unverified and probably false as stated.* With
+  read-dependent data, reversal puts a write before the read it depends on. Even with
+  constant data, a reversed read would see the *next* write rather than the previous
+  one. See §10, problem X4.
 - **Property-based fuzzing**: generator → solver → validator loop with shrinking of
   failing setups to minimal counterexamples.
 - **Proof obligations**: keep a list of lemmas (e.g. the §3.2 characterization) with
@@ -241,3 +371,86 @@ Phasing: S0 → {S1, S2, S7} in parallel → S3 → {S4, S5, S6} in parallel →
   short-circuit.
 - **Over-scoping** → each sub-project must ship its brute-force twin and validator tests
   before optimizing.
+
+---
+
+## 10. Problems for model testing (extrapolation)
+
+The second purpose of this study is to find which problems AI code-generation models
+fail. Problems that are textbook material only test recall. So this section collects
+problems that, as far as our survey found, the literature does not answer. A model has
+to derive something new, and we can still grade the result mechanically.
+
+**Protocol.** The rules are in the root `AGENTS.md` ("Model tests"):
+- a spec-only prompt, with no algorithm names or hints;
+- one isolated directory per model and trial;
+- a declared closed-book or open-book condition, and a `SOURCES.md` log of searches and
+  of where each idea came from;
+- grading by the orchestrator against the brute-force oracle.
+
+**What rounds 1–4 showed** (`python/attempts/_archive/round1_4/REPORT.md`):
+- **Every implementation passed every independent check**, including the new
+  feasibility theory in the observed case.
+- **The prompts named candidate algorithms**, so those rounds measured
+  guided implementation.
+- **To expose failures, a problem needs at least one of these:**
+  - a *trap*: a natural lemma that is false in this setting;
+  - a need for a *compact representation* or output-sensitive cost;
+  - a *claim that must be proved or refuted*, rather than just tested.
+
+**Grading.**
+- Anything with an exact answer is checked against `brute` (`python/harness/solve/brute.py`)
+  on small instances, and against `backtrack-feasible` for linearizations.
+- Theory answers must come with a mechanical artefact, such as a reduction implemented
+  as an instance generator, or a counterexample setup, so that they too can be checked
+  by the oracle.
+
+Items marked *(verify)* may have prior work that our survey missed.
+
+### X1. Exact solvers
+
+| # | Problem | Why it is off the map | Known trap |
+|---|---|---|---|
+| X1.1 | Compute `Poss(r)` for every read, over all of `Lin(P)`, in case `b` with **constant** data. Polynomial for fixed `N`? (RQ1) | The literature decides linearizability (yes/no). It does not compute exact value sets over all interleavings | The union over `L` of `Poss_L(r)` is correct but exponential. Shortcuts that reason "per competing write" miss combinations that are only jointly possible |
+| X1.2 | The same in case `b` with **read-dependent** data | Values are terms; sets can be exponentially large, so an output-sensitive algorithm needs a shared or DAG representation of terms | Listing sets explicitly; missing a value that only a specific combination of earlier reads produces |
+| X1.3 | Compute the joint set `Poss(r₁, r₂)` exactly | We know of no work on exact joint possibility sets | Returning `Poss(r₁) × Poss(r₂)`, which the example in "Terms" shows is wrong |
+| X1.4 | Compute `Poss(r)` and `Poss(b)` in case `o` | Needs feasibility of every candidate value against all observations, across blocks | Handling blocks separately. With read-dependent data, a read on one block determines a write on another |
+| X1.5 | All of the above in cases `s` and `so` | Sync plus data flow has not been treated | See X2.1 |
+
+### X2. Linearizations under observations
+
+| # | Problem | Why it is off the map | Known trap |
+|---|---|---|---|
+| X2.1 | Enumerate `LinFeas(P)` in case `so` (observations and sync) | The one case with no model-written code yet | **Barrier splitting.** An `at` barrier that every thread passes splits `Lin(P)` into a product of the segments before and after it. It does *not* split `LinFeas(P)`, because values written before the barrier are read after it. Reusing a segment-product enumerator is natural and wrong |
+| X2.2 | Sample uniformly from `LinFeas(P)` without rejection | Listed as open in `surveys.md` §7.2 | Samplers that are nearly uniform, or uniform over `Lin(P)`. Grade with exact counts and a statistical test on small instances |
+| X2.3 | Count `|LinFeas(P)|` in time polynomial for a fixed number of threads, independent of how many actions are in flight at once | Known FPT results for register checking assume each thread runs one operation at a time *(verify)* | State spaces that grow with the number of in-flight actions |
+| X2.4 | Enumerate one `L` per distinct reads-from assignment `rf` (one representative per outcome class) | Related to partial-order reduction for programs, not to traces with free-term data | Emitting two representatives of one class, or merging classes that differ only in a nested term |
+| X2.5 | Count the linear extensions of an interval order (the action order within one thread under `L`) | `surveys.md` §7.2: "no definitive result found" *(verify)* | Citing a complexity result that does not exist |
+
+### X3. New semantics
+
+A model must extend the definitions consistently before building on them.
+
+| # | Problem | Why it is off the map | Known trap |
+|---|---|---|---|
+| X3.1 | Add RCW (compare-and-write; the result is the old content) to CHECK and to X2.1 | Tractable fragments are unclear (`surveys.md` §7.2); whether an RCW succeeds depends on a value, so data flows back into the block | Treating a failed RCW as a plain read, or ignoring that the returned old content hides whether it succeeded |
+| X3.2 | Replace the atomic register by a *regular* register: a read that overlaps writes may return any of them, or the last value before them. Then compute `Poss` | Exact possibility sets under weaker registers are barely studied | Reusing the atomic-register fact that admissible effect orders are exactly the extensions of the interval order. It does not apply |
+| X3.3 | Allow equal effect points for different actions (`premise.md` §6, open decision 4) | Changes the interval-order argument, because ties become possible | Keeping the strict order silently |
+| X3.4 | Torn writes: a block is a tuple of sectors, and a write's sectors take effect separately | "A term equals at most one candidate value" no longer holds | Whole-block reasoning |
+
+### X4. Claims to prove or refute
+
+| # | Problem | How it is graded |
+|---|---|---|
+| X4.1 | Decide the complexity of `Poss(r)` for a single read, over all of `Lin(P)`: NP-hard in general? polynomial for fixed `N`? | A hardness claim must come with the reduction implemented as a generator; the oracle checks its instances on small sizes. A tractability claim must come with an implementation that is checked against the oracle |
+| X4.2 | The "dual instance" claim of §4 (reverse program order, swap start and end endpoints) | Probably false as stated (see §4). The model should state the claim precisely, then prove it or produce a counterexample setup. This also tests whether a model goes along with a claim it was given |
+| X4.3 | Find the smallest set of reads whose observation determines `rf` uniquely (RQ4) | Exact optimum by brute force on small instances; the model must also justify its complexity claim |
+| X4.4 | Given an algorithm with a planted bug, find the smallest setup on which it gives a wrong answer | Tests search and adversarial thinking rather than construction. The planted bug is known, so grading is exact |
+| X4.5 | Maintain `Poss` online, with steps and observations arriving one at a time, in amortized polylogarithmic time per step (RQ5) | Differential test against re-solving from scratch, plus the monotonicity rules in `premise.md` §4 (SOLVE-INC) |
+
+### Suggested order
+
+1. **X2.1:** fills the last linearization case, has a known trap, and has an oracle.
+2. **X1.1, then X1.2 and X1.3:** the study's main goal; no model has written a solver yet.
+3. **X4.2:** a cheap, sharp test of whether a model checks a claim or just accepts it.
+4. **X3.1:** the next extension of the semantics.

@@ -1,5 +1,5 @@
 # Base problem: reads/writes, no RCW, no sync, no observed results. Unset keys take
-# the defaults of abio/gen/hyperparams.py.
+# the defaults of harness/gen/hyperparams.py.
 format: hyperparams
 version: 2
 seed: 7

@@ -3,11 +3,11 @@ import unittest
 
 from helpers import example, small_setups
 
-from abio import terms as T
-from abio.formats import load_setup
-from abio.lin.random_topo import random_linearization
-from abio.semantics import execute
-from abio.solve.brute import BruteForce
+from harness import terms as T
+from harness.formats import load_setup
+from harness.lin.random_topo import random_linearization
+from harness.semantics import execute
+from harness.solve.brute import BruteForce
 
 
 def as_str(sets):
@@ -35,7 +35,7 @@ class SolveTests(unittest.TestCase):
 
     def test_fixed_union_equals_all(self):
         # Poss over all L must be the union of Poss_L (read-dependent data included).
-        from abio.lin.backtrack import linear_extensions
+        from harness.lin.backtrack import linear_extensions
         dep = {"content": {"classes": {"const": 0.3, "copy": 0.4, "combine": 0.3}, "value_pool": 2},
                "knowledge": {"p_w": 0.7, "init_known": 0.5}, "max_in_flight": 1, "actions_per_thread": 3}
         for s, _ in small_setups(8, **dep):
@@ -73,7 +73,7 @@ class SolveTests(unittest.TestCase):
                     self.assertIn(v, o.final[b])
 
     def test_inconsistent(self):
-        from abio.model import Setup
+        from harness.model import Setup
         doc = {"format": "setup", "version": 2, "id": "x", "blocks": 1, "sync_points": 0, "init": [0], "threads": [
             {"id": "t0", "steps": [{"read": 0, "id": "r"}, {"done": "r", "data": 5}]}]}
         o = BruteForce().solve(Setup.from_doc(doc))

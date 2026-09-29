@@ -3,14 +3,14 @@ requires = ["setuptools>=64"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "abio"
+name = "studyroom-001-harness"
 version = "0.1.0"
 description = "Trace analysis for asynchronous multi-threaded block I/O (Python reference implementation)"
 requires-python = ">=3.10"
 dependencies = ["PyYAML>=6"]
 
 [project.scripts]
-abio = "abio.cli:main"
+harness = "harness.cli:main"
 
 [tool.setuptools.packages.find]
-include = ["abio*"]
+include = ["harness*"]

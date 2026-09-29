@@ -2,9 +2,9 @@ import unittest
 
 from helpers import example
 
-from abio import terms as T
-from abio.formats import load_setup, to_string, load_documents
-from abio.model import MalformedSetup, Setup
+from harness import terms as T
+from harness.formats import load_setup, to_string, load_documents
+from harness.model import MalformedSetup, Setup
 
 
 class TermTests(unittest.TestCase):

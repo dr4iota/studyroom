@@ -13,14 +13,17 @@ sync points. Given such a trace, the study asks:
 1. [`premise.md`](premise.md): the problem class, definitions and sub-problems.
 2. [`formats.md`](formats.md): the on-disk documents every implementation shares.
 3. [`surveys.md`](surveys.md): related work.
-4. [`visions.md`](visions.md): what could be built and studied.
+4. [`visions.md`](visions.md): what could be built and studied. Its "Terms" section defines
+   every notion used here (`Lin(P)`, `LinFeas(P)`, `Poss(r)`, joint possibility, the four
+   cases), and §10 lists open problems for testing AI models.
 
 ## Layout
 
 | Path | What |
 |------|------|
-| `python/` | Reference implementation, package `abio`: model, formats, generator, linearization and solver APIs, brute-force oracle, CLI. See [`python/README.md`](python/README.md). |
-| `python/contrib/` | Linearizers written by Fable 5.1 and Opus 5.5. See [`contrib/README.md`](python/contrib/README.md) for the directory map and [`contrib/REPORT.md`](python/contrib/REPORT.md) for the model comparison. |
+| `python/harness/` | Our code, package `harness`: data model, formats, generator, linearization and solver APIs, brute-force oracles, grader, CLI. See [`python/README.md`](python/README.md). |
+| `python/attempts/` | One-shot model attempts, graded by the harness. See [`attempts/README.md`](python/attempts/README.md). |
+| `python/attempts/_archive/round1_4/` | Earlier model-written linearizers (four rounds, self-tested, with hinted prompts), and their comparison report. |
 | `rust/` | Not started. |
 
 ## Status
@@ -31,21 +34,21 @@ The work is split into four cases:
 - **observed:** some read results are known.
 - Each of the two comes with and without sync.
 
-| Case | Linearizers | Solvers |
-|------|-------------|---------|
-| base | core, plus two model implementations | `brute` oracle only |
-| base + sync | core, plus two model implementations | `brute` oracle only |
-| observed | core oracle, plus two model implementations | `brute` oracle only |
-| observed + sync | core oracle only | `brute` oracle only |
+| Case | Harness linearizers | Harness solvers | Graded attempts |
+|------|---------------------|-----------------|-----------------|
+| base (`b`) | `backtrack`, `dp-positions` | `brute` | none yet |
+| base + sync (`s`) | `backtrack`, `dp-positions` | `brute` | none yet |
+| observed (`o`) | `backtrack-feasible`, `enum-count` | `brute` | none yet |
+| observed + sync (`so`) | `backtrack-feasible`, `enum-count` | `brute` | none yet |
 
 ## Checks
 
-From `python/`, under a memory cap (enumerations grow exponentially):
+From `python/`:
 
 ```sh
-ulimit -v 2000000
-(cd tests && python3 -m unittest)                         # core: 31 tests
-python3 -m unittest contrib.linear_opus55_1.obs.test_opus_dep   # each contrib suite, 35 s – 4 min
+ulimit -v 3000000
+(cd tests && python3 -m unittest)                          # harness: 33 tests
+python3 -m harness grade --plugin attempts.<dir>           # grade an attempt; exit 0 iff all pass
 ```
 
-Last run: core 31, active contrib suites 84, archived suites 33; all pass.
+The grader caps its own memory (`--mem-mb`, default 2000) and time per call (`--seconds`).
