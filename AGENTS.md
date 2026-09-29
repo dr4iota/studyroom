@@ -11,8 +11,8 @@ Each study is self-contained, with the same layout:
 |------|------|
 | `README.md` | What the study is, reading order, status and how to run the checks. |
 | `*.md` at the top | The problem documents: definitions, formats, surveys, plans. |
-| `python/` | The Python implementation. |
-| `rust/` | The Rust implementation, when there is one. |
+| `python/harness/`, `python/attempts/` | The Python harness (our code) and model attempts. |
+| `rust/harness/`, `rust/attempts/` | The same for Rust, when there is one. |
 
 - Every implementation of a study reads and writes the same on-disk formats,
   so any implementation can be checked against any other.
@@ -33,13 +33,92 @@ Each study is self-contained, with the same layout:
 - Before committing: `cargo fmt --check`, `cargo clippy --all-targets -- -D warnings`
   and `cargo test`.
 
-## Model-written code
+## Model tests
 
-Code written by AI models for comparison goes in the study's `contrib/`, one
-directory per kind, model and trial: `<kind>_<model><version>_<trial>/`, e.g.
-`linear_opus55_1`. The trial number always starts at `_1`. Superseded work moves
-to `contrib/_archive/` instead of being deleted. The study's `contrib/README.md`
-maps directories to cases.
+A model test finds what a model can and cannot get right **in one shot, by itself**. The
+prompt must not do the work for it, and the model must not test its own work.
+
+**Roles.**
+- **Harness:** written by us. It holds the spec in code, the data model and APIs, the
+  reference implementation, the oracles and the grader. It lives in `<lang>/harness/`.
+- **Attempt:** one model's one-shot output for one task. It lives in
+  `<lang>/attempts/<dir>/` and is graded only by the harness.
+- **Orchestrator:** the parent model or a person. It writes the prompt, runs the grader
+  and writes the report. Only the orchestrator executes code.
+
+**One shot, no execution.** The attempting model gets file tools only (read, write,
+edit, search). It cannot run code, tests or commands, and it writes no tests: all
+testing belongs to the harness.
+- Use a restricted agent type for this; `.claude/agents/oneshot-coder.md` gives
+  Read/Write/Edit/Glob/Grep only.
+- If a restricted type is unavailable, the prompt forbids execution, and the
+  orchestrator audits the transcript (`python -m harness.grade.transcript`). An attempt
+  that used a shell, web or agent tool, read outside its allowed files, or wrote outside
+  its directory is discarded.
+
+**Closed book.** No web access. Ideas come from the model's memory or its own
+derivation. The model writes `SOURCES.md` in its directory, and for each algorithm
+records one of:
+- from memory, with the reference it has in mind;
+- its own derivation;
+- adapted from something it recalls, saying what changed.
+
+**Task documents.** Every model attempting the same task gets the same prompt, which
+points to the same documents:
+- the study's hint-free spec;
+- the language's shared rules (`<lang>/tasks/common.md`);
+- one task file per kind and case (`<lang>/tasks/<kind>_<case>.md`).
+
+Only the attempt directory and the name prefix differ between models.
+
+**Versions.** The prompt material is a versioned bundle, `<lang>/tasks/v<N>/`, holding:
+- the prompt template;
+- `common.md` and the task files;
+- `bundle.yaml`, which names the spec version and lists the allowed reads.
+
+Once any attempt has used a bundle, it is frozen: a change makes `v<N+1>`, and the spec
+likewise (`spec/v<N>.md`). Before launching, the orchestrator runs
+`python -m harness.grade.prepare`. It writes `PROMPT.md` (the exact prompt) and
+`attempt.yaml` (task, model, trial, bundle, spec, harness commit, conditions) into the
+attempt directory, so every attempt records what it was given.
+
+**What the prompt may contain:**
+- the problem specification: the relevant definitions from the study's documents, and
+  the case being tested;
+- the interface to implement (API files, registration, capability flags), the import
+  policy, and where to write;
+- the list of files the model may read.
+
+**What it must not contain:**
+- names of algorithms, papers or techniques;
+- hints about structure ("exploit barriers", "the lemma may break");
+- results from earlier attempts or other models;
+- the grader or its instances.
+
+**Independence.** Each run is one (kind, case, model) and starts from nothing. A model
+sees no earlier attempt, including its own, and no other model's code or the report.
+
+**Grading.** The orchestrator runs `python -m harness grade --plugin attempts.<dir>`
+(Python). It checks:
+- the import policy: attempts may use only the data model and APIs, never reference
+  code or oracles;
+- correctness on every case the algorithm's capabilities cover, against the oracles,
+  on generated instances and a fixed adversarial suite, under time and memory limits;
+- throughput.
+
+A crash, a timeout or an import error is a failure.
+
+**Layout and names.**
+- Directory: `attempts/<kind>_<case>_<model><version>_<trial>/`, e.g.
+  `attempts/linear_so_opus55_1/`.
+  - `kind` is `linear` (enumerators, counters) or `solver`.
+  - `case` is `b`, `s`, `o` or `so`.
+  - The trial starts at `1`.
+- Registered algorithm names: `<model><version>_<trial>-<case>-<short>`, e.g.
+  `opus55_1-so-split`, so any set of attempts can be loaded together.
+- Superseded work moves to `attempts/_archive/` instead of being deleted.
+- The study's `attempts/README.md` lists the attempts; `attempts/REPORT.md` records the
+  grades.
 
 ## Resource safety
 
