@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.pytest_cache/
+
+# Rust
+target/
+**/*.rs.bk
+*.snap.new
+
+# Editors and OS
+.DS_Store
+*.swp
+*~
+.vscode/
+.idea/
+
+# Local tool settings
+.claude/settings.local.json
