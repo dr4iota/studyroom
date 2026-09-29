@@ -1,0 +1,51 @@
+format: attempt
+version: 1
+task: solver_s
+kind: solver
+case: s
+model: opus55
+model_id: claude-opus-5-5
+trial: 1
+prefix: opus55_1-s-
+bundle: v1
+spec: spec/v1.md
+harness_commit: e1032c5bfa40fec06fd45c3447bb54f3e7404fdf
+prepared: '2026-09-29T14:53:17-04:00'
+conditions:
+  execution: none
+  web: none
+  tests: none
+  enforcement: transcript-audit
+transcript:
+  file: a5bf6b0855c790c06.output
+  sha256: f42a35a9bd50065297bf31543f60610ac7913ace74bdff67a3074cc4c9e9cbfb
+audit:
+  ok: true
+  errors: {}
+  tools:
+    Read: 9
+    Write: 3
+    SubagentHandback: 1
+grade:
+  ok: true
+  budget: full
+  grader_commit: b6298352debcbc7e39fd156bbedb2aed6f879040
+  errors: {}
+  algorithms:
+    opus55_1-s-downset:
+      cases:
+      - b
+      - s
+      passed: 89
+      instances: 89
+      throughput: null
+      scale:
+        b:
+        - 4
+        - 6
+        - 2
+        s:
+        - 5
+        - 5
+        - 3
+discarded: false

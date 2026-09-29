@@ -36,10 +36,10 @@ The work is split into four cases:
 
 | Case | Harness linearizers | Harness solvers | Graded attempts |
 |------|---------------------|-----------------|-----------------|
-| base (`b`) | `backtrack`, `dp-positions` | `brute` | none yet |
-| base + sync (`s`) | `backtrack`, `dp-positions` | `brute` | none yet |
-| observed (`o`) | `backtrack-feasible`, `enum-count` | `brute` | none yet |
-| observed + sync (`so`) | `backtrack-feasible`, `enum-count` | `brute` | none yet |
+| base (`b`) | `backtrack`, `dp-positions` | `brute` | round 5: 2 models, linear + solver ([report](python/attempts/REPORT.md)) |
+| base + sync (`s`) | `backtrack`, `dp-positions` | `brute` | round 5: 2 models, linear + solver ([report](python/attempts/REPORT.md)) |
+| observed (`o`) | `backtrack-feasible`, `enum-count` | `brute` | round 5: 2 models, linear + solver ([report](python/attempts/REPORT.md)) |
+| observed + sync (`so`) | `backtrack-feasible`, `enum-count` | `brute` | round 5: 2 models, linear + solver ([report](python/attempts/REPORT.md)) |
 
 ## Checks
 

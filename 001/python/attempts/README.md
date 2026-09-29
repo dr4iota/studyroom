@@ -43,20 +43,12 @@ Each attempt contains its code and a `SOURCES.md`. For every algorithm, `SOURCES
 whether it came from the model's memory (with the reference it had in mind), its own
 derivation, or an adaptation.
 
-## Planned attempts
+## Round 5 (bundle v1)
 
-| Kind | Case | Opus 5.5 | Fable 5.1 |
-|------|------|----------|-----------|
-| linear | b | `linear_b_opus55_1` | `linear_b_fable51_1` |
-| linear | s | `linear_s_opus55_1` | `linear_s_fable51_1` |
-| linear | o | `linear_o_opus55_1` | `linear_o_fable51_1` |
-| linear | so | `linear_so_opus55_1` | `linear_so_fable51_1` |
-| solver | b | `solver_b_opus55_1` | `solver_b_fable51_1` |
-| solver | s | `solver_s_opus55_1` | `solver_s_fable51_1` |
-| solver | o | `solver_o_opus55_1` | `solver_o_fable51_1` |
-| solver | so | `solver_so_opus55_1` | `solver_so_fable51_1` |
-
-None exist yet. Grades go in `REPORT.md` in this directory.
+All 16 attempts exist: linear and solver × cases `b`, `s`, `o`, `so` × Opus 5.5 and
+Fable 5.1, trial 1. Every algorithm passed every exact check. Five attempts are
+discarded for running a shell command (`ls` of their own directory). Grades, scaling
+and findings are in [`REPORT.md`](REPORT.md).
 
 ## `_archive/`
 

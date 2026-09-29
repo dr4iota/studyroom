@@ -448,9 +448,78 @@ A model must extend the definitions consistently before building on them.
 | X4.4 | Given an algorithm with a planted bug, find the smallest setup on which it gives a wrong answer | Tests search and adversarial thinking rather than construction. The planted bug is known, so grading is exact |
 | X4.5 | Maintain `Poss` online, with steps and observations arriving one at a time, in amortized polylogarithmic time per step (RQ5) | Differential test against re-solving from scratch, plus the monotonicity rules in `premise.md` §4 (SOLVE-INC) |
 
+### X5. Beyond enumeration
+
+In these problems, "enumerate everything and check" either cannot state the answer or
+gives the wrong one. So a model cannot fall back on brute force, and the harness needs
+a new kind of oracle before it can grade them.
+
+**X5.1. Interpreted unknown contents.** Today an unknown write (`data: "*"`) is a free
+symbol: its content is the term `w`, which equals only itself, so it never collides with
+another value. The original model (`premise.md` §2.6, and open decisions 5 and 6 in §6)
+also has an **assignment `θ`**, which gives every unknown an actual value from a domain.
+- A full schedule becomes `(L, π, θ)`.
+- An unknown can then *equal* a constant or another unknown, and an observed read can
+  pin an unknown down.
+- With an interpreted algebra (e.g. integers with `+`, so `1+2 = 2+1`), different
+  histories can produce the same value.
+
+The task is to compute `Poss(r)` when `θ` ranges over an infinite domain. The answer
+is then an infinite set and must be described **symbolically**, e.g. as a finite union
+of terms with constraints on the unknowns ("`u + 3`, for every `u ≠ 5`").
+- *Why brute force fails:* it cannot enumerate `θ`, or even write the answer down.
+- *Grading:* checking the description needs a decision procedure, for example an SMT
+  solver, or a restricted term class whose answers are provably finite.
+- *Trap:* treating unknowns as free symbols, which is the current, weaker semantics.
+  That misses the values where an unknown happens to coincide with another.
+
+**X5.2. Parametric traces (loops).** A thread's program may contain a loop, "repeat
+these steps `n` times", where the parameter `n` is left open. Task: give the answer as a
+**function of `n`**, e.g. a closed form for `|Lin(P)|(n)` or `|LinFeas(P)|(n)`, or a
+description of `Poss(r)` valid for all `n`.
+- *Why brute force fails:* it yields only data points for small `n`; the model has to
+  generalize.
+- *Grading:* compare the formula with brute-force values at small `n`, then at larger
+  `n` with the fast algorithms. A formula that only fits the samples it was built from
+  is caught by the larger values.
+- *Trap:* extrapolating a pattern from small cases that breaks later, e.g. at the point
+  where observations or sync points start to interact across iterations.
+
+**X5.3. Distributions (later).** Draw a linearization uniformly from `LinFeas(P)`, then
+effect points by a stated rule, e.g. uniformly among the admissible effect orders. Task:
+give the **exact probability** of each value in `Poss(r)`, as a rational number.
+- *Why brute force fails:* it works only for small cases. Exact answers at scale need
+  counting (weighted DP over the same states the solvers use), not sampling.
+- *Grading:* compare exact rationals on small cases, and check sampling agreement at
+  scale.
+- *Status:* recorded for later. The probability model needs choices of its own (which
+  distribution over effect points, and whether observations condition it) before it
+  can be a task.
+
+### Which problems a brute-force attempt could pass
+
+The harness oracles enumerate linearizations and effect orders. So does the laziest
+possible attempt. This decides what the correctness tests can show.
+
+| Group | Problems | What grading must rely on |
+|---|---|---|
+| **Brute force is correct, only slow** | X1.1–X1.5, X2.1, X2.4, X2.5, X3.1, X3.3 | A lazy attempt passes every small instance, so the **scaling suite** is the real grade. Use adversarial ladders: many writers per block, repeated values, long data chains |
+| **Brute force is correct but ruled out by the input size or the requirement** | X2.2 (whole list needed for uniform choice), X2.3 (counts too large to enumerate), X4.5 (re-solving breaks the per-step bound) | Required sizes or time bounds that enumeration cannot meet, e.g. count a 10¹² setup in 5 s |
+| **Brute force gives the wrong answer, or no answer** | X3.2 (regular and safe registers are not effect-point models), X3.4 (torn writes), X4.1 (proofs), X5.1, X5.2, X5.3 | New oracles, derived and validated in the harness first; then exact checks on small cases plus symbolic or formula checks |
+| **Brute force helps the model** | X4.2, X4.3, X4.4 | Searching small setups is a legitimate method here; grade the artefact (counterexample, minimal set, failing setup) |
+
 ### Suggested order
 
-1. **X2.1:** fills the last linearization case, has a known trap, and has an oracle.
-2. **X1.1, then X1.2 and X1.3:** the study's main goal; no model has written a solver yet.
-3. **X4.2:** a cheap, sharp test of whether a model checks a claim or just accepts it.
-4. **X3.1:** the next extension of the semantics.
+1. **Done in round 5 (bundle v1):** X2.1 and the exact solvers X1.1, X1.2 and X1.4 in all
+   four cases. Every attempt passed, and none enumerates and filters. See
+   `python/attempts/README.md`.
+2. **X1.1 and X1.2 with adversarial scaling ladders:** no new API; tests whether a
+   model finds something better than exponential search.
+3. **X3.2 (regular registers), X5.2 (loops) and X5.1 (interpreted unknowns):** the
+   natural approach is wrong or cannot state the answer. Each needs a new harness
+   oracle first.
+4. **X1.3 (joint possibility):** a small new API with a known trap.
+5. **X4.2 (the dual-instance claim):** tests whether a model checks a claim or
+   accepts it.
+6. **X3.1 (RCW):** the semantics already exist.
+7. **X5.3 (distributions):** later.

@@ -1,0 +1,12 @@
+ok: false
+errors:
+- code: TOOL
+  where:
+    tool: Bash
+  message: ls -la /home/hanhua/mix/studyroom/001/python/attempts/linear_b_opus55_1/
+tools:
+  Read: 8
+  Bash: 1
+  Write: 3
+  Edit: 1
+  SubagentHandback: 1

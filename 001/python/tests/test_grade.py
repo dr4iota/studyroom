@@ -15,7 +15,7 @@ from harness.formats import loads  # noqa: E402
 def grade(*argv):
     out, err = io.StringIO(), io.StringIO()
     with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
-        code = main(["grade", "--no-throughput", "--mem-mb", "3000", *argv])
+        code = main(["grade", "--no-throughput", "--no-scaling", "--mem-mb", "3000", *argv])
     return code, loads(out.getvalue(), "report")
 
 

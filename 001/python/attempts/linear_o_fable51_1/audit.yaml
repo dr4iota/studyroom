@@ -1,0 +1,13 @@
+ok: false
+errors:
+- code: TOOL
+  where:
+    tool: Bash
+  message: ls -la /home/hanhua/mix/studyroom/001/python/attempts/linear_o_fable51_1/
+    && cat /home/hanhua/mix/studyroom/001/python/attempts/linear_o_fable51_1/attempt.yaml
+tools:
+  Read: 9
+  Bash: 1
+  Write: 4
+  Edit: 1
+  SubagentHandback: 1

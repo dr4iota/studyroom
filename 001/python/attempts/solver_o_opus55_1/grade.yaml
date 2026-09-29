@@ -1,0 +1,79 @@
+format: report
+version: 2
+setup_id: grade:attempts.solver_o_opus55_1
+subject: grade
+ok: true
+errors: []
+stats:
+  opus55_1-o-memo:
+    category: solver
+    cases: [b, o]
+    instances: 91
+    failed: 0
+    errors: {}
+    seconds: 10.2
+    scaling:
+      b:
+        max_level: 5
+        max_shape: [4, 6, 2]
+        levels:
+        - level: 0
+          shape: [2, 3, 2]
+          cleared: true
+          max_seconds: 0.0
+        - level: 1
+          shape: [3, 3, 2]
+          cleared: true
+          max_seconds: 0.001
+        - level: 2
+          shape: [3, 4, 2]
+          cleared: true
+          max_seconds: 0.008
+        - level: 3
+          shape: [4, 4, 2]
+          cleared: true
+          max_seconds: 0.05
+        - level: 4
+          shape: [4, 5, 2]
+          cleared: true
+          max_seconds: 0.228
+        - level: 5
+          shape: [4, 6, 2]
+          cleared: true
+          max_seconds: 1.35
+        - level: 6
+          shape: [5, 5, 3]
+          cleared: false
+          max_seconds: 9.28
+      o:
+        max_level: 5
+        max_shape: [4, 6, 2]
+        levels:
+        - level: 0
+          shape: [2, 3, 2]
+          cleared: true
+          max_seconds: 0.0
+        - level: 1
+          shape: [3, 3, 2]
+          cleared: true
+          max_seconds: 0.001
+        - level: 2
+          shape: [3, 4, 2]
+          cleared: true
+          max_seconds: 0.004
+        - level: 3
+          shape: [4, 4, 2]
+          cleared: true
+          max_seconds: 0.037
+        - level: 4
+          shape: [4, 5, 2]
+          cleared: true
+          max_seconds: 0.333
+        - level: 5
+          shape: [4, 6, 2]
+          cleared: true
+          max_seconds: 0.482
+        - level: 6
+          shape: [5, 5, 3]
+          cleared: false
+          max_seconds: 5.599

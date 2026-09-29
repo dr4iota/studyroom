@@ -1,0 +1,11 @@
+ok: false
+errors:
+- code: TOOL
+  where:
+    tool: Bash
+  message: ls -la /home/hanhua/mix/studyroom/001/python/attempts/linear_s_fable51_1/
+tools:
+  Read: 9
+  Bash: 1
+  Write: 4
+  SubagentHandback: 1

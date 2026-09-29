@@ -1,0 +1,60 @@
+format: attempt
+version: 1
+task: linear_b
+kind: linear
+case: b
+model: fable51
+model_id: claude-fable-5-1
+trial: 1
+prefix: fable51_1-b-
+bundle: v1
+spec: spec/v1.md
+harness_commit: e1032c5bfa40fec06fd45c3447bb54f3e7404fdf
+prepared: '2026-09-29T14:53:17-04:00'
+conditions:
+  execution: none
+  web: none
+  tests: none
+  enforcement: transcript-audit
+transcript:
+  file: a1ccfe711acd0f936.output
+  sha256: becc473ce3c282c71310a0bdcf80d9e556f3273248b3a795464dfdca724de4b6
+audit:
+  ok: false
+  errors:
+    TOOL: 1
+  tools:
+    Read: 9
+    Bash: 1
+    Write: 3
+    SubagentHandback: 1
+grade:
+  ok: true
+  budget: full
+  grader_commit: b6298352debcbc7e39fd156bbedb2aed6f879040
+  errors: {}
+  algorithms:
+    fable51_1-b-multinomial:
+      cases:
+      - b
+      passed: 45
+      instances: 45
+      throughput: null
+      scale:
+        b:
+        - 6
+        - 6
+        - 3
+    fable51_1-b-interleave:
+      cases:
+      - b
+      passed: 45
+      instances: 45
+      throughput:
+        b: 906855
+      scale:
+        b:
+        - 6
+        - 6
+        - 3
+discarded: true
