@@ -16,7 +16,7 @@ from ..gen import generate
 from ..lin.api import LinCounter, LinEnumerator, LinSampler
 from ..registry import available
 from ..solve.api import Solver
-from . import checks, policy, tasks
+from . import checks, policy, scaling, tasks
 from .instances import covered_cases, instances
 
 CATEGORIES = {"lin-enum": LinEnumerator, "lin-count": LinCounter, "lin-sample": LinSampler, "solver": Solver}
@@ -31,6 +31,7 @@ def add_parser(sub: argparse._SubParsersAction) -> None:
     p.add_argument("--seconds", type=float, default=20.0, help="time limit per algorithm call")
     p.add_argument("--mem-mb", type=int, default=2000, help="address-space cap for the whole grader")
     p.add_argument("--no-throughput", action="store_true")
+    p.add_argument("--no-scaling", action="store_true", help="skip the scaling suite")
     p.add_argument("-o", "--output", default="-")
     p.set_defaults(handler=handle)
 
@@ -114,9 +115,16 @@ def handle(args: argparse.Namespace) -> int:
         if perf and cat == "lin-enum":
             st["throughput"] = {c: (round(r) if (r := checks.throughput(algo, s)) is not None else "error")
                                 for c, s in perf.items() if c in cases}
+        if not args.no_scaling:
+            sc, sc_errs = scaling.run(cat, algo, name, cases, args.budget)
+            st["scaling"] = sc
+            errors += sc_errs
+            fails.update(e["code"] for e in sc_errs)
         stats[name] = st
         print(f"{name:28s} {cat:10s} cases={','.join(cases):9s} {len(insts) - n_fail}/{len(insts)} passed"
-              f"  {dict(fails) or ''}", file=sys.stderr)
+              f"  {dict(fails) or ''}"
+              + (f"  scale={ {c: v['max_level'] for c, v in st['scaling'].items()} }" if "scaling" in st else ""),
+              file=sys.stderr)
     with Output(args.output) as out:
         out.write(report_doc("grade:" + ",".join(args.plugin or args.algo), "grade", errors, stats))
     return 0 if not errors else 1
