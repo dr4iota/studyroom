@@ -1,0 +1,27 @@
+# The worked example of formats.md §1/§10 (uses RCW, sync and an observed read).
+format: setup
+version: 2
+id: "ex-0001"
+meta: {tool: hand, comment: "formats.md §1"}
+blocks: 2
+sync_points: 1
+init: [0, "*"]
+threads:
+  - id: t0
+    steps:
+      - {write: 0, id: w1, data: 1}
+      - {read: 1, id: r1}
+      - {done: w1}
+      - {done: r1}
+      - {before: 0}
+      - {write: 1, id: w2, data: r1~7}
+      - {done: w2}
+  - id: t1
+    steps:
+      - {after: 0}
+      - {read: 0, id: r2}
+      - {write: 1, id: w3, data: 9}
+      - {done: r2, data: 1}
+      - {done: w3}
+      - {rcw: 0, id: c1, expect: 1, data: 2}
+      - {done: c1}

@@ -1,0 +1,14 @@
+# Base problem: reads/writes, no RCW, no sync, no observed results. Unset keys take
+# the defaults of abio/gen/hyperparams.py.
+format: hyperparams
+version: 2
+seed: 7
+threads: 2
+blocks: 2
+actions_per_thread: 3
+max_in_flight: 2
+kind_mix: {read: 0.5, write: 0.5, rcw: 0.0}
+content:
+  classes: {const: 0.4, copy: 0.3, combine: 0.3}
+  value_pool: 4
+knowledge: {p_w: 1.0, p_r: 0.0, init_known: 0.5}

@@ -1,0 +1,20 @@
+# Every extension on: RCW, sync points with all relations, observed results,
+# read-dependent contents, unknown writes. Only algorithms that declare the matching
+# capabilities will accept the generated setups.
+format: hyperparams
+version: 2
+seed: 11
+threads: 3
+blocks: 2
+sync_points: 1
+actions_per_thread: 3
+events_per_thread: 1
+relations: [before, after, at]
+max_in_flight: 2
+kind_mix: {read: 0.5, write: 0.4, rcw: 0.1}
+block_skew: {kind: zipf, s: 1.0}
+content:
+  classes: {const: 0.5, copy: 0.3, combine: 0.2}
+  max_depth: 2
+  value_pool: 4
+knowledge: {p_w: 0.9, p_r: 0.3, init_known: 0.5}
