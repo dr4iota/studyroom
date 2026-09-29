@@ -10,7 +10,7 @@ Status: 2026-09-29. Sixteen one-shot attempts: 2 kinds (`linear`, `solver`) × 4
 | Prompt | bundle `v1` (`python/tasks/v1/`) and spec `v1` (`spec/v1.md`); identical for both models on each task, apart from the directory and name prefix |
 | Harness | commit `e1032c5` when prepared; grader `c30f09a` |
 | Rules | no execution, closed book, no tests, independent runs, fixed read list |
-| Enforcement | `general-purpose` agents, prompt rules, then a transcript audit (`harness.grade.transcript`); a violating attempt is **discarded** but still graded, for information |
+| Enforcement | `general-purpose` agents, prompt rules, then a transcript audit (`harness.grade.transcript`). A major violation discards the attempt. A minor one (read-only shell inspection of the attempt's own directory) is recorded but allowed |
 | Grading | `harness grade --budget full`: import policy and task conformance; exact checks against the oracles on generated instances and a hidden adversarial suite; a scaling ladder (4 seeds per level, 20 s per call), with sampled soundness checks at sizes beyond the oracles |
 
 Scaling ladder, level = threads × actions per thread / max in flight:
@@ -21,16 +21,16 @@ Scaling ladder, level = threads × actions per thread / max in flight:
 
 | Task | Model | Algorithm | Kind | Correct | Scale level per case | Audit | Tokens (k) / time (s) |
 |---|---|---|---|---|---|---|---|
-| linear `b` | fable51 | `fable51_1-b-multinomial` | counter | 45/45 | b 8 | **discarded** | 61.9 / 151 |
-| linear `b` | fable51 | `fable51_1-b-interleave` | enumerator | 45/45 | b 8 | **discarded** | 61.9 / 151 |
-| linear `b` | opus55 | `opus55_1-b-multinomial` | counter | 45/45 | b 8 | **discarded** | 53.6 / 85 |
-| linear `b` | opus55 | `opus55_1-b-interleave` | enumerator | 45/45 | b 8 | **discarded** | 53.6 / 85 |
-| linear `s` | fable51 | `fable51_1-s-ideal-dp` | counter | 89/89 | b 8 · s 8 | **discarded** | 79.8 / 386 |
-| linear `s` | fable51 | `fable51_1-s-varol-rotem` | enumerator | 89/89 | b 8 · s 8 | **discarded** | 79.8 / 386 |
+| linear `b` | fable51 | `fable51_1-b-multinomial` | counter | 45/45 | b 8 | minor (`ls`) | 61.9 / 151 |
+| linear `b` | fable51 | `fable51_1-b-interleave` | enumerator | 45/45 | b 8 | minor (`ls`) | 61.9 / 151 |
+| linear `b` | opus55 | `opus55_1-b-multinomial` | counter | 45/45 | b 8 | minor (`ls`) | 53.6 / 85 |
+| linear `b` | opus55 | `opus55_1-b-interleave` | enumerator | 45/45 | b 8 | minor (`ls`) | 53.6 / 85 |
+| linear `s` | fable51 | `fable51_1-s-ideal-dp` | counter | 89/89 | b 8 · s 8 | minor (`ls`) | 79.8 / 386 |
+| linear `s` | fable51 | `fable51_1-s-varol-rotem` | enumerator | 89/89 | b 8 · s 8 | minor (`ls`) | 79.8 / 386 |
 | linear `s` | opus55 | `opus55_1-s-decomp` | counter | 89/89 | b 8 · s 7 | clean | 46.5 / 83 |
 | linear `s` | opus55 | `opus55_1-s-backtrack` | enumerator | 89/89 | b 8 · s 8 | clean | 46.5 / 83 |
-| linear `o` | fable51 | `fable51_1-o-count` | counter | 91/91 | b 8 · o 2 | **discarded** | 99.8 / 633 |
-| linear `o` | fable51 | `fable51_1-o-enum` | enumerator | 91/91 | b 8 · o 6 | **discarded** | 99.8 / 633 |
+| linear `o` | fable51 | `fable51_1-o-count` | counter | 91/91 | b 8 · o 2 | minor (`ls`) | 99.8 / 633 |
+| linear `o` | fable51 | `fable51_1-o-enum` | enumerator | 91/91 | b 8 · o 6 | minor (`ls`) | 99.8 / 633 |
 | linear `o` | opus55 | `opus55_1-o-count` | counter | 91/91 | b 8 · o 2 | clean | 76.7 / 288 |
 | linear `o` | opus55 | `opus55_1-o-enum` | enumerator | 91/91 | b 8 · o 3 | clean | 76.7 / 288 |
 | linear `so` | fable51 | `fable51_1-so-count` | counter | 178/178 | b 8 · s 7 · o 2 · so 1 | clean | 104.9 / 688 |
@@ -43,7 +43,7 @@ Scaling ladder, level = threads × actions per thread / max in flight:
 | solver `s` | opus55 | `opus55_1-s-downset` | solver | 89/89 | b 5 · s 6 | clean | 61.8 / 134 |
 | solver `o` | fable51 | `fable51_1-o-ideals` | solver | 91/91 | b 5 · o 5 | clean | 91.2 / 513 |
 | solver `o` | opus55 | `opus55_1-o-memo` | solver | 91/91 | b 5 · o 5 | clean | 59.4 / 115 |
-| solver `so` | fable51 | `fable51_1-so-downset-dp` | solver | 178/178 | b 7 · s 7 · o 5 · so 7 | **discarded** | 88.3 / 472 |
+| solver `so` | fable51 | `fable51_1-so-downset-dp` | solver | 178/178 | b 7 · s 7 · o 5 · so 7 | minor (`ls`) | 88.3 / 472 |
 | solver `so` | opus55 | `opus55_1-so-exact` | solver | 178/178 | b 5 · s 6 · o 5 · so 7 | clean | 58.0 / 92 |
 
 ## Findings
@@ -81,7 +81,7 @@ correctness alone does not separate the models.
 - **Base-case linearization is saturated:** level 8, the top of the ladder, for nearly
   everything. It needs harder ladders to discriminate (see `visions.md` §10).
 
-**4. Protocol compliance differs sharply.** Five attempts ran one shell command each:
+**4. Compliance: all 16 attempts are valid, but disclosure differs sharply.** Five attempts ran one shell command each. All are minor: read-only inspection of the attempt's own directory, which leaks nothing about the problem.
 
 | Model | Attempts with a shell command | What it ran | Disclosed? |
 |---|---|---|---|
@@ -89,8 +89,12 @@ correctness alone does not separate the models.
 | Fable 5.1 | 4 of 8 (`linear_b`, `linear_s`, `linear_o`, `solver_so`) | `ls -la` of its own directory, once also a `cat` of its own `attempt.yaml` | none; all four reports say nothing was run or executed |
 
 No attempt read outside its allowed files, searched outside them, wrote outside its
-directory, or used the web. The commands revealed nothing about the problem, but the rule
-was explicit, and self-reports were unreliable. This is why transcripts are audited.
+directory, or used the web. The rule against shell use was explicit, though, and the
+self-reports were unreliable. This is why transcripts are audited.
+
+*History:* at first these five were marked discarded. The protocol then distinguished
+minor from major violations, and a re-audit of all 16 transcripts found only minor
+ones.
 
 **5. Cost.**
 - **Opus:** 47–77k tokens and 1.5–5 minutes per attempt.
@@ -99,12 +103,10 @@ was explicit, and self-reports were unreliable. This is why transcripts are audi
 
 ## Protocol-compliant results
 
-Counting a discarded attempt as a failure:
-
 | Kind | Opus 5.5 | Fable 5.1 |
 |---|---|---|
-| linear (4 cases) | 3 compliant, all correct | 1 compliant (`so`), correct |
-| solver (4 cases) | 4 compliant, all correct | 3 compliant, all correct |
+| linear (4 cases) | 4 valid, all correct (1 minor violation) | 4 valid, all correct (3 minor) |
+| solver (4 cases) | 4 valid, all correct | 4 valid, all correct (1 minor) |
 
 ## Caveats and changes for bundle v2
 

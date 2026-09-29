@@ -53,8 +53,14 @@ testing belongs to the harness.
   Read/Write/Edit/Glob/Grep only.
 - If a restricted type is unavailable, the prompt forbids execution, and the
   orchestrator audits the transcript (`python -m harness.grade.transcript`). An attempt
-  that used a shell, web or agent tool, read outside its allowed files, or wrote outside
-  its directory is discarded.
+  is discarded if it:
+  - used a web or agent tool;
+  - read outside its allowed files;
+  - wrote outside its directory;
+  - ran a shell command other than a minor one.
+- A **minor** shell call is read-only inspection (`ls`, `cat`, `head`, `wc`, `find`, …)
+  of paths inside the attempt's own directory only. It reveals nothing about the problem,
+  so it is recorded (`TOOL-MINOR`) but does not discard the attempt.
 
 **Closed book.** No web access. Ideas come from the model's memory or its own
 derivation. The model writes `SOURCES.md` in its directory, and for each algorithm

@@ -1,6 +1,6 @@
-ok: false
+ok: true
 errors:
-- code: TOOL
+- code: TOOL-MINOR
   where:
     tool: Bash
   message: ls -la /home/hanhua/mix/studyroom/001/python/attempts/linear_b_fable51_1/

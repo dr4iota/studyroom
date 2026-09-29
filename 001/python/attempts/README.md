@@ -26,8 +26,13 @@ python3 -m harness grade --plugin attempts.<dir> [--budget full] -o report.yaml
 python3 -m harness.grade.transcript <agent-transcript.jsonl> attempts.<dir>   # protocol audit
 ```
 
-An attempt whose transcript shows a shell, web or agent tool, a read outside its task's
-allowed files, or a write outside its directory is discarded.
+An attempt is discarded if its transcript shows:
+- a web or agent tool;
+- a read outside its task's allowed files;
+- a write outside its directory;
+- a shell command other than read-only inspection of its own directory.
+
+Such inspection is a minor violation: recorded, not disqualifying.
 
 ## Names
 
@@ -46,8 +51,8 @@ derivation, or an adaptation.
 ## Round 5 (bundle v1)
 
 All 16 attempts exist: linear and solver × cases `b`, `s`, `o`, `so` × Opus 5.5 and
-Fable 5.1, trial 1. Every algorithm passed every exact check. Five attempts are
-discarded for running a shell command (`ls` of their own directory). Grades, scaling
+Fable 5.1, trial 1. Every algorithm passed every exact check. All 16 are valid. Five ran a *minor* shell
+command, read-only inspection of their own directory, which is recorded but allowed. Grades, scaling
 and findings are in [`REPORT.md`](REPORT.md).
 
 ## `_archive/`

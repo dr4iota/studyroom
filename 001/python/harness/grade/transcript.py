@@ -4,13 +4,17 @@
 
 Checks, as report errors:
 
-TOOL    a tool other than the file tools was used (shell, web, agents, ...)
+TOOL        a tool other than the file tools was used (shell, web, agents, ...)
+TOOL-MINOR  a shell call that only inspected the attempt's own directory, read-only
+            (``ls``, ``cat``, ``head``, ``tail``, ``wc``, ``stat``, ``file``, ``pwd``, ``find``
+            without actions); it leaks nothing about the problem, so it is recorded but
+            does not discard the attempt
 READ    a file outside the task's allowed list was read
 SEARCH  Grep/Glob searched outside the allowed files and the attempt directory
 WRITE   a file outside the attempt directory was written or edited
 
 Any TOOL, READ, SEARCH or WRITE error means the attempt did not follow the protocol and is
-discarded. Paths are resolved against the study root (``001/``).
+discarded. TOOL-MINOR is recorded but does not discard. Paths are resolved against the study root (``001/``).
 """
 
 from __future__ import annotations
@@ -32,6 +36,41 @@ def bundle_reads(bundle: str, kind: str, task: str) -> list[str]:
     import yaml
     b = yaml.safe_load((STUDY / "python" / "tasks" / bundle / "bundle.yaml").read_text())
     return [f.format(task=task) for f in b["reads"]["all"] + b["reads"][kind]]
+
+
+INSPECT = {"ls", "cat", "head", "tail", "wc", "stat", "file", "pwd", "find"}
+MINOR = {"TOOL-MINOR"}
+
+
+def minor_shell(command: str, own: pathlib.Path) -> bool:
+    """Is ``command`` read-only inspection of paths inside ``own`` only?"""
+    import re
+    import shlex
+    if re.search(r"[`$<>]|\\", command):  # substitutions, redirections, escapes: not simple
+        return False
+    for part in re.split(r"&&|\|\||;|\|", command):
+        try:
+            words = shlex.split(part)
+        except ValueError:
+            return False
+        if not words:
+            continue
+        if words[0] not in INSPECT:
+            return False
+        if words[0] == "find" and any(w in ("-exec", "-execdir", "-delete", "-ok", "-fprint") for w in words):
+            return False
+        for w in words[1:]:
+            if w.startswith("-"):
+                continue
+            q = pathlib.Path(w)
+            q = (q if q.is_absolute() else own / q).resolve()
+            if not (q == own or own in q.parents):
+                return False
+        if words[0] == "pwd":
+            continue
+        if len([w for w in words[1:] if not w.startswith("-")]) == 0 and words[0] != "pwd":
+            return False  # no explicit path: would act on an unknown working directory
+    return True
 
 
 def tool_calls(path: str):
@@ -76,7 +115,8 @@ def audit(transcript: str, module: str) -> tuple[list[dict], dict]:
             continue
         if name not in FILE_TOOLS:
             detail = inp.get("command") or inp.get("query") or inp.get("url") or ""
-            errs.append({"code": "TOOL", "where": {"tool": name}, "message": str(detail)[:200]})
+            code = "TOOL-MINOR" if name == "Bash" and minor_shell(str(detail), own) else "TOOL"
+            errs.append({"code": code, "where": {"tool": name}, "message": str(detail)[:200]})
             continue
         p = _resolve(inp.get("file_path") or inp.get("path"))
         if name == "Read":

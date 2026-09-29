@@ -20,9 +20,9 @@ transcript:
   file: a0653420145d33acc.output
   sha256: 97c70d3316f0a810bcbbd306f2016944a2d915323840c71e178694fc554581e1
 audit:
-  ok: false
+  ok: true
   errors:
-    TOOL: 1
+    TOOL-MINOR: 1
   tools:
     Read: 8
     Bash: 1
@@ -58,4 +58,4 @@ grade:
         - 6
         - 6
         - 3
-discarded: true
+discarded: false

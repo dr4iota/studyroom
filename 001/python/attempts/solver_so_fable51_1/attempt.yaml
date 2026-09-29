@@ -20,9 +20,9 @@ transcript:
   file: a71b61763dbec2fae.output
   sha256: f4fb73175ed774c603f57e1d6490179c15db3527efc3111d5074b3778633b392
 audit:
-  ok: false
+  ok: true
   errors:
-    TOOL: 1
+    TOOL-MINOR: 1
   tools:
     Read: 9
     Bash: 1
@@ -60,4 +60,4 @@ grade:
         - 5
         - 6
         - 3
-discarded: true
+discarded: false

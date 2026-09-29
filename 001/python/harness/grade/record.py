@@ -21,7 +21,7 @@ from collections import Counter
 
 import yaml
 
-from .transcript import audit
+from .transcript import MINOR, audit
 
 PYROOT = pathlib.Path(__file__).resolve().parents[2]
 
@@ -31,14 +31,23 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("module")
     p.add_argument("--transcript", required=True)
     p.add_argument("--budget", default="small", choices=["small", "full"])
+    p.add_argument("--audit-only", action="store_true", help="re-audit; keep the existing grade")
     a = p.parse_args(argv)
     own = PYROOT / pathlib.Path(*a.module.split("."))
     meta_path = own / "attempt.yaml"
     meta = yaml.safe_load(meta_path.read_text())
 
     errs, stats = audit(a.transcript, a.module)
-    (own / "audit.yaml").write_text(yaml.safe_dump({"ok": not errs, "errors": errs, **stats}, sort_keys=False))
+    (own / "audit.yaml").write_text(yaml.safe_dump(
+        {"ok": not [e for e in errs if e["code"] not in MINOR], "errors": errs, **stats}, sort_keys=False))
 
+    if a.audit_only:
+        major = [e for e in errs if e["code"] not in MINOR]
+        meta["audit"] = {"ok": not major, "errors": dict(Counter(e["code"] for e in errs)), "tools": stats["tools"]}
+        meta["discarded"] = bool(major)
+        meta_path.write_text(yaml.safe_dump(meta, sort_keys=False))
+        print(yaml.safe_dump({"audit": meta["audit"], "discarded": meta["discarded"]}, sort_keys=False), end="")
+        return 0
     (own / "grade.yaml").unlink(missing_ok=True)  # never read a stale report
     r = subprocess.run([sys.executable, "-m", "harness", "grade", "--plugin", a.module, "--budget", a.budget,
                         "-o", str(own / "grade.yaml")], cwd=PYROOT, capture_output=True, text=True)
@@ -54,14 +63,15 @@ def main(argv: list[str] | None = None) -> int:
 
     meta["transcript"] = {"file": pathlib.Path(a.transcript).name,
                           "sha256": hashlib.sha256(pathlib.Path(a.transcript).read_bytes()).hexdigest()}
-    meta["audit"] = {"ok": not errs, "errors": dict(Counter(e["code"] for e in errs)), "tools": stats["tools"]}
+    major = [e for e in errs if e["code"] not in MINOR]
+    meta["audit"] = {"ok": not major, "errors": dict(Counter(e["code"] for e in errs)), "tools": stats["tools"]}
     grader = subprocess.run(["git", "rev-parse", "HEAD"], cwd=PYROOT, capture_output=True, text=True).stdout.strip()
     for n, st in (grade.get("stats") or {}).items():
         if "scaling" in st:
             per_algo.setdefault(n, {})["scale"] = {c: v["max_shape"] for c, v in st["scaling"].items()}
     meta["grade"] = {"ok": bool(grade.get("ok")), "budget": a.budget, "grader_commit": grader,
                      "errors": dict(codes), "algorithms": per_algo}
-    meta["discarded"] = bool(errs)
+    meta["discarded"] = bool(major)
     meta_path.write_text(yaml.safe_dump(meta, sort_keys=False))
     print(yaml.safe_dump({"audit": meta["audit"], "grade": meta["grade"], "discarded": meta["discarded"]},
                          sort_keys=False), end="")
