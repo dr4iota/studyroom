@@ -1,0 +1,17 @@
+format: report
+version: 2
+setup_id: grade:attempts.looplin_s_opus55_1
+subject: grade
+ok: true
+errors: []
+stats:
+  opus55_1-s-decomp:
+    category: loop-count
+    cases: [b, s]
+    instances: 91
+    failed: 0
+    errors: {}
+    seconds: 0.7
+    scaling:
+      b: {max_n: 10000}
+      s: {max_n: 100}

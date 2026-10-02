@@ -216,3 +216,98 @@ Fable's other witness-returning solvers (`br`, `or`, `sor`) re-execute correctly
   (seen with Fable's `solver_or`).
 - **Editing a shell script while it runs is unsafe,** because bash reads scripts
   incrementally. Recording now uses a separate locked script.
+
+
+---
+
+# Round 7 — bundle v3 (loops), Opus only
+
+Status: 2026-10-01. Four one-shot attempts by Opus 5.5: `looplin_b`, `looplin_s`,
+`loopsol_b` and `loopsol_s`. The Fable 5.1 runs are deferred because its quota is low.
+This was the first round on the restricted `oneshot-coder` agent, which has file tools
+only, so no execution and no web by construction. Transcripts were audited as well.
+
+## Task
+
+- **Setups:** each thread is `prefix · body^n · suffix`, with one global `n`. Body data is
+  a constant or one read reference, so values stay finite. Sync events in a body use
+  per-iteration sync points.
+- **What models are told:** `n` is an input and may be arbitrarily large.
+- **looplin:** return `|Lin(P_n)|` exactly.
+- **loopsol:** return `Poss_n` for every read (the union over a body read's instances) and
+  for every block.
+
+## How it is graded
+
+1. **Exact at n = 1–4,** by unrolling to `P_n` and running the harness oracles. These
+   are the positions DP, and a new down-set reference solver validated against brute
+   force (`tests/test_downset.py`).
+2. **Exact at large n (50, 1000, and 10⁶ for solvers),** on instances whose answer is
+   known for every `n`:
+   - case-`b` counts: a multinomial;
+   - case-`s` counts on barrier instances, where every body ends with `at`: a product
+     per iteration, checked against the oracle at small `n`;
+   - **relays:** a value moves one block per iteration, so a suffix read's set by `n` is
+     {0}, {0}, {0, 9}, {0, 9}, {9}, {9}, … It grows, then shrinks, then stays fixed.
+3. **Scaling:** the largest `n` on a ladder (counts up to 10⁴, solvers up to 10⁶) that
+   finishes within the time limit.
+
+## Results
+
+| Attempt | Algorithm | Correct | Largest n cleared | Audit | Tokens (k) / time (s) |
+|---|---|---|---|---|---|
+| `looplin_b` | `opus55_1-b-multinomial` | 40/40 | b 10⁴ | clean | 38.0 / 104 |
+| `looplin_s` | `opus55_1-s-decomp` | 91/91 | b 10⁴ · s 100 | clean | 139.3 / 1252 |
+| `loopsol_b` | `opus55_1-b-explore` | 40/40 | b 10⁶ | clean | 124.9 / 1109 |
+| `loopsol_s` | `opus55_1-s-statespace` | 91/91 | b 10⁶ · s 10⁶ | clean | 148.3 / 1410 |
+
+Grader `7f0af45`; peak memory 0.02–1.2 GB.
+
+## Findings
+
+**1. Every answer checked was exact, including at large n.**
+- `loopsol_s` gets the relays right at n = 50 and 10⁶, including the non-monotone
+  shrink.
+- `looplin_s` gets the barrier products right at n = 50 and 1000.
+
+**2. Three of the four attempts rely on unproven extrapolation, and said so.**
+- `looplin_b` uses an exact closed form (a multinomial, computed through prime
+  factorisation for large totals).
+- The other three compute exactly up to a depth or cap, then extend:
+  - `loopsol_b`: by a detected period;
+  - `loopsol_s`: by an eventual period, up to a cap of 400;
+  - `looplin_s`: by linear growth of decomposed pieces.
+- Each attempt states in `SOURCES.md` that the extrapolation is not proven. `loopsol_s`
+  adds that it has no bound showing its cap is large enough.
+- This is new behaviour: in earlier rounds the methods were exact by construction.
+  **The grader's large-n instances are therefore the only thing standing between these
+  heuristics and an unnoticed wrong answer.**
+
+**3. The weak spot is counting with sync.** `looplin_s` climbs only to n = 100 on ladder
+setups where threads can drift apart across iterations (`before`/`after` events without
+a barrier). It predicted this itself.
+
+**4. Time and cost.**
+- **Time:** the loop tasks took Opus far longer than earlier rounds: 18.5–23.5 minutes and
+  125–148k tokens for each of `looplin_s`, `loopsol_b` and `loopsol_s`, against 2–5
+  minutes before. `looplin_b`, the closed form, took 1.7 minutes.
+- **Searches that read the clock:** two solvers use wall-clock budgets inside the
+  search, so they explore further on a faster machine, and their answers above the cap
+  could change with the machine.
+
+## Grading gaps and harness fixes in this round
+
+- **Gap: case-`b` solver answers are exact-checked only up to n = 4.** `loopsol_b`'s period
+  extrapolation is therefore not tested at large n. A case-`b` relay (propagation
+  without barriers) should be added before the Fable runs, so both models face the same
+  tests.
+- **Fixed:**
+  - the barrier count formula ignored an unused plain sync point, which is an isolated
+    node;
+  - a formula failing its oracle check aborted the grade instead of being dropped;
+  - case-`s` counts had no large-n checks, so 8 barrier instances were added;
+  - `record.py` did not accept the loop ladder's `max_n`.
+- **Orchestration slips, all mine:**
+  - one recording started before its agent had confirmed completion;
+  - a duplicated transcript mapping made one re-grade silently keep a stale report.
+    Both were caught by checking timestamps and grader commits.

@@ -1,0 +1,17 @@
+format: report
+version: 2
+setup_id: grade:attempts.loopsol_s_opus55_1
+subject: grade
+ok: true
+errors: []
+stats:
+  opus55_1-s-statespace:
+    category: loop-solver
+    cases: [b, s]
+    instances: 91
+    failed: 0
+    errors: {}
+    seconds: 3.7
+    scaling:
+      b: {max_n: 1000000}
+      s: {max_n: 1000000}

@@ -1,0 +1,46 @@
+format: attempt
+version: 1
+task: looplin_s
+kind: looplin
+case: s
+model: opus55
+model_id: claude-opus-5-5
+trial: 1
+prefix: opus55_1-s-
+bundle: v3
+spec: spec/v3.md
+harness_commit: da0d1fdf78d94db35a297b8ffdc092f6d8b0f3dc
+prepared: '2026-10-01T21:21:58-04:00'
+conditions:
+  execution: none
+  web: none
+  tests: none
+  enforcement: restricted-agent
+transcript:
+  file: a5de547136bf71604.output
+  sha256: da3625529381a5b3090297759e9654bab0d1eff409cedc6178d29ef9f83636ea
+audit:
+  ok: true
+  errors: {}
+  tools:
+    Read: 10
+    Glob: 1
+    Write: 3
+    SubagentHandback: 1
+grade:
+  ok: true
+  budget: full
+  grader_commit: 7f0af45367fccbaff6548019d00abe1de51e3657
+  errors: {}
+  algorithms:
+    opus55_1-s-decomp:
+      cases:
+      - b
+      - s
+      passed: 91
+      instances: 91
+      throughput: null
+      scale:
+        b: 10000
+        s: 100
+discarded: false

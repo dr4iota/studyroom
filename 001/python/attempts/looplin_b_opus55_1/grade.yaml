@@ -1,0 +1,16 @@
+format: report
+version: 2
+setup_id: grade:attempts.looplin_b_opus55_1
+subject: grade
+ok: true
+errors: []
+stats:
+  opus55_1-b-multinomial:
+    category: loop-count
+    cases: [b]
+    instances: 40
+    failed: 0
+    errors: {}
+    seconds: 0.2
+    scaling:
+      b: {max_n: 10000}

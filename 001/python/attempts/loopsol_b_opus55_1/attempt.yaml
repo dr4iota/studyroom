@@ -1,0 +1,44 @@
+format: attempt
+version: 1
+task: loopsol_b
+kind: loopsol
+case: b
+model: opus55
+model_id: claude-opus-5-5
+trial: 1
+prefix: opus55_1-b-
+bundle: v3
+spec: spec/v3.md
+harness_commit: da0d1fdf78d94db35a297b8ffdc092f6d8b0f3dc
+prepared: '2026-10-01T21:21:58-04:00'
+conditions:
+  execution: none
+  web: none
+  tests: none
+  enforcement: restricted-agent
+transcript:
+  file: af987f05399e3fcdc.output
+  sha256: c57884a18dfd665db53a8bc0e0dc6d0dc05185aaae900b16e6d61de09ea78771
+audit:
+  ok: true
+  errors: {}
+  tools:
+    Read: 9
+    Glob: 1
+    Write: 3
+    SubagentHandback: 1
+grade:
+  ok: true
+  budget: full
+  grader_commit: 7f0af45367fccbaff6548019d00abe1de51e3657
+  errors: {}
+  algorithms:
+    opus55_1-b-explore:
+      cases:
+      - b
+      passed: 40
+      instances: 40
+      throughput: null
+      scale:
+        b: 1000000
+discarded: false
