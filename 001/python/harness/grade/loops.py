@@ -109,6 +109,20 @@ def _relay(k: int, extra_reader: bool) -> LoopSetup:
                                "init": [9] + [0] * k, "threads": threads})
 
 
+def _b_relay(k: int) -> LoopSetup:
+    """Case-b relay (no sync): one thread's body copies block j -> j+1 for j = k-1 .. 0, in
+    that order, so a value needs k iterations to travel from block 0 to block k. A second
+    thread overwrites block 0 once (at an unknown time) and reads block k at the end."""
+    body = []
+    for j in range(k - 1, -1, -1):
+        body += [{"read": j, "id": f"c{j}"}, {"done": f"c{j}"}, {"write": j + 1, "id": f"v{j}", "data": f"c{j}"}, {"done": f"v{j}"}]
+    threads = [{"id": "mover", "prefix": [], "body": body, "suffix": []},
+               {"id": "other", "prefix": [{"write": 0, "id": "o", "data": 5}, {"done": "o"}], "body": [],
+                "suffix": [{"read": k, "id": "z"}, {"done": "z"}]}]
+    return LoopSetup.from_doc({"format": "loop-setup", "version": 1, "id": f"brelay-{k}", "blocks": k + 1,
+                               "sync_points": 0, "loop_sync_points": 0, "init": [9] + [0] * k, "threads": threads})
+
+
 def _barrier_variant(seed: int) -> LoopSetup:
     """A generated loop, rewritten so every body ends with `at` on a per-iteration sync
     point and nothing else syncs: the barrier-product count formula then applies."""
@@ -168,6 +182,11 @@ def loop_instances(kind: str, cases: list[str], budget: str) -> list[LoopInstanc
                 inst.count_at = _checked(L, f) if f else None
             out.append(inst)
             made += 1
+        if case == "b":  # n-dependent solver traps without sync
+            for k in (2, 3):
+                L = _b_relay(k)
+                out.append(LoopInstance(L.id, "b", L, _small_ns(L), count_at=_checked(L, _multinomial_count(L)),
+                                        solve_at=_stable_solve(L, k + 2)))
         if case == "s":  # exact large-n counts: barrier products
             for seed in range(3 if budget == "small" else 8):
                 L = _barrier_variant(7000 + seed)
