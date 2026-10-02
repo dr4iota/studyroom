@@ -16,10 +16,13 @@ from ..gen import generate
 from ..lin.api import LinCounter, LinEnumerator, LinSampler
 from ..registry import available
 from ..solve.api import Solver
+from ..loop.api import LoopCounter, LoopSolver
+from . import loops as loopgrade
 from . import checks, policy, scaling, tasks
 from .instances import covered_cases, instances
 
-CATEGORIES = {"lin-enum": LinEnumerator, "lin-count": LinCounter, "lin-sample": LinSampler, "solver": Solver}
+CATEGORIES = {"lin-enum": LinEnumerator, "lin-count": LinCounter, "lin-sample": LinSampler, "solver": Solver,
+              "loop-count": LoopCounter, "loop-solver": LoopSolver}
 
 
 def add_parser(sub: argparse._SubParsersAction) -> None:
@@ -95,9 +98,15 @@ def handle(args: argparse.Namespace) -> int:
             errors.append({"code": "CRASH", "where": {"algo": name}, "message": f"constructor: {ex}"[:300]})
             continue
         caps = cls.capabilities
-        cases = covered_cases(caps.sync, caps.observed_reads, caps.rcw)
-        insts = instances(cases, args.budget, args.seed)
-        check = checks.CHECKS.get(cat)
+        is_loop = cat in ("loop-count", "loop-solver")
+        if is_loop:
+            cases = ["b", "s"] if caps.sync else ["b"]
+            insts = loopgrade.loop_instances(cat, cases, args.budget)
+            check = loopgrade.check_loop_count if cat == "loop-count" else loopgrade.check_loop_solve
+        else:
+            cases = covered_cases(caps.sync, caps.observed_reads, caps.rcw)
+            insts = instances(cases, args.budget, args.seed)
+            check = checks.CHECKS.get(cat)
         if check is None:
             stats[name] = {"category": cat, "note": "not graded (no checker for this category)"}
             continue
@@ -115,7 +124,9 @@ def handle(args: argparse.Namespace) -> int:
         if perf and cat == "lin-enum":
             st["throughput"] = {c: (round(r) if (r := checks.throughput(algo, s)) is not None else "error")
                                 for c, s in perf.items() if c in cases}
-        if not args.no_scaling:
+        if not args.no_scaling and is_loop:
+            st["scaling"] = loopgrade.loop_scaling(cat, algo, cases, args.seconds)
+        elif not args.no_scaling:
             try:
                 sc, sc_errs = scaling.run(cat, algo, name, cases, args.budget)
             except Exception as ex:  # a harness bug must not abort the whole grade
@@ -127,7 +138,7 @@ def handle(args: argparse.Namespace) -> int:
         stats[name] = st
         print(f"{name:28s} {cat:10s} cases={','.join(cases):9s} {len(insts) - n_fail}/{len(insts)} passed"
               f"  {dict(fails) or ''}"
-              + (f"  scale={ {c: v['max_level'] for c, v in st['scaling'].items()} }" if "scaling" in st else ""),
+              + (f"  scale={ {c: v.get('max_level', v.get('max_n')) for c, v in st['scaling'].items()} }" if "scaling" in st else ""),
               file=sys.stderr)
     with Output(args.output) as out:
         out.write(report_doc("grade:" + ",".join(args.plugin or args.algo), "grade", errors, stats))

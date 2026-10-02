@@ -24,6 +24,7 @@ import sys
 ALLOWED = {
     "harness", "harness.model", "harness.poset", "harness.terms", "harness.capabilities",
     "harness.registry", "harness.lin", "harness.lin.api", "harness.solve", "harness.solve.api",
+    "harness.loops", "harness.loop", "harness.loop.api",
 }
 # from-imports allowed from these packages/modules: only these names
 ALLOWED_NAMES = {
@@ -31,6 +32,7 @@ ALLOWED_NAMES = {
     "harness.lin": {"api", "LinEnumerator", "LinCounter", "LinSampler", "CountResult"},
     "harness.solve": {"api", "Solver", "SolverCapabilities", "Outcomes"},
     "harness.semantics": {"Schedule"},
+    "harness.loop": {"api", "LoopCounter", "LoopSolver", "LoopOutcomes"},
 }
 FORBIDDEN_STDLIB = {
     "subprocess", "socket", "ssl", "http", "urllib", "ftplib", "smtplib", "telnetlib",

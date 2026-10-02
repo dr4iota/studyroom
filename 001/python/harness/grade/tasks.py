@@ -17,9 +17,10 @@ import pathlib
 import re
 from dataclasses import dataclass
 
-NAME_RE = re.compile(r"^attempts\.(linear|solver)_(b|s|o|so|br|sr|or|sor)_([a-z]+[0-9]+)_([0-9]+)$")
+NAME_RE = re.compile(r"^attempts\.(linear|solver|looplin|loopsol)_(b|s|o|so|br|sr|or|sor)_([a-z]+[0-9]+)_([0-9]+)$")
 CASE_CAPS = {c: ("s" in c, "o" in c, "r" in c) for c in ("b", "s", "o", "so", "br", "sr", "or", "sor")}
-ALLOWED_CATS = {"linear": {"lin-enum": (1, 1), "lin-count": (0, 1)}, "solver": {"solver": (1, 1)}}
+ALLOWED_CATS = {"linear": {"lin-enum": (1, 1), "lin-count": (0, 1)}, "solver": {"solver": (1, 1)},
+                "looplin": {"loop-count": (1, 1)}, "loopsol": {"loop-solver": (1, 1)}}
 
 
 @dataclass(frozen=True)

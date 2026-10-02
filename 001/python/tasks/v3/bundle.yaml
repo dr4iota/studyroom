@@ -1,0 +1,25 @@
+# Prompt bundle v3 (loops; reads and writes only). Frozen once any attempt has used it: change nothing here; make v4.
+format: prompt-bundle
+version: 1
+bundle: v3
+created: 2026-10-01
+spec: spec/v3.md                       # relative to the study root (001/)
+prompt: python/tasks/v3/prompt.md      # template; placeholders in {braces}
+common: python/tasks/v3/common.md
+tasks: [looplin_b, looplin_s, loopsol_b, loopsol_s]
+reads:                                 # files an attempt may read, besides its own directory
+  all:
+    - spec/v3.md
+    - python/tasks/v3/common.md
+    - python/tasks/v3/{task}.md
+    - python/harness/model.py
+    - python/harness/poset.py
+    - python/harness/terms.py
+    - python/harness/capabilities.py
+    - python/harness/registry.py
+  looplin: [python/harness/loops.py, python/harness/loop/api.py]
+  loopsol: [python/harness/loops.py, python/harness/loop/api.py]
+conditions:
+  execution: none                      # file tools only
+  web: none                            # closed book
+  tests: none                          # the model writes no tests
