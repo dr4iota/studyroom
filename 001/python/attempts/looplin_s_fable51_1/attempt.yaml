@@ -1,0 +1,25 @@
+format: attempt
+version: 1
+task: looplin_s
+kind: looplin
+case: s
+model: fable51
+model_id: claude-fable-5-1
+trial: 1
+prefix: fable51_1-s-
+bundle: v3
+spec: spec/v3.md
+harness_commit: 848d493307c811447987ce698402877850301ac7
+prepared: '2026-10-01T22:18:57-04:00'
+conditions:
+  execution: none
+  web: none
+  tests: none
+  enforcement: restricted-agent
+transcript: null
+audit: null
+grade: null
+incomplete:
+  reason: quota
+  note: started; stopped by an out-of-credits API error while reading the task files,
+    before writing code

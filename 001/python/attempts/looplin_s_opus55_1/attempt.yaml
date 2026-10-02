@@ -30,15 +30,15 @@ audit:
 grade:
   ok: true
   budget: full
-  grader_commit: 7f0af45367fccbaff6548019d00abe1de51e3657
+  grader_commit: 2d8138784725b6cb6749a9c65fc91319029d2930
   errors: {}
   algorithms:
     opus55_1-s-decomp:
       cases:
       - b
       - s
-      passed: 91
-      instances: 91
+      passed: 93
+      instances: 93
       throughput: null
       scale:
         b: 10000

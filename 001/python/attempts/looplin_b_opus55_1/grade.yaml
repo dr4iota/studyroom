@@ -8,9 +8,9 @@ stats:
   opus55_1-b-multinomial:
     category: loop-count
     cases: [b]
-    instances: 40
+    instances: 42
     failed: 0
     errors: {}
-    seconds: 0.2
+    seconds: 0.3
     scaling:
       b: {max_n: 10000}

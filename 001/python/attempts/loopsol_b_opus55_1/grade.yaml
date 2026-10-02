@@ -8,7 +8,7 @@ stats:
   opus55_1-b-explore:
     category: loop-solver
     cases: [b]
-    instances: 40
+    instances: 42
     failed: 0
     errors: {}
     seconds: 0.5

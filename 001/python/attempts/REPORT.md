@@ -256,18 +256,20 @@ only, so no execution and no web by construction. Transcripts were audited as we
 
 | Attempt | Algorithm | Correct | Largest n cleared | Audit | Tokens (k) / time (s) |
 |---|---|---|---|---|---|
-| `looplin_b` | `opus55_1-b-multinomial` | 40/40 | b 10⁴ | clean | 38.0 / 104 |
-| `looplin_s` | `opus55_1-s-decomp` | 91/91 | b 10⁴ · s 100 | clean | 139.3 / 1252 |
-| `loopsol_b` | `opus55_1-b-explore` | 40/40 | b 10⁶ | clean | 124.9 / 1109 |
-| `loopsol_s` | `opus55_1-s-statespace` | 91/91 | b 10⁶ · s 10⁶ | clean | 148.3 / 1410 |
+| `looplin_b` | `opus55_1-b-multinomial` | 42/42 | b 10⁴ | clean | 38.0 / 104 |
+| `looplin_s` | `opus55_1-s-decomp` | 93/93 | b 10⁴ · s 100 | clean | 139.3 / 1252 |
+| `loopsol_b` | `opus55_1-b-explore` | 42/42 | b 10⁶ | clean | 124.9 / 1109 |
+| `loopsol_s` | `opus55_1-s-statespace` | 93/93 | b 10⁶ · s 10⁶ | clean | 148.3 / 1410 |
 
-Grader `7f0af45`; peak memory 0.02–1.2 GB.
+Final grader `2d81387`, which includes the case-`b` relays; peak memory 0.03–1.2 GB.
 
 ## Findings
 
 **1. Every answer checked was exact, including at large n.**
 - `loopsol_s` gets the relays right at n = 50 and 10⁶, including the non-monotone
   shrink.
+- `loopsol_b` gets the case-`b` relays right at n = 50 and 10⁶. Those relays are a
+  propagation through one thread's own loop-carried copies, needing k iterations.
 - `looplin_s` gets the barrier products right at n = 50 and 1000.
 
 **2. Three of the four attempts rely on unproven extrapolation, and said so.**
@@ -297,10 +299,11 @@ a barrier). It predicted this itself.
 
 ## Grading gaps and harness fixes in this round
 
-- **Gap: case-`b` solver answers are exact-checked only up to n = 4.** `loopsol_b`'s period
-  extrapolation is therefore not tested at large n. A case-`b` relay (propagation
-  without barriers) should be added before the Fable runs, so both models face the same
-  tests.
+- **Closed gap: case-`b` solver answers were first exact-checked only up to n = 4.** Two
+  case-`b` relays were then added (`2d81387`): one thread's loop-carried copies need k
+  iterations, while a second thread overwrites the source at an unknown time. Their
+  answers are verified constant from n = k onward. All four Opus attempts were
+  re-graded on that grader.
 - **Fixed:**
   - the barrier count formula ignored an unused plain sync point, which is an isolated
     node;
@@ -311,3 +314,14 @@ a barrier). It predicted this itself.
   - one recording started before its agent had confirmed completion;
   - a duplicated transcript mapping made one re-grade silently keep a stale report.
     Both were caught by checking timestamps and grader commits.
+
+## Fable 5.1: not run
+
+All four Fable loop attempts were prepared under bundle v3, but Fable's usage quota ran
+out:
+- `looplin_s` and `loopsol_s` started, and stopped with an out-of-credits API error while
+  still reading the task and data-model files. Neither wrote any code.
+- `looplin_b` and `loopsol_b` were not launched.
+
+Each directory keeps its `PROMPT.md` and an `attempt.yaml` marked `incomplete: quota`, so
+the four can be run later as trial 1, with the same bundle and identical prompts.

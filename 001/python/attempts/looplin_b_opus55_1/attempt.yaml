@@ -31,14 +31,14 @@ audit:
 grade:
   ok: true
   budget: full
-  grader_commit: 7f0af45367fccbaff6548019d00abe1de51e3657
+  grader_commit: 2d8138784725b6cb6749a9c65fc91319029d2930
   errors: {}
   algorithms:
     opus55_1-b-multinomial:
       cases:
       - b
-      passed: 40
-      instances: 40
+      passed: 42
+      instances: 42
       throughput: null
       scale:
         b: 10000

@@ -64,9 +64,9 @@ witnesses, the first genuine defect in the study. See [`REPORT.md`](REPORT.md).
 ## Round 7 (bundle v3, loops), Opus only
 
 4 attempts: `looplin_b`, `looplin_s`, `loopsol_b`, `loopsol_s` by Opus 5.5. All are valid
-and exact on every check, including large-n relays and barrier counts. Three of them
-extrapolate past a search cap by unproven period or growth detection. The Fable runs are
-deferred. See [`REPORT.md`](REPORT.md).
+and exact on every check, including large-n relays (cases `b` and `s`) and barrier counts.
+Three of them extrapolate past a search cap by unproven period or growth detection. The
+four Fable directories are prepared but marked `incomplete: quota`. See [`REPORT.md`](REPORT.md).
 
 ## `_archive/`
 

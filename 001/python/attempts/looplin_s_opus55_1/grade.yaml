@@ -8,7 +8,7 @@ stats:
   opus55_1-s-decomp:
     category: loop-count
     cases: [b, s]
-    instances: 91
+    instances: 93
     failed: 0
     errors: {}
     seconds: 0.7

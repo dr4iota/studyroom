@@ -8,10 +8,10 @@ stats:
   opus55_1-s-statespace:
     category: loop-solver
     cases: [b, s]
-    instances: 91
+    instances: 93
     failed: 0
     errors: {}
-    seconds: 3.7
+    seconds: 4.5
     scaling:
       b: {max_n: 1000000}
       s: {max_n: 1000000}
