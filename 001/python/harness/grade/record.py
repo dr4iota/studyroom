@@ -68,7 +68,7 @@ def main(argv: list[str] | None = None) -> int:
     grader = subprocess.run(["git", "rev-parse", "HEAD"], cwd=PYROOT, capture_output=True, text=True).stdout.strip()
     for n, st in (grade.get("stats") or {}).items():
         if "scaling" in st:
-            per_algo.setdefault(n, {})["scale"] = {c: v["max_shape"] for c, v in st["scaling"].items()}
+            per_algo.setdefault(n, {})["scale"] = {c: v.get("max_shape", v.get("max_n")) for c, v in st["scaling"].items()}
     meta["grade"] = {"ok": bool(grade.get("ok")), "budget": a.budget, "grader_commit": grader,
                      "errors": dict(codes), "algorithms": per_algo}
     meta["discarded"] = bool(major)
