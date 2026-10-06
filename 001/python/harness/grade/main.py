@@ -69,7 +69,7 @@ def handle(args: argparse.Namespace) -> int:
         except Exception as ex:
             errors.append({"code": "IMPORT", "where": {"plugin": mod}, "message": f"{type(ex).__name__}: {ex}"[:300]})
             continue
-        root = pathlib.Path(m.__file__).parent
+        root = pathlib.Path(m.__file__).parent if getattr(m, "__file__", None) else pathlib.Path(list(m.__path__)[0])
         errors += policy.check_package(mod, root)
         roots[mod] = root
     after = _registered()
