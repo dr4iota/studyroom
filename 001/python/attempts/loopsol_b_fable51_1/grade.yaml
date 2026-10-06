@@ -1,0 +1,16 @@
+format: report
+version: 2
+setup_id: grade:attempts.loopsol_b_fable51_1
+subject: grade
+ok: false
+errors:
+- code: TASK
+  where: {task: loopsol_b}
+  message: missing __init__.py
+- code: TASK
+  where: {task: loopsol_b}
+  message: missing SOURCES.md
+- code: TASK
+  where: {task: loopsol_b}
+  message: registers 0 loop-solver, task wants 1..1
+stats: {}

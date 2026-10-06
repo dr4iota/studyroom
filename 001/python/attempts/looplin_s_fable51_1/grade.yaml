@@ -1,0 +1,16 @@
+format: report
+version: 2
+setup_id: grade:attempts.looplin_s_fable51_1
+subject: grade
+ok: false
+errors:
+- code: TASK
+  where: {task: looplin_s}
+  message: missing __init__.py
+- code: TASK
+  where: {task: looplin_s}
+  message: missing SOURCES.md
+- code: TASK
+  where: {task: looplin_s}
+  message: registers 0 loop-count, task wants 1..1
+stats: {}

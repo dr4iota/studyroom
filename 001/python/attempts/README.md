@@ -61,12 +61,15 @@ and findings are in [`REPORT.md`](REPORT.md).
 All are valid and all answer sets are correct. Fable's `solver_sr` fails on its optional
 witnesses, the first genuine defect in the study. See [`REPORT.md`](REPORT.md).
 
-## Round 7 (bundle v3, loops), Opus only
+## Round 7 (bundle v3, loops)
 
-4 attempts: `looplin_b`, `looplin_s`, `loopsol_b`, `loopsol_s` by Opus 5.5. All are valid
-and exact on every check, including large-n relays (cases `b` and `s`) and barrier counts.
-Three of them extrapolate past a search cap by unproven period or growth detection. The
-four Fable directories are prepared but marked `incomplete: quota`. See [`REPORT.md`](REPORT.md).
+8 attempts: `looplin_b`, `looplin_s`, `loopsol_b`, `loopsol_s` × Opus 5.5 and Fable 5.1.
+- **Opus:** all four are exact on every check, including the large-n relays.
+- **Fable:** `looplin_b` and `loopsol_s` are exact. `looplin_s` and `loopsol_b` produced
+  no code: each was cut off at the 64k output-token cap after long deliberation.
+
+Every loop solver delivered extrapolates past a computed range by unproven period
+detection. See [`REPORT.md`](REPORT.md).
 
 ## `_archive/`
 

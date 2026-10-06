@@ -1,0 +1,17 @@
+format: report
+version: 2
+setup_id: grade:attempts.loopsol_s_fable51_1
+subject: grade
+ok: true
+errors: []
+stats:
+  fable51_1-s-effects:
+    category: loop-solver
+    cases: [b, s]
+    instances: 93
+    failed: 0
+    errors: {}
+    seconds: 32.1
+    scaling:
+      b: {max_n: 1000000}
+      s: {max_n: 1000000}

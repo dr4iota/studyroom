@@ -315,13 +315,50 @@ a barrier). It predicted this itself.
   - a duplicated transcript mapping made one re-grade silently keep a stale report.
     Both were caught by checking timestamps and grader commits.
 
-## Fable 5.1: not run
+## Fable 5.1 (run after its quota reset)
 
-All four Fable loop attempts were prepared under bundle v3, but Fable's usage quota ran
-out:
-- `looplin_s` and `loopsol_s` started, and stopped with an out-of-credits API error while
-  still reading the task and data-model files. Neither wrote any code.
-- `looplin_b` and `loopsol_b` were not launched.
+The four Fable directories were prepared under bundle v3 on 2026-10-01. Fable's quota ran
+out at the first launch, before any code was written. They were relaunched on 2026-10-06
+with the same `PROMPT.md`, after checking that every file an attempt may read was
+unchanged since the pinned commit. Each `attempt.yaml` records the relaunch.
 
-Each directory keeps its `PROMPT.md` and an `attempt.yaml` marked `incomplete: quota`, so
-the four can be run later as trial 1, with the same bundle and identical prompts.
+| Attempt | Outcome | Correct | Largest n cleared | Audit | Tokens (k) / time (s) |
+|---|---|---|---|---|---|
+| `looplin_b` | `fable51_1-b-chains` | 42/42 | b 10⁴ | clean | 75.6 / 519 |
+| `looplin_s` | **failed: no code written** | – | – | clean | about 385 output / – |
+| `loopsol_b` | **failed: no code written** | – | – | clean | about 257 output / – |
+| `loopsol_s` | `fable51_1-s-effects` | 93/93 | b 10⁶ · s 10⁶ | clean | 95.7 / 2611 |
+
+Grader `2d81387`, the same as Opus; the empty attempts were graded with the fix
+`df0935e`.
+
+**Finding: a new kind of failure.**
+- **What happened:** two of Fable's four loop attempts produced no deliverable. In each,
+  the agent read every allowed file, then generated hundreds of thousands of output
+  tokens over several turns without writing a single file, until one response exceeded
+  the 64,000-token output maximum and the agent was terminated. The grader records them
+  as `TASK` failures: no `__init__.py`, no `SOURCES.md`, no algorithm.
+- **New in this study:** in every earlier round, every attempt delivered code. A
+  round-5 Fable attempt once hit the same cap, but recovered and finished.
+- **Opus finished all four** of the same tasks in 2–23 minutes.
+
+**What Fable did deliver was exact.**
+- `loopsol_s` gets the relays right at n = 50 and 10⁶. Its method, like Opus's, computes
+  exactly up to a time budget, then extends by a detected eventual period, which it
+  calls heuristic.
+- `looplin_b` is the same closed form as Opus's: a multinomial computed through prime
+  exponents, with an extra path for when one chain dominates.
+
+## Round 7 summary
+
+| Task | Opus 5.5 | Fable 5.1 |
+|---|---|---|
+| `looplin_b` | 42/42, n to 10⁴ | 42/42, n to 10⁴ |
+| `looplin_s` | 93/93, n to 100 in case s | **no code written** |
+| `loopsol_b` | 42/42, n to 10⁶ | **no code written** |
+| `loopsol_s` | 93/93, n to 10⁶ | 93/93, n to 10⁶ |
+
+Loops are the first task family where a model failed outright, and the failure is in
+producing an answer at all, not in correctness: every delivered algorithm was exact on
+every check. Every loop solver delivered relies on an unproven extrapolation past a
+computed range.

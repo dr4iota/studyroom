@@ -16,9 +16,33 @@ conditions:
   web: none
   tests: none
   enforcement: restricted-agent
-transcript: null
-audit: null
-grade: null
-incomplete:
-  reason: quota
-  note: 'prepared but not launched: Fable quota exhausted'
+transcript:
+  file: ae303ec749107ac7d.output
+  sha256: f1dd375f9d96e5fc59292452693dfae1b8e81cec10767318accf956141a6e2ad
+audit:
+  ok: true
+  errors: {}
+  tools:
+    Read: 10
+    Glob: 1
+grade:
+  ok: false
+  budget: full
+  grader_commit: df0935eef0419878d961cbc3215bfe55c1c42350
+  errors:
+    TASK: 3
+  algorithms: {}
+relaunch:
+  date: '2026-10-06'
+  note: first launch stopped by quota before any code was written; relaunched with
+    the same PROMPT.md, harness files unchanged since the pinned commit
+  previous:
+    reason: quota
+    note: 'prepared but not launched: Fable quota exhausted'
+discarded: false
+outcome:
+  status: failed
+  reason: no deliverable
+  note: read all allowed files, then produced about 257k output tokens over several
+    turns without writing any file; terminated when one response exceeded the 64,000-token
+    output maximum

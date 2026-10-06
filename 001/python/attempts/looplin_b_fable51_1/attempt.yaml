@@ -16,9 +16,36 @@ conditions:
   web: none
   tests: none
   enforcement: restricted-agent
-transcript: null
-audit: null
-grade: null
-incomplete:
-  reason: quota
-  note: 'prepared but not launched: Fable quota exhausted'
+transcript:
+  file: aae5eee9a798117ba.output
+  sha256: a6cf922b47d2c8a6d7a2a4c1d7bcf4bf98e25056d484b26f2bea0d2be331850f
+audit:
+  ok: true
+  errors: {}
+  tools:
+    Read: 10
+    Glob: 1
+    Write: 3
+    SubagentHandback: 1
+grade:
+  ok: true
+  budget: full
+  grader_commit: df0935eef0419878d961cbc3215bfe55c1c42350
+  errors: {}
+  algorithms:
+    fable51_1-b-chains:
+      cases:
+      - b
+      passed: 42
+      instances: 42
+      throughput: null
+      scale:
+        b: 10000
+relaunch:
+  date: '2026-10-06'
+  note: first launch stopped by quota before any code was written; relaunched with
+    the same PROMPT.md, harness files unchanged since the pinned commit
+  previous:
+    reason: quota
+    note: 'prepared but not launched: Fable quota exhausted'
+discarded: false

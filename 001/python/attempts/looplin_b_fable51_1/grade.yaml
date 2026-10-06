@@ -1,0 +1,16 @@
+format: report
+version: 2
+setup_id: grade:attempts.looplin_b_fable51_1
+subject: grade
+ok: true
+errors: []
+stats:
+  fable51_1-b-chains:
+    category: loop-count
+    cases: [b]
+    instances: 42
+    failed: 0
+    errors: {}
+    seconds: 0.3
+    scaling:
+      b: {max_n: 10000}

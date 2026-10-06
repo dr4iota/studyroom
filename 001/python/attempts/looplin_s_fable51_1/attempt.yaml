@@ -16,10 +16,34 @@ conditions:
   web: none
   tests: none
   enforcement: restricted-agent
-transcript: null
-audit: null
-grade: null
-incomplete:
-  reason: quota
-  note: started; stopped by an out-of-credits API error while reading the task files,
-    before writing code
+transcript:
+  file: a2fdc16214dd7e72c.output
+  sha256: 0a600734fd0224a3de07124882a2b268093762e52b41c689fde0fbc061f91fc9
+audit:
+  ok: true
+  errors: {}
+  tools:
+    Read: 10
+    Glob: 1
+grade:
+  ok: false
+  budget: full
+  grader_commit: 9ec71d961ce8ad80986cf6008b72d760c572a171
+  errors:
+    TASK: 3
+  algorithms: {}
+relaunch:
+  date: '2026-10-06'
+  note: first launch stopped by quota before any code was written; relaunched with
+    the same PROMPT.md, harness files unchanged since the pinned commit
+  previous:
+    reason: quota
+    note: started; stopped by an out-of-credits API error while reading the task files,
+      before writing code
+discarded: false
+outcome:
+  status: failed
+  reason: no deliverable
+  note: read all allowed files, then produced about 385k output tokens over several
+    turns without writing any file; terminated when one response exceeded the 64,000-token
+    output maximum
