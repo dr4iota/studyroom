@@ -475,6 +475,9 @@ def well_mixed(threads, M):
     return True
 
 
+MAX_JOINTS = 300  # joint sets conditional() examines per seed; a search budget for long traces
+
+
 def conditional(p, P, cands, rng, poss):
     """Selection mode 4: a deep trap, asked as a slice. Over joint sets of 2..4 locations,
     find impossible rows that need 3 or more constraint groups (refutations()). Fix the
@@ -485,7 +488,7 @@ def conditional(p, P, cands, rng, poss):
     joints = [list(s) for k in range(2, min(4, P["max_queries"] + 2) + 1) for s in itertools.combinations(cands, k)]
     rng.shuffle(joints)
     best = None
-    for Q in joints:
+    for Q in joints[:MAX_JOINTS]:
         T = solve(p, Q)[0]
         if len(T) > 200:
             continue
