@@ -108,7 +108,7 @@ listed, `∅` is no readable answer.
 | t2op9b3v6s4pnc5x5q4-01 | 5 | −0+3 | ✓ ✓ ✓ | ✓ ✓ ✓ | ✓ −1+0 ✓ |
 | t2op9b3v6s4pnc5x5q4-02 | 6 | −0+2 | ✓ −2+0 ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ |
 | t2op9b3v6s4pnc5x5q4-03 | 5 | −0+1 | ✓ ✓ ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ |
-| t2op9b3v6s4pnc5x5q4-04 | 6 | −0+2 | ✓ −0+2 ✓ | −2+0 ✓ −2+0 | −0+2 ✓ ✓ |
+| t2op9b3v6s4pnc5x5q4-04 | 6 | −0+2 −0+2 −2+0 | ✓ −0+2 ✓ −2+0 ✓ ✓ ✓ ✓ −0+2 | −2+0 ✓ −2+0 −0+2 ✓ −2+0 ✓ ✓ ✓ | −0+2 ✓ ✓ −3+0 ✓ ✓ −3+0 ✓ ✓ |
 | t2op9b3v6s4pnc5x5q4-05 | 5 | ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ |
 | t2op9b3v6s4pnc5x5q4-06 | 6 | ✓ | ✓ ✓ ✓ | −1+0 −0+2 ✓ | ✓ −1+0 ✓ |
 | t3op4b2v3s2g3c5-01 | 14 | ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ | ✓ ✓ −2+0 |
@@ -121,10 +121,10 @@ listed, `∅` is no readable answer.
 
 | model | no sync | with sync |
 |---|---|---|
-| fable | 72/85 | 12/20 |
-| opus | 236/255 | 47/60 |
-| sonnet | 223/255 | 45/60 |
-| haiku | 236/255 | 48/60 |
+| fable | 72/85 | 12/22 |
+| opus | 236/255 | 51/66 |
+| sonnet | 223/255 | 49/66 |
+| haiku | 236/255 | 52/66 |
 
 ## Effort low, wrong rows by trap kind
 
@@ -137,10 +137,10 @@ that only a stale copy produces, and how many of them the model missed.
 
 | model | wrong rows | interval | depth2 | depth1 | decoys | pruned | other | deep listed | stale missed |
 |---|---|---|---|---|---|---|---|---|---|
-| fable | 47 | 0 | 2 | 2 | 29 | 4 | 10 | 14 of 188 | 3 of 326 |
-| opus | 95 | 30 | 9 | 12 | 28 | 14 | 2 | 23 of 564 | 45 of 978 |
-| sonnet | 125 | 23 | 8 | 30 | 43 | 17 | 4 | 27 of 564 | 40 of 978 |
-| haiku | 89 | 10 | 11 | 22 | 31 | 10 | 5 | 18 of 564 | 34 of 978 |
+| fable | 51 | 0 | 4 | 2 | 31 | 4 | 10 | 16 of 192 | 3 of 334 |
+| opus | 99 | 30 | 11 | 12 | 30 | 14 | 2 | 25 of 576 | 45 of 1002 |
+| sonnet | 129 | 23 | 10 | 30 | 45 | 17 | 4 | 29 of 576 | 40 of 1002 |
+| haiku | 95 | 10 | 17 | 22 | 31 | 10 | 5 | 18 of 576 | 38 of 1002 |
 
 # Details
 
@@ -579,10 +579,10 @@ N=2 ops≤9 M=3 values=6 syncs=4 (8 events) p_obs=0.0 p_copy=0.5; 4 asked, 6 ans
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | -0 +2 | 1210 |
-| haiku | low | -0 +2, ✓, ✓ | 8561, 12010, 12052 |
-| opus | low | ✓, -0 +2, ✓ | 973, 917, 933 |
-| sonnet | low | -2 +0, ✓, -2 +0 | 1365, 1687, 1227 |
+| fable | low | -0 +2, -0 +2, -2 +0 | 1210, 1348, 1128 |
+| haiku | low | -0 +2, ✓, ✓, -3 +0, ✓, ✓, -3 +0, ✓, ✓ | 8561, 12010, 12052, 7179, 11019, 9859, 9052, 12422, 9863 |
+| opus | low | ✓, -0 +2, ✓, -2 +0, ✓, ✓, ✓, ✓, -0 +2 | 973, 917, 933, 580, 903, 1008, 960, 911, 834 |
+| sonnet | low | -2 +0, ✓, -2 +0, -0 +2, ✓, -2 +0, ✓, ✓, ✓ | 1365, 1687, 1227, 1549, 1772, 1286, 1735, 1815, 1891 |
 
 ## t2op9b3v6s4pnc5x5q4-05
 
