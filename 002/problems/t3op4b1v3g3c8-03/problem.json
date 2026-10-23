@@ -1,0 +1,119 @@
+{
+ "id": "t3op4b1v3g3c8-03",
+ "seed": 1183178639,
+ "params": {
+  "threads": 3,
+  "ops": 4,
+  "blocks": 1,
+  "values": 3,
+  "syncs": 0,
+  "relations": "pair,at",
+  "p_read": 0.5,
+  "p_obs": 0.3,
+  "p_copy": 0.8,
+  "min_given": 1,
+  "min_copies": 2,
+  "max_queries": 3,
+  "min_answers": 12,
+  "max_answers": 99
+ },
+ "blocks": 1,
+ "syncs": 0,
+ "threads": [
+  {
+   "name": "A",
+   "ops": [
+    {
+     "id": "A1",
+     "kind": "write",
+     "block": 0,
+     "data": 1
+    },
+    {
+     "id": "A2",
+     "kind": "write",
+     "block": 0,
+     "data": 3
+    },
+    {
+     "id": "A3",
+     "kind": "write",
+     "block": 0,
+     "data": 1
+    },
+    {
+     "id": "A4",
+     "kind": "write",
+     "block": 0,
+     "data": 2
+    }
+   ],
+   "events": []
+  },
+  {
+   "name": "B",
+   "ops": [
+    {
+     "id": "B1",
+     "kind": "read",
+     "block": 0,
+     "obs": 1
+    },
+    {
+     "id": "B2",
+     "kind": "read",
+     "block": 0,
+     "obs": null
+    },
+    {
+     "id": "B3",
+     "kind": "write",
+     "block": 0,
+     "data": "B2"
+    }
+   ],
+   "events": []
+  },
+  {
+   "name": "C",
+   "ops": [
+    {
+     "id": "C1",
+     "kind": "read",
+     "block": 0,
+     "obs": null
+    },
+    {
+     "id": "C2",
+     "kind": "write",
+     "block": 0,
+     "data": "C1"
+    },
+    {
+     "id": "C3",
+     "kind": "write",
+     "block": 0,
+     "data": "C1"
+    },
+    {
+     "id": "C4",
+     "kind": "read",
+     "block": 0,
+     "obs": null
+    }
+   ],
+   "events": []
+  }
+ ],
+ "queries": [
+  {
+   "read": "B2"
+  },
+  {
+   "read": "C1"
+  },
+  {
+   "final": 0
+  }
+ ]
+}

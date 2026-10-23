@@ -1,0 +1,23 @@
+Blocks: x, y.
+Thread A:
+  A1: read x
+  A2: read x
+  A3: write the value read by A1 to y
+  A4: write 3 to y
+  A5: write 2 to x
+Thread B:
+  B1: write 3 to y
+  B2: write 1 to x
+  B3: write 1 to y
+  B4: read y
+  B5: write the value read by B4 to y
+Thread C:
+  C1: write 2 to x
+  C2: write 2 to y
+  C3: write 1 to y
+  C4: read y
+  C5: write the value read by C4 to y
+Asked:
+  Q1: the value returned by A1
+  Q2: the value returned by B4
+  Q3: the value returned by C4

@@ -1,0 +1,14 @@
+{
+ "problem": "t3op5b2v3s3g3c5-01",
+ "model": "sonnet",
+ "model_id": "claude-sonnet-5-5",
+ "effort": "low",
+ "trial": 3,
+ "prompt": "v1",
+ "harness": "e982ea9-dirty",
+ "started": "2026-10-23T01:46:17+00:00",
+ "seconds": 15.6,
+ "cost_usd": 0.019404000000000005,
+ "output_tokens": 1793,
+ "thinking_tokens": 1244
+}

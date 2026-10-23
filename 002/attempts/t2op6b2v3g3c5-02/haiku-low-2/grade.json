@@ -1,0 +1,24 @@
+{
+ "parsed": true,
+ "exact": false,
+ "truth": 14,
+ "answered": 13,
+ "missing": 1,
+ "extra": 0,
+ "jaccard": 0.929,
+ "missing_rows": [
+  [
+   2,
+   2,
+   2
+  ]
+ ],
+ "extra_rows": [],
+ "bad_lines": [],
+ "trap_wrong": {
+  "interval": 0,
+  "depth2": 0,
+  "depth1": 1,
+  "decoys": 0
+ }
+}

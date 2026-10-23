@@ -1,0 +1,37 @@
+Blocks: x, y.
+Sync points: P, Q, R.
+Thread A:
+  A1: read x
+  A2 starts: read y, returned 3
+  -- at P
+  A2 ends
+  -- before Q
+  A3: write the value read by A1 to x
+  A4: write 3 to y
+  -- after R
+  A5: write the value read by A1 to y
+  A6: write the value read by A1 to x
+Thread B:
+  B1: write 3 to y
+  B2: write 1 to x
+  B3: read x
+  B4: write the value read by B3 to x
+  B5: write 2 to y
+  B6: read y
+  B7: read y
+  -- at P
+Thread C:
+  C1: read x
+  C2: write the value read by C1 to y
+  C3: write 3 to y
+  C4: read y, returned 3
+  C5 starts: write 3 to y
+  -- after Q
+  C5 ends
+  C6: write the value read by C1 to y
+  -- before R
+  C7: read y, returned 0
+Asked:
+  Q1: the value returned by B6
+  Q2: the value returned by B7
+  Q3: the final value of y

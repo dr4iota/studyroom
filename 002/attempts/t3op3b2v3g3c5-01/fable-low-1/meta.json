@@ -1,0 +1,14 @@
+{
+ "problem": "t3op3b2v3g3c5-01",
+ "model": "fable",
+ "model_id": "claude-fable-5-1",
+ "effort": "low",
+ "trial": 1,
+ "prompt": "v1",
+ "harness": "e982ea9-dirty",
+ "started": "2026-10-23T01:40:52+00:00",
+ "seconds": 10.7,
+ "cost_usd": 0.06648000000000001,
+ "output_tokens": 844,
+ "thinking_tokens": 709
+}

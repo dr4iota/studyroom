@@ -1,0 +1,54 @@
+Threads read and write shared storage blocks at the same time. Find every outcome that is possible.
+
+Rules:
+1. Each block holds one integer. Every block holds 0 at the start.
+2. Each thread runs its operations one at a time, in the order listed. An operation has a start and an end, and takes effect at a single instant between them. Operations of different threads may overlap in any way the rules allow.
+3. No two operations take effect at the same instant. A read returns the value of the last write to that block that took effect before it, or 0 if there is none.
+4. "write the value read by A2 to y" writes whatever read A2 returned.
+5. "read y, returned 2" means that read is known to have returned 2. Only executions that agree with every known result count.
+6. Sync points P, Q, ... are instants. "-- before P" means the thread's steps (starts and ends) above that line happen before P; "-- after P" means its steps below the line happen after P; "-- at P" means both.
+7. "A2 starts: ..." and "A2 ends" mark the start and the end of an operation that has a sync line in between.
+
+Give every possible combination of the asked values. End your reply with the combinations between the lines BEGIN and END, one per line, values in the order asked, separated by spaces.
+
+Example:
+Blocks: x.
+Thread A:
+  A1: write 1 to x
+  A2: read x
+Thread B:
+  B1: write 2 to x
+Asked:
+  Q1: the value returned by A2
+  Q2: the final value of x
+Answer:
+BEGIN
+1 1
+1 2
+2 2
+END
+
+Problem:
+Blocks: x, y.
+Sync points: P, Q.
+Thread A:
+  A1: read y
+  A2: write the value read by A1 to y
+  A3: write the value read by A1 to x
+  A4: write 2 to y
+  -- after Q
+  A5: read x
+  -- at P
+Thread B:
+  B1: write 1 to y
+  B2: write 3 to y
+  B3: read y
+  B4: write the value read by B3 to y
+  -- before Q
+  B5 starts: write 1 to y
+  -- at P
+  B5 ends
+Asked:
+  Q1: the value returned by A1
+  Q2: the value returned by B3
+  Q3: the final value of y

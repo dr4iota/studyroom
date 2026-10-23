@@ -1,0 +1,14 @@
+{
+ "problem": "t4op4b2v3s3g3c5-01",
+ "model": "opus",
+ "model_id": "claude-opus-5-5",
+ "effort": "low",
+ "trial": 1,
+ "prompt": "v1",
+ "harness": "e982ea9-dirty",
+ "started": "2026-10-23T01:48:12+00:00",
+ "seconds": 17.4,
+ "cost_usd": 0.044500000000000005,
+ "output_tokens": 1673,
+ "thinking_tokens": 994
+}

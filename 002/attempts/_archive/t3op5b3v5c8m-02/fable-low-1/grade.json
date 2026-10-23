@@ -1,0 +1,43 @@
+{
+ "parsed": true,
+ "exact": false,
+ "truth": 13,
+ "answered": 19,
+ "missing": 0,
+ "extra": 6,
+ "jaccard": 0.684,
+ "missing_rows": [],
+ "extra_rows": [
+  [
+   0,
+   0,
+   0
+  ],
+  [
+   0,
+   0,
+   4
+  ],
+  [
+   1,
+   0,
+   1
+  ],
+  [
+   1,
+   0,
+   4
+  ],
+  [
+   2,
+   0,
+   2
+  ],
+  [
+   2,
+   0,
+   4
+  ]
+ ],
+ "bad_lines": []
+}
