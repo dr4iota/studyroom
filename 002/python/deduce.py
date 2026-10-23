@@ -58,10 +58,14 @@ DEFAULTS = {
     "min_pruned": 0,     # the asked locations rule out at least this many plausible rows
                          # (decoys + pruned, see traps())
     "min_deep": 0,       # ... of which at least this many need 3 or more constraint groups
+    "min_without_syncs": 0,  # only ask locations with at least this many combinations
+                             # once the sync points are removed
+    "inseparable": 0,    # 1: only ask locations whose answer is not a product of smaller sets
     "adversarial": 0,    # 1: ask the locations whose answer holds the most traps (see traps());
                          # 2: the same for small answers, scored by score_few;
                          # 3: scored by score_deep (refutation depth, see refutations());
-                         # 4: conditional, see conditional()
+                         # 4: conditional, see conditional();
+                         # 5: scored by score_stale (stale copies, see traps())
     "mixed": 0,          # 1: keep only seeds where threads mix reads and writes, most start
                          #    with a write, and every block is written and used by two threads
     "max_queries": 3,    # asked locations: 1..max_queries
@@ -323,6 +327,56 @@ def outside_syncs(p):
     return q if topo_order(build_graph(q, effects=False)[0]) is not None else None
 
 
+def stale_rows(p, queries):
+    """The true rows that only a stale copy can produce: in every execution giving the row,
+    some asked value was written by a stale copy, or copied from such a value. A copy is
+    stale if it takes effect after the block its read came from was overwritten, so it
+    writes out an outdated value. Same walk as ``solve``, with values tagged stale or not."""
+    ops = flat_ops(p)
+    n = len(ops)
+    before = action_order(p)
+    pos = {op["id"]: i for i, op in enumerate(ops)}
+    asked = {pos[q["read"]] for q in queries if "read" in q}
+    users = [0] * n
+    for j, op in enumerate(ops):
+        if op["kind"] == "write" and isinstance(op["data"], str):
+            users[pos[op["data"]]] |= 1 << j
+    layer = {(0, ((INIT, False),) * p["blocks"], (None,) * n)}
+    for _ in range(n):
+        nxt = set()
+        for mask, c, v in layer:
+            for j in range(n):
+                if mask >> j & 1 or before[j] & ~mask:
+                    continue
+                op, b = ops[j], ops[j]["block"]
+                if op["kind"] == "read":
+                    if op["obs"] is not None and op["obs"] != c[b][0]:
+                        continue
+                    v2, c2 = v[:j] + (c[b],) + v[j + 1:], c
+                else:
+                    d = op["data"]
+                    if isinstance(d, str):
+                        val, tag = v[pos[d]]
+                        x = (val, tag or c[ops[pos[d]]["block"]][0] != val)
+                    else:
+                        x = (d, False)
+                    v2, c2 = v, c[:b] + (x,) + c[b + 1:]
+                m = mask | 1 << j
+                v2 = tuple(x if i in asked or users[i] & ~m else None for i, x in enumerate(v2))
+                nxt.add((m, c2, v2))
+        layer = nxt
+    fresh, seen = set(), set()
+    for _, c, v in layer:
+        if not final_ok(p, tuple(x[0] for x in c)):
+            continue
+        items = [v[pos[q["read"]]] if "read" in q else c[q["final"]] for q in queries]
+        key = tuple(x[0] for x in items)
+        seen.add(key)
+        if not any(x[1] for x in items):
+            fresh.add(key)
+    return seen - fresh
+
+
 def solve_relaxed(p, queries, drop_obs=False, free=None, decouple=None):
     """``solve`` with one group of constraints removed, to see what that group rules out.
     ``drop_obs`` ignores the given results, final values included. ``free`` (a thread index) lets that thread's
@@ -423,6 +477,27 @@ def flow_candidates(p, queries):
             for q in queries]
 
 
+def separable(answers, k):
+    """Whether the answer set is the product of its projections onto two disjoint groups of
+    the k asked locations, i.e. the locations could be asked about separately."""
+    for r in range(1, k // 2 + 1):
+        for S in itertools.combinations(range(k), r):
+            rest = [i for i in range(k) if i not in S]
+            a = {tuple(t[i] for i in S) for t in answers}
+            b = {tuple(t[i] for i in rest) for t in answers}
+            if len(a) * len(b) == len(answers):
+                return True
+    return False
+
+
+def without_syncs(p, queries):
+    """The answer with every sync line removed."""
+    free = json.loads(json.dumps(p))
+    for th in free["threads"]:
+        th["events"] = []
+    return solve(free, queries)[0]
+
+
 def needs_sync(p, groups):
     """With sync points, only rows that a sync point helps rule out count as traps."""
     return not p["syncs"] or any(g.startswith("sync:") for g in groups)
@@ -439,6 +514,10 @@ def traps(p, queries, answers=None, poss=None):
     ``score`` weighs the first four by how often models got such rows wrong in the first
     610 runs (about 35%, 4.7%, 2.3% and 1.2% of row-runs, against 0.3% for other rows).
     ``score_few`` is for small answers: plausible rows that are ruled out count most.
+    ``stale`` lists the true rows that only a stale value reaching an asked location
+    produces (stale_rows()); in the first 960 runs models missed such rows in 3.94% of
+    row-runs, against 0.82% for other true rows. ``score_stale`` adds 16 per such row
+    (4x the rate) to ``score_deep``.
     ``refutation`` gives, for each decoy and pruned row, the constraint groups it needs
     (refutations()). ``score_deep`` weighs ruled-out rows by how many groups they need and
     true rows by copy depth (with sync points, only rows a sync point helps rule out count),
@@ -468,6 +547,9 @@ def traps(p, queries, answers=None, poss=None):
     scored = [g for g in ref.values() if needs_sync(p, g)]
     by = [sum(1 for g in scored if min(len(g), 3) == d) for d in (1, 2, 3)]
     out["score_deep"] = 16 * by[2] + 3 * by[1] + 2 * by[0] + 19 * len(kinds["depth2"]) + 3 * len(kinds["depth1"])
+    stale = stale_rows(p, queries) if any(isinstance(o.get("data"), str) for o in flat_ops(p)) else set()
+    out["stale"] = sorted(stale)
+    out["score_stale"] = 16 * len(stale) + out["score_deep"]
     return out
 
 
@@ -614,7 +696,7 @@ def generate(params, seed):
     subsets = [list(s) for k in range(1, P["max_queries"] + 1)
                for s in itertools.combinations(cands, k)]
     rng.shuffle(subsets)
-    poss = copy_sources(p) if P["adversarial"] >= 3 else None
+    poss = copy_sources(p) if P["adversarial"] >= 3 else None  # only modes 3+ need it
     if P["adversarial"] == 4:
         return conditional(p, P, cands, rng, poss)
     best = None
@@ -622,10 +704,14 @@ def generate(params, seed):
         ans = solve(p, qs)[0]
         if not P["min_answers"] <= len(ans) <= P["max_answers"]:
             continue
+        if P["inseparable"] and separable(ans, len(qs)):
+            continue
+        if P["min_without_syncs"] and len(without_syncs(p, qs)) < P["min_without_syncs"]:
+            continue
         if not P["adversarial"]:
             p["queries"] = qs
             return p
-        key = {1: "score", 2: "score_few", 3: "score_deep"}[P["adversarial"]]
+        key = {1: "score", 2: "score_few", 3: "score_deep", 5: "score_stale"}[P["adversarial"]]
         score = traps(p, qs, ans, poss)[key]
         if score and (best is None or score > best[0]):
             best = (score, qs)
@@ -738,6 +824,10 @@ def trap_hits(truth, t, rows):
     wrong = t ^ rows
     tr = truth["traps"]
     out = {"trap_wrong": {k: len({tuple(r) for r in tr[k]} & wrong) for k in TRAP_KINDS if k in tr}}
+    if "stale" in tr:
+        st = {tuple(r) for r in tr["stale"]}
+        out["stale_rows"] = len(st)
+        out["stale_missed"] = len(st - rows)
     if "refutation" in tr:
         deep = {tuple(r) for r, g in tr["refutation"] if len(g) >= 3}
         out["deep_refutations"] = len(deep)
@@ -763,7 +853,7 @@ def git_commit():
 
 
 def param_prefix(P):
-    """t<N>op<ops>b<M>v<V>[s<K>[p|a][n]][g<p_obs>][c<p_copy>][r<p_read>][x|x2|x3][q<max_queries>],
+    """t<N>op<ops>b<M>v<V>[s<K>[p|a][n]][g<p_obs>][c<p_copy>][r<p_read>][x|x2..x5][q<max_queries>],
     the probabilities
     in tenths; zero or default fields are left out. A problem is named <prefix>-<case>,
     with case 01, 02, ... per prefix; its seed is in problem.json. Selection rules
@@ -783,7 +873,7 @@ def param_prefix(P):
     if P["p_read"] != DEFAULTS["p_read"]:
         s += f"r{round(P['p_read'] * 10)}"
     if P["adversarial"]:
-        s += "x" if P["adversarial"] == 1 else f"x{P['adversarial']}"  # x, x2, x3
+        s += "x" if P["adversarial"] == 1 else f"x{P['adversarial']}"  # x, x2, ..., x5
     if P["max_queries"] != DEFAULTS["max_queries"]:
         s += f"q{P['max_queries']}"
     return s
@@ -838,10 +928,7 @@ def cmd_gen(a):
         "traps": traps(p, q, ans),
     }
     if p["syncs"]:
-        free = json.loads(json.dumps(p))
-        for th in free["threads"]:
-            th["events"] = []
-        truth["without_syncs"] = len(solve(free, q)[0])
+        truth["without_syncs"] = len(without_syncs(p, q))
     d = PROBLEMS / pid
     d.mkdir(parents=True)
     dump(d / "problem.json", p)
@@ -911,12 +998,12 @@ def cmd_run(a):
 
 
 def cmd_regrade(a):
-    """Add trap data to every truth.json that lacks it (or lacks refutation depths), and
-    regrade every stored reply."""
+    """Add trap data to every truth.json that lacks it (all of them with --traps, after the
+    trap analysis changes), and regrade every stored reply."""
     n = 0
     for pd in sorted(d for d in PROBLEMS.iterdir() if not d.name.startswith("_")):
         p, truth = load(pd.name)
-        if "refutation" not in truth.get("traps", {}):
+        if a.traps or "stale" not in truth.get("traps", {}):
             truth["traps"] = traps(p, p["queries"], {tuple(r) for r in truth["answers"]})
             dump(pd / "truth.json", truth)
         for d in sorted((ATTEMPTS / pd.name).glob("*/reply.md")) if (ATTEMPTS / pd.name).exists() else []:
@@ -969,11 +1056,12 @@ def cmd_report(a):
                 "Rows a model got wrong (missed or impossible), and how many fall on each trap",
                 "kind (premise.md §2).", "",
                 "The last column counts impossible rows that need 3 or more constraint groups to",
-                "rule out (deep refutations), and how many of them the model listed.", "",
-                "| model | wrong rows | " + " | ".join(kinds) + " | other | deep listed |",
-                "|---|---|" + "---|" * (len(kinds) + 2)]
+                "rule out (deep refutations), and how many of them the model listed; then true rows",
+                "that only a stale copy produces, and how many of them the model missed.", "",
+                "| model | wrong rows | " + " | ".join(kinds) + " | other | deep listed | stale missed |",
+                "|---|---|" + "---|" * (len(kinds) + 3)]
         for model in models:
-            w, k, dl, dn = 0, dict.fromkeys(kinds, 0), 0, 0
+            w, k, dl, dn, sm, sn = 0, dict.fromkeys(kinds, 0), 0, 0, 0, 0
             for f in ATTEMPTS.glob(f"*/{model}-{effort}-*/grade.json"):
                 g = json.loads(f.read_text())
                 if not g["parsed"] or "trap_wrong" not in g:
@@ -982,9 +1070,11 @@ def cmd_report(a):
                 for x in kinds:
                     k[x] += g["trap_wrong"].get(x, 0)
                 dl += g.get("deep_listed", 0)
+                sm += g.get("stale_missed", 0)
+                sn += g.get("stale_rows", 0)
                 dn += g.get("deep_refutations", 0)
             out.append(f"| {model} | {w} | " + " | ".join(str(k[x]) for x in kinds)
-                       + f" | {w - sum(k.values())} | {dl} of {dn} |")
+                       + f" | {w - sum(k.values())} | {dl} of {dn} | {sm} of {sn} |")
         out.append("")
     out += ["# Details", ""]
     for pd in problems:
@@ -997,6 +1087,7 @@ def cmd_report(a):
                 f"{len(p['queries'])} asked, {truth['size']} answers, brute agrees: {truth['agree']}"
                 + "".join(f"; selected: {k}={P[k]}" for k in ("min_given", "min_copies", "min_pruned", "min_deep", "mixed")
                           if P.get(k, 0) > 0 and (k != "min_given" or P["p_obs"]))
+                + "".join(f"; {k}={P[k]}" for k in ("min_without_syncs", "inseparable") if P.get(k, 0))
                 + (f"; answers {P['min_answers']}..{P['max_answers']}"
                    if (P["min_answers"], P["max_answers"]) != (DEFAULTS["min_answers"], DEFAULTS["max_answers"])
                    else ""), ""]
@@ -1040,7 +1131,8 @@ def main(argv=None):
     r.add_argument("--effort", default="low")
     r.add_argument("--plan", default="fable:1,opus:3,sonnet:3,haiku:3")
     r.add_argument("--parallel", type=int, default=2)
-    sub.add_parser("regrade", help="add trap data to old problems and regrade all replies")
+    rg = sub.add_parser("regrade", help="add trap data to old problems and regrade all replies")
+    rg.add_argument("--traps", action="store_true", help="recompute every problem's trap data")
     sub.add_parser("report", help="write REPORT.md")
     a = ap.parse_args(argv)
     {"gen": cmd_gen, "show": cmd_show, "ask": cmd_ask, "run": cmd_run, "regrade": cmd_regrade, "report": cmd_report}[a.cmd](a)

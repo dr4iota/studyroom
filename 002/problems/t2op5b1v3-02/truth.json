@@ -904,6 +904,8 @@
     ]
    ]
   ],
-  "score_deep": 101
+  "score_deep": 101,
+  "stale": [],
+  "score_stale": 101
  }
 }

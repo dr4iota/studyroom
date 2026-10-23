@@ -22,6 +22,8 @@
   "decoys": 0,
   "pruned": 1
  },
+ "stale_rows": 10,
+ "stale_missed": 0,
  "deep_refutations": 3,
  "deep_listed": 0
 }

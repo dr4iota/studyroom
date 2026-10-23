@@ -652,6 +652,8 @@
     []
    ]
   ],
-  "score_deep": 45
+  "score_deep": 45,
+  "stale": [],
+  "score_stale": 45
  }
 }

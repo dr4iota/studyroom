@@ -875,7 +875,25 @@
     ]
    ]
   ],
-  "score_deep": 105
+  "score_deep": 105,
+  "stale": [
+   [
+    0,
+    6,
+    0
+   ],
+   [
+    0,
+    6,
+    5
+   ],
+   [
+    6,
+    6,
+    0
+   ]
+  ],
+  "score_stale": 153
  },
  "without_syncs": 21
 }

@@ -97,9 +97,11 @@ but program order and the given results leave only 2 and 5.
 | `p_copy` | chance that a write copies an earlier unobserved read (if one exists) | 0 |
 | `min_given` | with `p_obs > 0`, the least number of given results | 1 |
 | `min_copies` | the least number of writes that copy a read | 0 |
-| `adversarial` | 1: ask the locations with the most traps (§2); 2: the same for few answers, with `score_few`; 3: with `score_deep` (refutation depth) | 0 |
+| `adversarial` | 1: ask the locations with the most traps (§2); 2: the same for few answers, with `score_few`; 3: with `score_deep` (refutation depth); 4: conditional; 5: with `score_stale` | 0 |
 | `min_pruned` | the asked locations rule out at least this many plausible rows (§2) | 0 |
 | `min_deep` | ... of which at least this many need 3 or more constraint groups (§3) | 0 |
+| `inseparable` | 1: only ask locations whose answer is not a product of smaller sets | 0 |
+| `min_without_syncs` | only ask locations with at least this many combinations once the sync points are removed | 0 |
 | `mixed` | 1: every thread both reads and writes, at least half the threads start with a write, every block is written at least once and used by at least two threads, and no sync line is vacuous (`before` above a thread's first step, `after` below its last) | 0 |
 | `max_queries` | asked locations, 1..this | 3 |
 | `min_answers`, `max_answers` | accepted answer-set size | 12, 99 |
@@ -139,9 +141,28 @@ rates. With `min_deep`, a seed is rejected unless the chosen locations have at l
 many rows needing 3 or more groups. `truth.json` records each ruled-out row's groups
 (`refutation`), and the grade counts the deep ones a model listed (`deep_listed`).
 
+**Stale copies** (`adversarial: 5`, suffix `x5`). A copy is *stale* if it takes effect
+after the block its read came from was overwritten, so it writes out an outdated value
+(often an early 0). A true row is *stale-only* if, in every execution that gives it, some
+asked value was written by a stale copy or copied from such a value. In the first 960
+runs, models missed stale-only rows in 3.94% of row-runs and other true rows in 0.82%;
+stale-only rows were 72% of all missed rows. `truth.json` lists them under `stale`, and
+the grade counts the missed ones (`stale_missed`).
+`score_stale = 16·stale + score_deep`.
+
+Two more conditions on the asked locations, recorded in `problem.json`:
+- `inseparable`: the answer must not be the product of its projections onto two groups
+  of asked locations; otherwise those groups could be asked separately. This also rules
+  out an asked location with a single value.
+- `min_without_syncs`: with the sync points removed, the answer has at least this many
+  combinations, so the sync points do real pruning.
+
+After a change to the trap analysis, `python3 deduce.py regrade --traps` recomputes every
+problem's trap data and regrades every reply.
+
 **Names.** A problem is named `<parameters>-<case>`. The parameter part is
 `t<threads>op<ops>b<blocks>v<values>`, followed by `s<syncs>`, `g<p_obs>`, `c<p_copy>`,
-`r<p_read>`, `x`, `x2` or `x3` (adversarial) and `q<max_queries>` when they are nonzero or
+`r<p_read>`, `x`, `x2`, …, `x5` (adversarial) and `q<max_queries>` when they are nonzero or
 not the default. The answer-size bounds also change which locations are asked, but only
 `problem.json` and the report's details record them. Probabilities are in tenths. `s` takes
 a suffix `p` (pairs only) or `a` (barriers only) when `relations` is restricted, then `n`

@@ -204,6 +204,8 @@
     ]
    ]
   ],
-  "score_deep": 8
+  "score_deep": 8,
+  "stale": [],
+  "score_stale": 8
  }
 }

@@ -915,7 +915,9 @@
     []
    ]
   ],
-  "score_deep": 90
+  "score_deep": 90,
+  "stale": [],
+  "score_stale": 90
  },
  "without_syncs": 13
 }

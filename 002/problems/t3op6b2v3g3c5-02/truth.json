@@ -223,6 +223,8 @@
     ]
    ]
   ],
-  "score_deep": 20
+  "score_deep": 20,
+  "stale": [],
+  "score_stale": 20
  }
 }

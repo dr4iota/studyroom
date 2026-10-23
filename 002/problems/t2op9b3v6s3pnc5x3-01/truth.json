@@ -1038,7 +1038,15 @@
     ]
    ]
   ],
-  "score_deep": 47
+  "score_deep": 47,
+  "stale": [
+   [
+    5,
+    4,
+    6
+   ]
+  ],
+  "score_stale": 63
  },
  "without_syncs": 8
 }

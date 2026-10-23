@@ -67,6 +67,12 @@
     ]
    ]
   ],
-  "score_deep": 35
+  "score_deep": 35,
+  "stale": [
+   [
+    5
+   ]
+  ],
+  "score_stale": 51
  }
 }

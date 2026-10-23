@@ -210,6 +210,8 @@
     ]
    ]
   ],
-  "score_deep": 75
+  "score_deep": 75,
+  "stale": [],
+  "score_stale": 75
  }
 }

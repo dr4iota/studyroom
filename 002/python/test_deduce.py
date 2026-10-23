@@ -148,6 +148,40 @@ class Conditional(unittest.TestCase):
             self.assertEqual(p["prompt"], "v2")
 
 
+class StaleAndSeparable(unittest.TestCase):
+    def test_stale_copy(self):
+        # A1 reads x early (0); B1 then writes 5; A2 copies A1's 0 into y after that: stale.
+        p = problem({"A": ([("r", 0, None), ("w", 1, "A1")], []), "B": ([("w", 0, 5)], [])},
+                    blocks=2, queries=[{"final": 1}])
+        self.assertEqual(D.solve(p, p["queries"])[0], {(0,), (5,)})
+        # Without stale copies, a read of 0 must be copied before B1 writes 5... which is
+        # still possible (A1, A2, B1), so 0 is not stale-only; 5 needs no stale copy either.
+        self.assertEqual(D.traps(p, p["queries"])["stale"], [])
+        q = problem({"A": ([("r", 0, None), ("w", 1, "A1")], []), "B": ([("w", 0, 5), ("w", 1, 3)], [])},
+                    blocks=2, queries=[{"read": "A1"}, {"final": 1}])
+        # y ends as 0 only if A2 comes after B2, hence after B1; with A1 = 0, A1 came before
+        # B1, so A2 copies a 0 that x no longer holds: (0, 0) needs a stale copy.
+        self.assertEqual(D.solve(q, q["queries"])[0], {(0, 0), (0, 3), (5, 3), (5, 5)})
+        self.assertEqual(D.traps(q, q["queries"])["stale"], [(0, 0)])
+
+    def test_stale_rows_are_true_rows(self):
+        rng = random.Random(4)
+        for seed in range(100):
+            params = {"threads": 2, "ops": rng.randint(3, 5), "blocks": 2, "p_copy": 0.8,
+                      "min_answers": 1, "max_answers": 10**6}
+            p = D.generate(params, seed)
+            if p is None:
+                continue
+            self.assertTrue(D.stale_rows(p, p["queries"]) <= D.solve(p, p["queries"])[0])
+
+    def test_separable(self):
+        self.assertTrue(D.separable({(5, 4), (5, 6)}, 2))
+        self.assertTrue(D.separable({(1, 4), (1, 6), (2, 4), (2, 6)}, 2))
+        self.assertFalse(D.separable({(1, 4), (2, 6)}, 2))
+        self.assertTrue(D.separable({(1, 4, 0), (2, 6, 0)}, 3))
+        self.assertFalse(D.separable({(1, 4, 0), (2, 6, 0), (1, 6, 1)}, 3))
+
+
 class SolverVsBrute(unittest.TestCase):
     def test_random(self):
         rng = random.Random(7)

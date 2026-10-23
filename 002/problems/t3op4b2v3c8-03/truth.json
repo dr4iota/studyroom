@@ -198,6 +198,29 @@
   "score": 11,
   "score_few": 11,
   "refutation": [],
-  "score_deep": 33
+  "score_deep": 33,
+  "stale": [
+   [
+    0,
+    0,
+    3
+   ],
+   [
+    0,
+    3,
+    0
+   ],
+   [
+    0,
+    3,
+    1
+   ],
+   [
+    0,
+    3,
+    3
+   ]
+  ],
+  "score_stale": 97
  }
 }

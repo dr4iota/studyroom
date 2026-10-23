@@ -105,6 +105,12 @@ listed, `∅` is no readable answer.
 | t2op9b3v6s4pnc5x3-01 | 5 | ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ | −3+0 −3+0 −3+0 |
 | t2op9b3v6s4pnc5x3-02 | 4 | ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ |
 | t2op9b3v6s4pnc5x3-03 | 3 | ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ |
+| t2op9b3v6s4pnc5x5q4-01 | 5 |  |  |  |  |
+| t2op9b3v6s4pnc5x5q4-02 | 6 |  |  |  |  |
+| t2op9b3v6s4pnc5x5q4-03 | 5 |  |  |  |  |
+| t2op9b3v6s4pnc5x5q4-04 | 6 |  |  |  |  |
+| t2op9b3v6s4pnc5x5q4-05 | 5 |  |  |  |  |
+| t2op9b3v6s4pnc5x5q4-06 | 6 |  |  |  |  |
 | t3op4b2v3s2g3c5-01 | 14 | ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ | ✓ ✓ −2+0 |
 | t3op5b2v3s3g3c5-01 | 13 | −1+0 | ✓ −1+0 −1+0 | ✓ ✓ −1+0 | ✓ −1+0 ✓ |
 | t3op7b2v3s3g3c5-01 | 15 | ✓ | ✓ ✓ ✓ | −3+0 −0+9 −3+0 | ✓ ✓ ✓ |
@@ -126,14 +132,15 @@ Rows a model got wrong (missed or impossible), and how many fall on each trap
 kind (premise.md §2).
 
 The last column counts impossible rows that need 3 or more constraint groups to
-rule out (deep refutations), and how many of them the model listed.
+rule out (deep refutations), and how many of them the model listed; then true rows
+that only a stale copy produces, and how many of them the model missed.
 
-| model | wrong rows | interval | depth2 | depth1 | decoys | pruned | other | deep listed |
-|---|---|---|---|---|---|---|---|---|
-| fable | 39 | 0 | 2 | 2 | 21 | 4 | 10 | 9 of 161 |
-| opus | 91 | 30 | 9 | 10 | 26 | 14 | 2 | 21 of 483 |
-| sonnet | 118 | 23 | 4 | 29 | 41 | 17 | 4 | 25 of 483 |
-| haiku | 85 | 10 | 11 | 20 | 29 | 10 | 5 | 16 of 483 |
+| model | wrong rows | interval | depth2 | depth1 | decoys | pruned | other | deep listed | stale missed |
+|---|---|---|---|---|---|---|---|---|---|
+| fable | 39 | 0 | 2 | 2 | 21 | 4 | 10 | 9 of 169 | 3 of 302 |
+| opus | 91 | 30 | 9 | 10 | 26 | 14 | 2 | 21 of 507 | 43 of 906 |
+| sonnet | 118 | 23 | 4 | 29 | 41 | 17 | 4 | 25 of 507 | 40 of 906 |
+| haiku | 85 | 10 | 11 | 20 | 29 | 10 | 5 | 16 of 507 | 33 of 906 |
 
 # Details
 
@@ -532,6 +539,30 @@ N=2 ops≤9 M=3 values=6 syncs=4 (8 events) p_obs=0.0 p_copy=0.5; 3 asked, 3 ans
 | haiku | low | ✓, ✓, ✓ | 4318, 5348, 5417 |
 | opus | low | ✓, ✓, ✓ | 486, 605, 431 |
 | sonnet | low | ✓, ✓, ✓ | 1109, 1130, 1008 |
+
+## t2op9b3v6s4pnc5x5q4-01
+
+N=2 ops≤9 M=3 values=6 syncs=4 (8 events) p_obs=0.0 p_copy=0.5; 4 asked, 5 answers, brute agrees: True; selected: min_copies=3; selected: mixed=1; min_without_syncs=24; inseparable=1; answers 3..6
+
+## t2op9b3v6s4pnc5x5q4-02
+
+N=2 ops≤9 M=3 values=6 syncs=4 (8 events) p_obs=0.0 p_copy=0.5; 4 asked, 6 answers, brute agrees: True; selected: min_copies=3; selected: mixed=1; min_without_syncs=24; inseparable=1; answers 3..6
+
+## t2op9b3v6s4pnc5x5q4-03
+
+N=2 ops≤9 M=3 values=6 syncs=4 (8 events) p_obs=0.0 p_copy=0.5; 4 asked, 5 answers, brute agrees: True; selected: min_copies=3; selected: mixed=1; min_without_syncs=24; inseparable=1; answers 3..6
+
+## t2op9b3v6s4pnc5x5q4-04
+
+N=2 ops≤9 M=3 values=6 syncs=4 (8 events) p_obs=0.0 p_copy=0.5; 4 asked, 6 answers, brute agrees: True; selected: min_copies=3; selected: mixed=1; min_without_syncs=24; inseparable=1; answers 3..6
+
+## t2op9b3v6s4pnc5x5q4-05
+
+N=2 ops≤9 M=3 values=6 syncs=4 (8 events) p_obs=0.0 p_copy=0.5; 4 asked, 5 answers, brute agrees: True; selected: min_copies=3; selected: mixed=1; min_without_syncs=24; inseparable=1; answers 3..6
+
+## t2op9b3v6s4pnc5x5q4-06
+
+N=2 ops≤9 M=3 values=6 syncs=4 (8 events) p_obs=0.0 p_copy=0.5; 4 asked, 6 answers, brute agrees: True; selected: min_copies=3; selected: mixed=1; min_without_syncs=24; inseparable=1; answers 3..6
 
 ## t3op3b2v3g3c5-01
 

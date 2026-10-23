@@ -73,6 +73,8 @@
     ]
    ]
   ],
-  "score_deep": 9
+  "score_deep": 9,
+  "stale": [],
+  "score_stale": 9
  }
 }

@@ -466,6 +466,17 @@
     ]
    ]
   ],
-  "score_deep": 87
+  "score_deep": 87,
+  "stale": [
+   [
+    3,
+    2
+   ],
+   [
+    3,
+    3
+   ]
+  ],
+  "score_stale": 119
  }
 }

@@ -447,6 +447,8 @@
     ]
    ]
   ],
-  "score_deep": 42
+  "score_deep": 42,
+  "stale": [],
+  "score_stale": 42
  }
 }

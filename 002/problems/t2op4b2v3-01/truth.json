@@ -898,6 +898,8 @@
     ]
    ]
   ],
-  "score_deep": 102
+  "score_deep": 102,
+  "stale": [],
+  "score_stale": 102
  }
 }

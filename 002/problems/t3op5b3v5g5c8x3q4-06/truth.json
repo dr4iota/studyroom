@@ -190,6 +190,14 @@
     ]
    ]
   ],
-  "score_deep": 57
+  "score_deep": 57,
+  "stale": [
+   [
+    0,
+    0,
+    5
+   ]
+  ],
+  "score_stale": 73
  }
 }

@@ -44,6 +44,8 @@
     ]
    ]
   ],
-  "score_deep": 16
+  "score_deep": 16,
+  "stale": [],
+  "score_stale": 16
  }
 }

@@ -1388,6 +1388,8 @@
     []
    ]
   ],
-  "score_deep": 99
+  "score_deep": 99,
+  "stale": [],
+  "score_stale": 99
  }
 }
