@@ -126,6 +126,250 @@ listed, `∅` is no readable answer.
 | sonnet | 223/255 | 49/66 |
 | haiku | 236/255 | 52/66 |
 
+## Effort medium, no sync
+
+| problem | answers | fable | opus | sonnet | haiku |
+|---|---|---|---|---|---|
+| t2op3b1v3-01 | 12 |  |  |  |  |
+| t2op4b2v3-01 | 20 |  |  |  |  |
+| t2op4b2v3g4-01 | 16 |  |  |  |  |
+| t2op4b2v3g4c6-01 | 16 |  |  |  |  |
+| t2op5b1v3-01 | 12 |  |  |  |  |
+| t2op5b1v3-02 | 18 |  |  |  |  |
+| t2op5b1v3c8-01 | 26 |  |  |  |  |
+| t2op5b1v3c8-02 | 26 |  |  |  |  |
+| t2op5b1v3c8-03 | 13 |  |  |  |  |
+| t2op5b2v3c8-01 | 12 |  |  |  |  |
+| t2op5b2v3c8-02 | 13 |  |  |  |  |
+| t2op5b2v3c8-03 | 12 |  |  |  |  |
+| t2op5b3v4-01 | 19 |  |  |  |  |
+| t2op5b3v4-02 | 12 |  |  |  |  |
+| t2op5b3v4-03 | 12 |  |  |  |  |
+| t2op5b3v4g3-01 | 12 |  |  |  |  |
+| t2op5b3v4g3-02 | 12 |  |  |  |  |
+| t2op5b3v4g3-03 | 12 |  |  |  |  |
+| t2op5b3v4g6-01 | 12 |  |  |  |  |
+| t2op5b3v4g6-02 | 12 |  |  |  |  |
+| t2op5b3v4g6-03 | 13 |  |  |  |  |
+| t2op6b1v3-01 | 13 |  |  |  |  |
+| t2op6b1v3-02 | 14 |  |  |  |  |
+| t2op6b2v3g3c5-01 | 12 |  |  |  |  |
+| t2op6b2v3g3c5-02 | 14 |  |  |  |  |
+| t2op8b2v3g3c5-01 | 12 |  |  |  |  |
+| t2op8b2v3g3c5-02 | 13 |  |  |  |  |
+| t3op3b2v3g3c5-01 | 21 |  |  |  |  |
+| t3op4b1v3g3c8-01 | 12 |  |  |  |  |
+| t3op4b1v3g3c8-02 | 14 |  |  |  |  |
+| t3op4b1v3g3c8-03 | 29 |  |  |  |  |
+| t3op4b2v3c8-01 | 15 |  |  |  |  |
+| t3op4b2v3c8-02 | 25 |  |  |  |  |
+| t3op4b2v3c8-03 | 12 |  |  |  |  |
+| t3op5b2v3c8-01 | 27 |  |  |  |  |
+| t3op5b2v3c8-02 | 29 |  |  |  |  |
+| t3op5b2v3c8-03 | 17 |  |  |  |  |
+| t3op5b2v3g3c5-01 | 12 |  |  |  |  |
+| t3op5b2v3g3c5-02 | 16 |  |  |  |  |
+| t3op5b3v5c8x3q1-01 | 3 |  |  |  |  |
+| t3op5b3v5c8x3q1-02 | 2 |  |  |  |  |
+| t3op5b3v5c8x2q1-01 | 3 |  |  |  |  |
+| t3op5b3v5c8x2q1-02 | 2 |  |  |  |  |
+| t3op5b3v5c8x4q1-01 | 1 |  |  |  |  |
+| t3op5b3v5c8x4q1-02 | 1 |  |  |  |  |
+| t3op5b3v5c8x4q1-03 | 1 |  |  |  |  |
+| t3op5b3v5c8x4q1-04 | 2 |  |  |  |  |
+| t3op5b3v5c8x4q1-05 | 2 |  |  |  |  |
+| t3op5b3v5c8x4q1-06 | 2 |  |  |  |  |
+| t3op5b3v5c8x-01 | 21 |  |  |  |  |
+| t3op5b3v5c8x-02 | 32 |  |  |  |  |
+| t3op5b3v5c8x-03 | 29 |  |  |  |  |
+| t3op5b3v5c8-01 | 12 |  |  |  |  |
+| t3op5b3v5c8-02 | 14 |  |  |  |  |
+| t3op5b3v5c8-03 | 20 |  |  |  |  |
+| t3op5b3v5g4c8x2q2-01 | 3 |  |  |  |  |
+| t3op5b3v5g4c8x2q2-02 | 5 |  |  |  |  |
+| t3op5b3v5g4c8x3q1-01 | 2 |  |  |  |  |
+| t3op5b3v5g4c8x3q1-02 | 3 |  |  |  |  |
+| t3op5b3v5g4c8x3q2-01 | 3 |  |  |  |  |
+| t3op5b3v5g4c8x3q2-02 | 6 |  |  |  |  |
+| t3op5b3v5g5c8x3q4-01 | 4 |  |  |  |  |
+| t3op5b3v5g5c8x3q4-02 | 5 |  |  |  |  |
+| t3op5b3v5g5c8x3q4-03 | 4 |  |  |  |  |
+| t3op5b3v5g5c8x3q4-04 | 5 |  |  |  |  |
+| t3op5b3v5g5c8x3q4-05 | 3 |  |  |  |  |
+| t3op5b3v5g5c8x3q4-06 | 5 |  |  |  |  |
+| t3op5b3v5g6c8x2q1-01 | 2 |  |  |  |  |
+| t3op5b3v5g6c8x2q1-02 | 2 |  |  |  |  |
+| t3op6b2v3c8-01 | 12 |  |  |  |  |
+| t3op6b2v3c8-02 | 15 |  |  |  |  |
+| t3op6b2v3c8-03 | 16 |  |  |  |  |
+| t3op6b2v3g3c5-01 | 14 |  |  |  |  |
+| t3op6b2v3g3c5-02 | 12 |  |  |  |  |
+| t3op8b3v5g6c8x4q2-01 | 2 |  |  |  |  |
+| t3op8b3v5g6c8x4q2-02 | 2 |  |  |  |  |
+| t3op8b3v5g6c8x4q2-03 | 2 |  |  |  |  |
+| t3op8b3v5g6c8x4q2-04 | 2 |  |  |  |  |
+| t3op8b3v5g6c8x4q2-05 | 2 |  |  |  |  |
+| t3op8b3v5g6c8x4q2-06 | 2 |  |  |  |  |
+| t4op4b2v3c8-01 | 27 |  |  |  |  |
+| t4op4b2v3c8-02 | 27 |  |  |  |  |
+| t4op4b2v3c8-03 | 14 |  |  |  |  |
+
+## Effort medium, with sync
+
+| problem | answers | fable | opus | sonnet | haiku |
+|---|---|---|---|---|---|
+| t2op4b2v3s1pg3c5-01 | 14 |  |  |  |  |
+| t2op4b2v3s1ag3c5-01 | 13 |  |  |  |  |
+| t2op5b2v3s2g3c5-01 | 13 |  |  |  |  |
+| t2op9b3v6s3pnc5x3-01 | 4 |  |  |  |  |
+| t2op9b3v6s3pnc5x3-02 | 4 |  |  |  |  |
+| t2op9b3v6s3pnc5x3-03 | 5 |  |  |  |  |
+| t2op9b3v6s4pnc5x3-01 | 5 |  |  |  |  |
+| t2op9b3v6s4pnc5x3-02 | 4 |  |  |  |  |
+| t2op9b3v6s4pnc5x3-03 | 3 |  |  |  |  |
+| t2op9b3v6s4pnc5x5q4-01 | 5 |  |  |  |  |
+| t2op9b3v6s4pnc5x5q4-02 | 6 |  |  |  |  |
+| t2op9b3v6s4pnc5x5q4-03 | 5 |  |  |  |  |
+| t2op9b3v6s4pnc5x5q4-04 | 6 | ✓ −0+2 −2+0 | ✓ ✓ ✓ ✓ ✓ −0+2 ✓ ✓ ✓ | −2+0 ✓ −2+0 ✓ −0+2 ✓ ✓ ✓ ✓ | ✓ ✓ ✓ ✓ ✓ −0+2 ✓ ✓ ✓ |
+| t2op9b3v6s4pnc5x5q4-05 | 5 |  |  |  |  |
+| t2op9b3v6s4pnc5x5q4-06 | 6 |  |  |  |  |
+| t3op4b2v3s2g3c5-01 | 14 |  |  |  |  |
+| t3op5b2v3s3g3c5-01 | 13 |  |  |  |  |
+| t3op7b2v3s3g3c5-01 | 15 |  |  |  |  |
+| t4op4b2v3s3g3c5-01 | 14 |  |  |  |  |
+| t4op6b3v3s4g3c5-01 | 17 |  |  |  |  |
+
+## Effort medium, exact answers / trials
+
+| model | no sync | with sync |
+|---|---|---|
+| fable | 0/0 | 1/3 |
+| opus | 0/0 | 8/9 |
+| sonnet | 0/0 | 6/9 |
+| haiku | 0/0 | 8/9 |
+
+## Effort high, no sync
+
+| problem | answers | fable | opus | sonnet | haiku |
+|---|---|---|---|---|---|
+| t2op3b1v3-01 | 12 |  |  |  |  |
+| t2op4b2v3-01 | 20 |  |  |  |  |
+| t2op4b2v3g4-01 | 16 |  |  |  |  |
+| t2op4b2v3g4c6-01 | 16 |  |  |  |  |
+| t2op5b1v3-01 | 12 |  |  |  |  |
+| t2op5b1v3-02 | 18 |  |  |  |  |
+| t2op5b1v3c8-01 | 26 |  |  |  |  |
+| t2op5b1v3c8-02 | 26 |  |  |  |  |
+| t2op5b1v3c8-03 | 13 |  |  |  |  |
+| t2op5b2v3c8-01 | 12 |  |  |  |  |
+| t2op5b2v3c8-02 | 13 |  |  |  |  |
+| t2op5b2v3c8-03 | 12 |  |  |  |  |
+| t2op5b3v4-01 | 19 |  |  |  |  |
+| t2op5b3v4-02 | 12 |  |  |  |  |
+| t2op5b3v4-03 | 12 |  |  |  |  |
+| t2op5b3v4g3-01 | 12 |  |  |  |  |
+| t2op5b3v4g3-02 | 12 |  |  |  |  |
+| t2op5b3v4g3-03 | 12 |  |  |  |  |
+| t2op5b3v4g6-01 | 12 |  |  |  |  |
+| t2op5b3v4g6-02 | 12 |  |  |  |  |
+| t2op5b3v4g6-03 | 13 |  |  |  |  |
+| t2op6b1v3-01 | 13 |  |  |  |  |
+| t2op6b1v3-02 | 14 |  |  |  |  |
+| t2op6b2v3g3c5-01 | 12 |  |  |  |  |
+| t2op6b2v3g3c5-02 | 14 |  |  |  |  |
+| t2op8b2v3g3c5-01 | 12 |  |  |  |  |
+| t2op8b2v3g3c5-02 | 13 |  |  |  |  |
+| t3op3b2v3g3c5-01 | 21 |  |  |  |  |
+| t3op4b1v3g3c8-01 | 12 |  |  |  |  |
+| t3op4b1v3g3c8-02 | 14 |  |  |  |  |
+| t3op4b1v3g3c8-03 | 29 |  |  |  |  |
+| t3op4b2v3c8-01 | 15 |  |  |  |  |
+| t3op4b2v3c8-02 | 25 |  |  |  |  |
+| t3op4b2v3c8-03 | 12 |  |  |  |  |
+| t3op5b2v3c8-01 | 27 |  |  |  |  |
+| t3op5b2v3c8-02 | 29 |  |  |  |  |
+| t3op5b2v3c8-03 | 17 |  |  |  |  |
+| t3op5b2v3g3c5-01 | 12 |  |  |  |  |
+| t3op5b2v3g3c5-02 | 16 |  |  |  |  |
+| t3op5b3v5c8x3q1-01 | 3 |  |  |  |  |
+| t3op5b3v5c8x3q1-02 | 2 |  |  |  |  |
+| t3op5b3v5c8x2q1-01 | 3 |  |  |  |  |
+| t3op5b3v5c8x2q1-02 | 2 |  |  |  |  |
+| t3op5b3v5c8x4q1-01 | 1 |  |  |  |  |
+| t3op5b3v5c8x4q1-02 | 1 |  |  |  |  |
+| t3op5b3v5c8x4q1-03 | 1 |  |  |  |  |
+| t3op5b3v5c8x4q1-04 | 2 |  |  |  |  |
+| t3op5b3v5c8x4q1-05 | 2 |  |  |  |  |
+| t3op5b3v5c8x4q1-06 | 2 |  |  |  |  |
+| t3op5b3v5c8x-01 | 21 |  |  |  |  |
+| t3op5b3v5c8x-02 | 32 |  |  |  |  |
+| t3op5b3v5c8x-03 | 29 |  |  |  |  |
+| t3op5b3v5c8-01 | 12 |  |  |  |  |
+| t3op5b3v5c8-02 | 14 |  |  |  |  |
+| t3op5b3v5c8-03 | 20 |  |  |  |  |
+| t3op5b3v5g4c8x2q2-01 | 3 |  |  |  |  |
+| t3op5b3v5g4c8x2q2-02 | 5 |  |  |  |  |
+| t3op5b3v5g4c8x3q1-01 | 2 |  |  |  |  |
+| t3op5b3v5g4c8x3q1-02 | 3 |  |  |  |  |
+| t3op5b3v5g4c8x3q2-01 | 3 |  |  |  |  |
+| t3op5b3v5g4c8x3q2-02 | 6 |  |  |  |  |
+| t3op5b3v5g5c8x3q4-01 | 4 |  |  |  |  |
+| t3op5b3v5g5c8x3q4-02 | 5 |  |  |  |  |
+| t3op5b3v5g5c8x3q4-03 | 4 |  |  |  |  |
+| t3op5b3v5g5c8x3q4-04 | 5 |  |  |  |  |
+| t3op5b3v5g5c8x3q4-05 | 3 |  |  |  |  |
+| t3op5b3v5g5c8x3q4-06 | 5 |  |  |  |  |
+| t3op5b3v5g6c8x2q1-01 | 2 |  |  |  |  |
+| t3op5b3v5g6c8x2q1-02 | 2 |  |  |  |  |
+| t3op6b2v3c8-01 | 12 |  |  |  |  |
+| t3op6b2v3c8-02 | 15 |  |  |  |  |
+| t3op6b2v3c8-03 | 16 |  |  |  |  |
+| t3op6b2v3g3c5-01 | 14 |  |  |  |  |
+| t3op6b2v3g3c5-02 | 12 |  |  |  |  |
+| t3op8b3v5g6c8x4q2-01 | 2 |  |  |  |  |
+| t3op8b3v5g6c8x4q2-02 | 2 |  |  |  |  |
+| t3op8b3v5g6c8x4q2-03 | 2 |  |  |  |  |
+| t3op8b3v5g6c8x4q2-04 | 2 |  |  |  |  |
+| t3op8b3v5g6c8x4q2-05 | 2 |  |  |  |  |
+| t3op8b3v5g6c8x4q2-06 | 2 |  |  |  |  |
+| t4op4b2v3c8-01 | 27 |  |  |  |  |
+| t4op4b2v3c8-02 | 27 |  |  |  |  |
+| t4op4b2v3c8-03 | 14 |  |  |  |  |
+
+## Effort high, with sync
+
+| problem | answers | fable | opus | sonnet | haiku |
+|---|---|---|---|---|---|
+| t2op4b2v3s1pg3c5-01 | 14 |  |  |  |  |
+| t2op4b2v3s1ag3c5-01 | 13 |  |  |  |  |
+| t2op5b2v3s2g3c5-01 | 13 |  |  |  |  |
+| t2op9b3v6s3pnc5x3-01 | 4 |  |  |  |  |
+| t2op9b3v6s3pnc5x3-02 | 4 |  |  |  |  |
+| t2op9b3v6s3pnc5x3-03 | 5 |  |  |  |  |
+| t2op9b3v6s4pnc5x3-01 | 5 |  |  |  |  |
+| t2op9b3v6s4pnc5x3-02 | 4 |  |  |  |  |
+| t2op9b3v6s4pnc5x3-03 | 3 |  |  |  |  |
+| t2op9b3v6s4pnc5x5q4-01 | 5 |  |  |  |  |
+| t2op9b3v6s4pnc5x5q4-02 | 6 |  |  |  |  |
+| t2op9b3v6s4pnc5x5q4-03 | 5 |  |  |  |  |
+| t2op9b3v6s4pnc5x5q4-04 | 6 | ✓ −2+0 ✓ | ✓ ✓ ✓ ✓ ✓ ✓ ✓ −2+0 ✓ | −2+0 −2+0 ✓ ✓ ✓ ✓ ✓ ✓ −2+0 | ✓ ✓ ✓ ✓ ✓ ✓ ✓ ✓ ✓ |
+| t2op9b3v6s4pnc5x5q4-05 | 5 |  |  |  |  |
+| t2op9b3v6s4pnc5x5q4-06 | 6 |  |  |  |  |
+| t3op4b2v3s2g3c5-01 | 14 |  |  |  |  |
+| t3op5b2v3s3g3c5-01 | 13 |  |  |  |  |
+| t3op7b2v3s3g3c5-01 | 15 |  |  |  |  |
+| t4op4b2v3s3g3c5-01 | 14 |  |  |  |  |
+| t4op6b3v3s4g3c5-01 | 17 |  |  |  |  |
+
+## Effort high, exact answers / trials
+
+| model | no sync | with sync |
+|---|---|---|
+| fable | 0/0 | 2/3 |
+| opus | 0/0 | 8/9 |
+| sonnet | 0/0 | 6/9 |
+| haiku | 0/0 | 9/9 |
+
 ## Effort low, wrong rows by trap kind
 
 Rows a model got wrong (missed or impossible), and how many fall on each trap
@@ -141,6 +385,38 @@ that only a stale copy produces, and how many of them the model missed.
 | opus | 99 | 30 | 11 | 12 | 30 | 14 | 2 | 25 of 576 | 45 of 1002 |
 | sonnet | 129 | 23 | 10 | 30 | 45 | 17 | 4 | 29 of 576 | 40 of 1002 |
 | haiku | 95 | 10 | 17 | 22 | 31 | 10 | 5 | 18 of 576 | 38 of 1002 |
+
+## Effort medium, wrong rows by trap kind
+
+Rows a model got wrong (missed or impossible), and how many fall on each trap
+kind (premise.md §2).
+
+The last column counts impossible rows that need 3 or more constraint groups to
+rule out (deep refutations), and how many of them the model listed; then true rows
+that only a stale copy produces, and how many of them the model missed.
+
+| model | wrong rows | interval | depth2 | depth1 | decoys | pruned | other | deep listed | stale missed |
+|---|---|---|---|---|---|---|---|---|---|
+| fable | 4 | 0 | 2 | 0 | 2 | 0 | 0 | 2 of 6 | 2 of 12 |
+| opus | 2 | 0 | 0 | 0 | 2 | 0 | 0 | 2 of 18 | 0 of 36 |
+| sonnet | 6 | 0 | 4 | 0 | 2 | 0 | 0 | 2 of 18 | 2 of 36 |
+| haiku | 2 | 0 | 0 | 0 | 2 | 0 | 0 | 2 of 18 | 0 of 36 |
+
+## Effort high, wrong rows by trap kind
+
+Rows a model got wrong (missed or impossible), and how many fall on each trap
+kind (premise.md §2).
+
+The last column counts impossible rows that need 3 or more constraint groups to
+rule out (deep refutations), and how many of them the model listed; then true rows
+that only a stale copy produces, and how many of them the model missed.
+
+| model | wrong rows | interval | depth2 | depth1 | decoys | pruned | other | deep listed | stale missed |
+|---|---|---|---|---|---|---|---|---|---|
+| fable | 2 | 0 | 2 | 0 | 0 | 0 | 0 | 0 of 6 | 2 of 12 |
+| opus | 2 | 0 | 2 | 0 | 0 | 0 | 0 | 0 of 18 | 2 of 36 |
+| sonnet | 6 | 0 | 6 | 0 | 0 | 0 | 0 | 0 of 18 | 0 of 36 |
+| haiku | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 of 18 | 0 of 36 |
 
 # Details
 
@@ -579,10 +855,18 @@ N=2 ops≤9 M=3 values=6 syncs=4 (8 events) p_obs=0.0 p_copy=0.5; 4 asked, 6 ans
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
+| fable | high | ✓, -2 +0, ✓ | 2635, 1649, 2299 |
 | fable | low | -0 +2, -0 +2, -2 +0 | 1210, 1348, 1128 |
+| fable | medium | ✓, -0 +2, -2 +0 | 1682, 1862, 1099 |
+| haiku | high | ✓, ✓, ✓, ✓, ✓, ✓, ✓, ✓, ✓ | 13055, 16191, 18321, 13899, 13545, 12332, 13321, 11095, 14751 |
 | haiku | low | -0 +2, ✓, ✓, -3 +0, ✓, ✓, -3 +0, ✓, ✓ | 8561, 12010, 12052, 7179, 11019, 9859, 9052, 12422, 9863 |
+| haiku | medium | ✓, ✓, ✓, ✓, ✓, -0 +2, ✓, ✓, ✓ | 11493, 10984, 8966, 13957, 10273, 8535, 12535, 10110, 11197 |
+| opus | high | ✓, ✓, ✓, ✓, ✓, ✓, ✓, -2 +0, ✓ | 1474, 1690, 1477, 1545, 1393, 1518, 1409, 925, 1501 |
 | opus | low | ✓, -0 +2, ✓, -2 +0, ✓, ✓, ✓, ✓, -0 +2 | 973, 917, 933, 580, 903, 1008, 960, 911, 834 |
+| opus | medium | ✓, ✓, ✓, ✓, ✓, -0 +2, ✓, ✓, ✓ | 1177, 1573, 1525, 1401, 1668, 1304, 1225, 1391, 1398 |
+| sonnet | high | -2 +0, -2 +0, ✓, ✓, ✓, ✓, ✓, ✓, -2 +0 | 1820, 1878, 2841, 2161, 2276, 2866, 2456, 2638, 1514 |
 | sonnet | low | -2 +0, ✓, -2 +0, -0 +2, ✓, -2 +0, ✓, ✓, ✓ | 1365, 1687, 1227, 1549, 1772, 1286, 1735, 1815, 1891 |
+| sonnet | medium | -2 +0, ✓, -2 +0, ✓, -0 +2, ✓, ✓, ✓, ✓ | 1610, 1994, 1877, 1673, 1978, 2179, 1988, 1864, 1682 |
 
 ## t2op9b3v6s4pnc5x5q4-05
 
