@@ -390,6 +390,36 @@
     2
    ]
   ],
-  "score": 23
+  "pruned": [],
+  "score": 23,
+  "score_few": 28,
+  "refutation": [
+   [
+    [
+     1,
+     0,
+     2
+    ],
+    [
+     "copies",
+     "order:A",
+     "order:C"
+    ]
+   ],
+   [
+    [
+     1,
+     2,
+     2
+    ],
+    [
+     "copies",
+     "order:A",
+     "order:B",
+     "order:C"
+    ]
+   ]
+  ],
+  "score_deep": 98
  }
 }

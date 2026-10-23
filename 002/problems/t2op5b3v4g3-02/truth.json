@@ -138,6 +138,10 @@
   "depth2": [],
   "depth1": [],
   "decoys": [],
-  "score": 0
+  "pruned": [],
+  "score": 0,
+  "score_few": 0,
+  "refutation": [],
+  "score_deep": 0
  }
 }

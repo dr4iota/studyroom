@@ -95,12 +95,15 @@ listed, `∅` is no readable answer.
 Rows a model got wrong (missed or impossible), and how many fall on each trap
 kind (premise.md §2).
 
-| model | wrong rows | interval | depth2 | depth1 | decoys | pruned | other |
-|---|---|---|---|---|---|---|---|
-| fable | 32 | 0 | 2 | 2 | 18 | 2 | 8 |
-| opus | 83 | 30 | 9 | 10 | 21 | 0 | 13 |
-| sonnet | 110 | 23 | 4 | 29 | 37 | 0 | 17 |
-| haiku | 61 | 10 | 5 | 17 | 25 | 0 | 4 |
+The last column counts impossible rows that need 3 or more constraint groups to
+rule out (deep refutations), and how many of them the model listed.
+
+| model | wrong rows | interval | depth2 | depth1 | decoys | pruned | other | deep listed |
+|---|---|---|---|---|---|---|---|---|
+| fable | 32 | 0 | 2 | 2 | 18 | 2 | 8 | 5 of 95 |
+| opus | 83 | 30 | 9 | 10 | 21 | 11 | 2 | 17 of 285 |
+| sonnet | 110 | 23 | 4 | 29 | 37 | 13 | 4 | 19 of 285 |
+| haiku | 61 | 10 | 5 | 17 | 25 | 1 | 3 | 9 of 285 |
 
 # Details
 

@@ -181,6 +181,57 @@
     1
    ]
   ],
-  "score": 15
+  "pruned": [],
+  "score": 15,
+  "score_few": 26,
+  "refutation": [
+   [
+    [
+     0,
+     1
+    ],
+    [
+     "copies",
+     "given",
+     "order:B"
+    ]
+   ],
+   [
+    [
+     0,
+     2
+    ],
+    [
+     "copies",
+     "order:B",
+     "order:C"
+    ]
+   ],
+   [
+    [
+     0,
+     3
+    ],
+    [
+     "copies",
+     "order:B",
+     "order:C"
+    ]
+   ],
+   [
+    [
+     3,
+     1
+    ],
+    [
+     "copies",
+     "given",
+     "order:A",
+     "order:B",
+     "order:C"
+    ]
+   ]
+  ],
+  "score_deep": 116
  }
 }

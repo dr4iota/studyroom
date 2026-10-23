@@ -23,6 +23,9 @@
   "interval": 0,
   "depth2": 1,
   "depth1": 0,
-  "decoys": 1
- }
+  "decoys": 1,
+  "pruned": 0
+ },
+ "deep_refutations": 4,
+ "deep_listed": 1
 }

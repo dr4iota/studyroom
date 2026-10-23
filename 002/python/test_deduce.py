@@ -86,6 +86,26 @@ class Traps(unittest.TestCase):
         # Treating "before P" as after A1's end hides B1 = 0.
         self.assertEqual(D.traps(p, p["queries"])["interval"], [(0,)])
 
+    def test_refutation_groups(self):
+        p = problem({"A": ([("w", 0, 1), ("r", 0, None)], []), "B": ([("w", 0, 2)], [])},
+                    queries=[{"read": "A2"}])
+        # A2 reads 1 or 2; 0 is plausible, and only A's own order (A1 first) rules it out.
+        self.assertEqual(D.solve(p, p["queries"])[0], {(1,), (2,)})
+        self.assertEqual(D.refutations(p, p["queries"], {(0,)}), {(0,): ["order:A"]})
+
+    def test_relaxations_are_supersets(self):
+        rng = random.Random(9)
+        for seed in range(120):
+            params = {"threads": 3, "ops": rng.randint(2, 4), "blocks": 2, "p_obs": rng.choice([0, 0.4]),
+                      "p_copy": 0.8, "min_answers": 1, "max_answers": 10**6}
+            p = D.generate(params, seed)
+            if p is None:
+                continue
+            t = D.solve(p, p["queries"])[0]
+            poss = D.copy_sources(p)
+            for kw in [{"drop_obs": True}, {"free": 0}, {"free": 2}, {"decouple": poss}]:
+                self.assertTrue(t <= D.solve_relaxed(p, p["queries"], **kw), (seed, kw))
+
     def test_depths_cover_answers(self):
         rng = random.Random(3)
         for seed in range(150):

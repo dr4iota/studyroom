@@ -1,0 +1,64 @@
+{
+ "answers": [
+  [
+   0
+  ],
+  [
+   1
+  ],
+  [
+   5
+  ]
+ ],
+ "size": 3,
+ "solver": {
+  "states": 790,
+  "seconds": 0.004
+ },
+ "brute": {
+  "states": 65106,
+  "seconds": 0.257,
+  "answers": [
+   [
+    0
+   ],
+   [
+    1
+   ],
+   [
+    5
+   ]
+  ]
+ },
+ "agree": true,
+ "traps": {
+  "interval": [],
+  "depth2": [],
+  "depth1": [
+   [
+    5
+   ]
+  ],
+  "decoys": [],
+  "pruned": [
+   [
+    4
+   ]
+  ],
+  "score": 1,
+  "score_few": 5,
+  "refutation": [
+   [
+    [
+     4
+    ],
+    [
+     "copies",
+     "order:B",
+     "order:C"
+    ]
+   ]
+  ],
+  "score_deep": 19
+ }
+}

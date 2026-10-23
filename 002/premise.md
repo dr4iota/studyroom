@@ -96,8 +96,9 @@ but program order and the given results leave only 2 and 5.
 | `p_copy` | chance that a write copies an earlier unobserved read (if one exists) | 0 |
 | `min_given` | with `p_obs > 0`, the least number of given results | 1 |
 | `min_copies` | the least number of writes that copy a read | 0 |
-| `adversarial` | 1: ask the locations with the most traps (§2); 2: the same for few answers, with `score_few` | 0 |
+| `adversarial` | 1: ask the locations with the most traps (§2); 2: the same for few answers, with `score_few`; 3: with `score_deep` (refutation depth) | 0 |
 | `min_pruned` | the asked locations rule out at least this many plausible rows (§2) | 0 |
+| `min_deep` | ... of which at least this many need 3 or more constraint groups (§3) | 0 |
 | `mixed` | 1: every thread both reads and writes, at least half the threads start with a write, and every block is written at least once and used by at least two threads | 0 |
 | `max_queries` | asked locations, 1..this | 3 |
 | `min_answers`, `max_answers` | accepted answer-set size | 12, 99 |
@@ -110,13 +111,32 @@ if its thread has read something earlier. So `c8` alone gives 0–3 copies per p
 `min_copies` sets a floor. Random traces can also be logically weak: a thread of only reads
 or only writes, or a block that one thread uses alone. `mixed` rejects those.
 
-`min_given`, `min_copies`, `min_pruned` and `mixed` are **selection rules**: they only reject seeds and never
+`min_given`, `min_copies`, `min_pruned`, `min_deep` and `mixed` are **selection rules**: they only reject seeds and never
 change a draw. An accepted seed gives the same trace with or without them, so they are not
 part of the name. The report lists them for each problem as "selected".
 
+**Refutation depth** (`adversarial: 3`, suffix `x3`). For each ruled-out row (decoy or
+pruned), find the constraint groups it needs: those whose removal alone makes it possible.
+The groups are the given results, each thread's program order (relaxed: the thread's
+operations may take effect in any order, but a copy still follows its read), and the copy
+linkage (relaxed: a copy may write any value its read can return in some execution). In
+the first 690 runs, models listed impossible rows at these rates:
+
+| Groups needed | Listed |
+|---|---|
+| 0 (ruled out redundantly) | 0.00% |
+| 1 | 0.49% |
+| 2 | 0.69% |
+| 3 or more | 3.98% |
+
+`score_deep = 16·(3+ groups) + 3·(2 groups) + 2·(1 group) + 19·depth2 + 3·depth1`, about 4× those
+rates. With `min_deep`, a seed is rejected unless the chosen locations have at least that
+many rows needing 3 or more groups. `truth.json` records each ruled-out row's groups
+(`refutation`), and the grade counts the deep ones a model listed (`deep_listed`).
+
 **Names.** A problem is named `<parameters>-<case>`. The parameter part is
 `t<threads>op<ops>b<blocks>v<values>`, followed by `s<syncs>`, `g<p_obs>`, `c<p_copy>`,
-`r<p_read>`, `x` or `x2` (adversarial), `q<max_queries>` and `a<min_answers>_<max_answers>`
+`r<p_read>`, `x`, `x2` or `x3` (adversarial), `q<max_queries>` and `a<min_answers>_<max_answers>`
 when they are nonzero or not the default. Probabilities are in tenths. `s` takes
 a suffix `p` (pairs only) or `a` (barriers only) when `relations` is restricted. The case
 number counts problems with the same parameters (`01`, `02`, …). The seed is recorded in

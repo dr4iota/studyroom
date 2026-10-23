@@ -194,6 +194,10 @@
    ]
   ],
   "decoys": [],
-  "score": 11
+  "pruned": [],
+  "score": 11,
+  "score_few": 11,
+  "refutation": [],
+  "score_deep": 33
  }
 }

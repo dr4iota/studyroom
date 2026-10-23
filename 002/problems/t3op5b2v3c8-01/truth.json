@@ -400,6 +400,10 @@
    ]
   ],
   "decoys": [],
-  "score": 24
+  "pruned": [],
+  "score": 24,
+  "score_few": 26,
+  "refutation": [],
+  "score_deep": 98
  }
 }

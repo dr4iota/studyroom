@@ -45,6 +45,25 @@
    ]
   ],
   "score": 0,
-  "score_few": 8
+  "score_few": 8,
+  "refutation": [
+   [
+    [
+     2
+    ],
+    [
+     "order:B"
+    ]
+   ],
+   [
+    [
+     4
+    ],
+    [
+     "order:B"
+    ]
+   ]
+  ],
+  "score_deep": 4
  }
 }

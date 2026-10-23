@@ -365,6 +365,78 @@
     2
    ]
   ],
-  "score": 24
+  "pruned": [],
+  "score": 24,
+  "score_few": 39,
+  "refutation": [
+   [
+    [
+     0,
+     0,
+     2
+    ],
+    [
+     "copies"
+    ]
+   ],
+   [
+    [
+     0,
+     1,
+     2
+    ],
+    [
+     "copies",
+     "order:B"
+    ]
+   ],
+   [
+    [
+     0,
+     2,
+     2
+    ],
+    [
+     "copies",
+     "order:B"
+    ]
+   ],
+   [
+    [
+     1,
+     0,
+     2
+    ],
+    [
+     "copies",
+     "order:C"
+    ]
+   ],
+   [
+    [
+     2,
+     0,
+     1
+    ],
+    [
+     "copies",
+     "order:A",
+     "order:B",
+     "order:C"
+    ]
+   ],
+   [
+    [
+     2,
+     0,
+     2
+    ],
+    [
+     "copies",
+     "order:C"
+    ]
+   ]
+  ],
+  "score_deep": 93
  }
 }

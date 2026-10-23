@@ -56,8 +56,10 @@ DEFAULTS = {
     "min_copies": 0,     # at least this many writes copy a read
     "min_pruned": 0,     # the asked locations rule out at least this many plausible rows
                          # (decoys + pruned, see traps())
+    "min_deep": 0,       # ... of which at least this many need 3 or more constraint groups
     "adversarial": 0,    # 1: ask the locations whose answer holds the most traps (see traps());
-                         # 2: the same for small answers, scored by score_few
+                         # 2: the same for small answers, scored by score_few;
+                         # 3: scored by score_deep (refutation depth, see refutations())
     "mixed": 0,          # 1: keep only seeds where threads mix reads and writes, most start
                          #    with a write, and every block is written and used by two threads
     "max_queries": 3,    # asked locations: 1..max_queries
@@ -311,6 +313,77 @@ def outside_syncs(p):
     return q if topo_order(build_graph(q, effects=False)[0]) is not None else None
 
 
+def solve_relaxed(p, queries, drop_obs=False, free=None, decouple=None):
+    """``solve`` with one group of constraints removed, to see what that group rules out.
+    ``drop_obs`` ignores the given results. ``free`` (a thread index) lets that thread's
+    operations take effect in any order, except that a copy still follows the read it
+    copies. ``decouple`` maps each copied read to the values it can return, and lets every
+    copy of it write any of them."""
+    ops = flat_ops(p)
+    n = len(ops)
+    pos = {op["id"]: i for i, op in enumerate(ops)}
+    before = action_order(p)
+    if free is not None:
+        mine = 0
+        for op in p["threads"][free]["ops"]:
+            mine |= 1 << pos[op["id"]]
+        for j in range(n):
+            if mine >> j & 1:
+                d = ops[j].get("data")
+                keep = 1 << pos[d] if isinstance(d, str) else 0
+                before[j] = before[j] & ~mine | before[j] & keep
+    asked = {pos[q["read"]] for q in queries if "read" in q}
+    users = [0] * n
+    for j, op in enumerate(ops):
+        if op["kind"] == "write" and isinstance(op["data"], str):
+            users[pos[op["data"]]] |= 1 << j
+    layer = {(0, (INIT,) * p["blocks"], (None,) * n)}
+    for _ in range(n):
+        nxt = set()
+        for mask, c, v in layer:
+            for j in range(n):
+                if mask >> j & 1 or before[j] & ~mask:
+                    continue
+                op, b, m = ops[j], ops[j]["block"], mask | 1 << j
+                if op["kind"] == "read":
+                    if not drop_obs and op["obs"] is not None and op["obs"] != c[b]:
+                        continue
+                    outs = [(c, v[:j] + (c[b],) + v[j + 1:])]
+                elif isinstance(op["data"], str) and decouple is not None:
+                    outs = [(c[:b] + (x,) + c[b + 1:], v) for x in decouple[op["data"]]]
+                else:
+                    outs = [apply(op, c, v, pos)]
+                for c2, v2 in outs:
+                    v2 = tuple(x if i in asked or users[i] & ~m else None for i, x in enumerate(v2))
+                    nxt.add((m, c2, v2))
+        layer = nxt
+    return {project(queries, c, v, pos) for _, c, v in layer}
+
+
+def copy_sources(p):
+    """Each copied read and the values it can return, for solve_relaxed(decouple=...)."""
+    ops = flat_ops(p)
+    srcs = sorted({o["data"] for o in ops if o["kind"] == "write" and isinstance(o["data"], str)})
+    return {s: sorted({r[0] for r in solve(p, [{"read": s}])[0]}) for s in srcs}
+
+
+def refutations(p, queries, rows, poss=None):
+    """For each impossible row, the constraint groups it needs: those whose removal alone
+    (solve_relaxed) makes it possible. Groups: "given", "order:<thread>", "copies". A row
+    needing none is ruled out by several redundant reasons."""
+    ops = flat_ops(p)
+    groups = {}
+    if any(o.get("obs") is not None for o in ops):
+        groups["given"] = solve_relaxed(p, queries, drop_obs=True)
+    for t, th in enumerate(p["threads"]):
+        if len(th["ops"]) > 1:
+            groups[f"order:{th['name']}"] = solve_relaxed(p, queries, free=t)
+    poss = copy_sources(p) if poss is None else poss
+    if poss:
+        groups["copies"] = solve_relaxed(p, queries, decouple=poss)
+    return {r: sorted(g for g, ans in groups.items() if r in ans) for r in rows}
+
+
 def flow_candidates(p, queries):
     """Per asked location, the values that could reach it if order were ignored: for a
     block, 0 and the constants written to it, plus whatever its copies can carry; for a
@@ -334,7 +407,7 @@ def flow_candidates(p, queries):
             for q in queries]
 
 
-def traps(p, queries, answers=None):
+def traps(p, queries, answers=None, poss=None):
     """The combinations a reader is likely to get wrong, by kind:
     - interval: combinations that change when a sync line inside an operation is read as
       outside it (hidden true rows, or impossible rows that reading admits);
@@ -344,7 +417,12 @@ def traps(p, queries, answers=None):
       order were ignored (flow_candidates), so ruling them out takes the ordering.
     ``score`` weighs the first four by how often models got such rows wrong in the first
     610 runs (about 35%, 4.7%, 2.3% and 1.2% of row-runs, against 0.3% for other rows).
-    ``score_few`` is for small answers: plausible rows that are ruled out count most."""
+    ``score_few`` is for small answers: plausible rows that are ruled out count most.
+    ``refutation`` gives, for each decoy and pruned row, the constraint groups it needs
+    (refutations()). ``score_deep`` weighs ruled-out rows by how many groups they need and
+    true rows by copy depth, at about 4x the rates at which models got such rows wrong in
+    the first 690 runs: 3.98% for 3+ groups, 0.69% for 2, 0.49% for 1, 0% for none; 4.7%
+    and 0.8% for copy depth 2 and 1."""
     answers = answers if answers is not None else solve(p, queries)[0]
     depths = copy_depths(p, queries)
     naive = outside_syncs(p)
@@ -363,6 +441,10 @@ def traps(p, queries, answers=None):
         + len(kinds["decoys"]) // 2
     out["score_few"] = 10 * len(kinds["interval"]) + 4 * len(kinds["pruned"]) + 3 * len(kinds["decoys"]) \
         + 3 * len(kinds["depth2"]) + len(kinds["depth1"])
+    ref = refutations(p, queries, kinds["decoys"] | kinds["pruned"], poss)
+    out["refutation"] = sorted([list(r), g] for r, g in ref.items())
+    by = [sum(1 for g in ref.values() if min(len(g), 3) == d) for d in (1, 2, 3)]
+    out["score_deep"] = 16 * by[2] + 3 * by[1] + 2 * by[0] + 19 * len(kinds["depth2"]) + 3 * len(kinds["depth1"])
     return out
 
 
@@ -449,6 +531,7 @@ def generate(params, seed):
     subsets = [list(s) for k in range(1, P["max_queries"] + 1)
                for s in itertools.combinations(cands, k)]
     rng.shuffle(subsets)
+    poss = copy_sources(p) if P["adversarial"] == 3 else None
     best = None
     for qs in subsets:
         ans = solve(p, qs)[0]
@@ -457,15 +540,18 @@ def generate(params, seed):
         if not P["adversarial"]:
             p["queries"] = qs
             return p
-        score = traps(p, qs, ans)["score" if P["adversarial"] == 1 else "score_few"]
+        key = {1: "score", 2: "score_few", 3: "score_deep"}[P["adversarial"]]
+        score = traps(p, qs, ans, poss)[key]
         if score and (best is None or score > best[0]):
             best = (score, qs)
     if best is None:
         return None
     p["queries"] = best[1]
-    if P["min_pruned"]:
-        t = traps(p, best[1])
+    if P["min_pruned"] or P["min_deep"]:
+        t = traps(p, best[1], poss=poss)
         if len(t["decoys"]) + len(t["pruned"]) < P["min_pruned"]:
+            return None
+        if sum(len(g) >= 3 for _, g in t["refutation"]) < P["min_deep"]:
             return None
     return p
 
@@ -550,14 +636,22 @@ def grade(p, truth, text):
     }
 
 
+TRAP_KINDS = ("interval", "depth2", "depth1", "decoys", "pruned")
+
+
 def trap_hits(truth, t, rows):
     """For each trap kind, how many of its rows the answer got wrong (missed when true,
     listed when impossible)."""
     if "traps" not in truth:
         return {}
     wrong = t ^ rows
-    return {"trap_wrong": {k: len({tuple(r) for r in v} & wrong)
-                           for k, v in truth["traps"].items() if not k.startswith("score")}}
+    tr = truth["traps"]
+    out = {"trap_wrong": {k: len({tuple(r) for r in tr[k]} & wrong) for k in TRAP_KINDS if k in tr}}
+    if "refutation" in tr:
+        deep = {tuple(r) for r, g in tr["refutation"] if len(g) >= 3}
+        out["deep_refutations"] = len(deep)
+        out["deep_listed"] = len(deep & rows)
+    return out
 
 
 # --------------------------------------------------------------------------- storage
@@ -578,11 +672,11 @@ def git_commit():
 
 
 def param_prefix(P):
-    """t<N>op<ops>b<M>v<V>[s<K>[p|a]][g<p_obs>][c<p_copy>][r<p_read>][x|x2][q<max_queries>]
+    """t<N>op<ops>b<M>v<V>[s<K>[p|a]][g<p_obs>][c<p_copy>][r<p_read>][x|x2|x3][q<max_queries>]
     [a<min_answers>_<max_answers>], the probabilities
     in tenths; zero or default fields are left out. A problem is named <prefix>-<case>,
     with case 01, 02, ... per prefix; its seed is in problem.json. Selection rules
-    (min_given, min_copies, min_pruned, mixed) only reject seeds, so they are not in the name;
+    (min_given, min_copies, min_pruned, min_deep, mixed) only reject seeds, so they are not in the name;
     ``adversarial`` changes which locations are asked, so it is (x)."""
     P = {**DEFAULTS, **P}
     s = f"t{P['threads']}op{P['ops']}b{P['blocks']}v{P['values']}"
@@ -595,7 +689,7 @@ def param_prefix(P):
     if P["p_read"] != DEFAULTS["p_read"]:
         s += f"r{round(P['p_read'] * 10)}"
     if P["adversarial"]:
-        s += "x" if P["adversarial"] == 1 else f"x{P['adversarial']}"
+        s += "x" if P["adversarial"] == 1 else f"x{P['adversarial']}"  # x, x2, x3
     if P["max_queries"] != DEFAULTS["max_queries"]:
         s += f"q{P['max_queries']}"
     if (P["min_answers"], P["max_answers"]) != (DEFAULTS["min_answers"], DEFAULTS["max_answers"]):
@@ -720,11 +814,12 @@ def cmd_run(a):
 
 
 def cmd_regrade(a):
-    """Add trap data to every truth.json that lacks it, and regrade every stored reply."""
+    """Add trap data to every truth.json that lacks it (or lacks refutation depths), and
+    regrade every stored reply."""
     n = 0
     for pd in sorted(d for d in PROBLEMS.iterdir() if not d.name.startswith("_")):
         p, truth = load(pd.name)
-        if "traps" not in truth:
+        if "refutation" not in truth.get("traps", {}):
             truth["traps"] = traps(p, p["queries"], {tuple(r) for r in truth["answers"]})
             dump(pd / "truth.json", truth)
         for d in sorted((ATTEMPTS / pd.name).glob("*/reply.md")) if (ATTEMPTS / pd.name).exists() else []:
@@ -776,9 +871,12 @@ def cmd_report(a):
         out += [f"## Effort {effort}, wrong rows by trap kind", "",
                 "Rows a model got wrong (missed or impossible), and how many fall on each trap",
                 "kind (premise.md §2).", "",
-                "| model | wrong rows | " + " | ".join(kinds) + " | other |", "|---|---|" + "---|" * (len(kinds) + 1)]
+                "The last column counts impossible rows that need 3 or more constraint groups to",
+                "rule out (deep refutations), and how many of them the model listed.", "",
+                "| model | wrong rows | " + " | ".join(kinds) + " | other | deep listed |",
+                "|---|---|" + "---|" * (len(kinds) + 2)]
         for model in models:
-            w, k = 0, dict.fromkeys(kinds, 0)
+            w, k, dl, dn = 0, dict.fromkeys(kinds, 0), 0, 0
             for f in ATTEMPTS.glob(f"*/{model}-{effort}-*/grade.json"):
                 g = json.loads(f.read_text())
                 if not g["parsed"] or "trap_wrong" not in g:
@@ -786,7 +884,10 @@ def cmd_report(a):
                 w += g["missing"] + g["extra"]
                 for x in kinds:
                     k[x] += g["trap_wrong"].get(x, 0)
-            out.append(f"| {model} | {w} | " + " | ".join(str(k[x]) for x in kinds) + f" | {w - sum(k.values())} |")
+                dl += g.get("deep_listed", 0)
+                dn += g.get("deep_refutations", 0)
+            out.append(f"| {model} | {w} | " + " | ".join(str(k[x]) for x in kinds)
+                       + f" | {w - sum(k.values())} | {dl} of {dn} |")
         out.append("")
     out += ["# Details", ""]
     for pd in problems:
@@ -797,7 +898,7 @@ def cmd_report(a):
                 f"N={P['threads']} ops≤{P['ops']} M={P['blocks']} values={P['values']} "
                 f"syncs={P['syncs']} ({nev} events) p_obs={P['p_obs']} p_copy={P['p_copy']}; "
                 f"{len(p['queries'])} asked, {truth['size']} answers, brute agrees: {truth['agree']}"
-                + "".join(f"; selected: {k}={P[k]}" for k in ("min_given", "min_copies", "min_pruned", "mixed")
+                + "".join(f"; selected: {k}={P[k]}" for k in ("min_given", "min_copies", "min_pruned", "min_deep", "mixed")
                           if P.get(k, 0) > 0 and (k != "min_given" or P["p_obs"])), ""]
         rows = {}
         for d in sorted((ATTEMPTS / pd.name).glob("*/meta.json")) if (ATTEMPTS / pd.name).exists() else []:

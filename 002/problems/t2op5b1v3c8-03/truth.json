@@ -172,6 +172,44 @@
     0
    ]
   ],
-  "score": 10
+  "pruned": [],
+  "score": 10,
+  "score_few": 18,
+  "refutation": [
+   [
+    [
+     1,
+     0
+    ],
+    [
+     "copies",
+     "order:A",
+     "order:B"
+    ]
+   ],
+   [
+    [
+     1,
+     2
+    ],
+    [
+     "copies",
+     "order:A",
+     "order:B"
+    ]
+   ],
+   [
+    [
+     2,
+     0
+    ],
+    [
+     "copies",
+     "order:A",
+     "order:B"
+    ]
+   ]
+  ],
+  "score_deep": 75
  }
 }

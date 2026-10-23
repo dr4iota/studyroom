@@ -80,6 +80,9 @@
   "interval": 10,
   "depth2": 0,
   "depth1": 0,
-  "decoys": 3
- }
+  "decoys": 3,
+  "pruned": 0
+ },
+ "deep_refutations": 3,
+ "deep_listed": 3
 }

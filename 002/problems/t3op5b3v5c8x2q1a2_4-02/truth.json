@@ -43,6 +43,27 @@
    ]
   ],
   "score": 1,
-  "score_few": 9
+  "score_few": 9,
+  "refutation": [
+   [
+    [
+     1
+    ],
+    [
+     "copies",
+     "order:A"
+    ]
+   ],
+   [
+    [
+     2
+    ],
+    [
+     "copies",
+     "order:A"
+    ]
+   ]
+  ],
+  "score_deep": 9
  }
 }
