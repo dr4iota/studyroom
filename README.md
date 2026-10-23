@@ -1,28 +1,37 @@
 # studyroom
 
-Research studies, one directory per study. The studies have two purposes:
+This repository tests the performance of AI models: what they can and cannot get right,
+and what kinds of problem make them fail. Each study is one such test, built around a
+problem family; so far, multi-threaded reads and writes (which global orders of the
+steps are possible, and which values each read can return).
 
-1. **Algorithms.** Study existing algorithms for a family of combinatorial problems
-   around multi-threaded reads and writes: which global orders of the steps are possible,
-   and which values each read can return. Where the literature stops, look for new
-   directions and results.
-2. **Model testing.** Test AI code-generation models on these problems, to find out what
-   kinds of problem make them fail. A model gets only the problem specification and the
-   interface to implement, not hints or known algorithms. Its output is graded against a
-   brute-force oracle. We record whether each result came from the model's memory, from
-   web sources it looked up, or from its own derivation.
+## Categories
 
-Each study has problem documents (definitions, formats, surveys, plans) and, per
-language (Python, Rust), two parts that share the same on-disk formats:
-- **`harness/`**: our code. It holds the data model and APIs, the reference
-  implementation, the oracles and the grader.
-- **`attempts/`**: model output, one directory per one-shot attempt. Attempts are graded
-  only by the harness.
+Every study belongs to one or both of these categories, and states it at the top of its
+`README.md`:
+
+| Category | The model … | Graded by |
+|----------|-------------|-----------|
+| **LLM coding performance test** | writes code for a problem from its specification and the interface to implement, in one shot, with file tools only and no execution | our harness, which runs the code against oracles on generated and adversarial instances |
+| **LLM response performance test** | answers one problem instance directly, in one reply, with no tools at all | our harness, which compares the answer with exact ground truth |
+
+Neither kind of prompt contains hints or names known algorithms. A coding test records
+whether each idea came from the model's memory or its own derivation. A response test
+records the effort setting and the thinking used.
+
+To grade models we need exact answers, so a study also does the supporting work: it
+surveys the known algorithms, and writes reference implementations, oracles and
+generators. That work lives in the study's **harness**, our code per language. The model
+output lives in **attempts**. Coding attempts sit under their language's directory;
+response attempts and other language-independent data sit at the study level.
+
+## Studies
 
 Start with a study's `README.md`.
 
-| Study | What |
-|-------|------|
-| [`001/`](001/README.md) | Trace analysis for asynchronous multi-threaded block I/O: problem documents, Python reference implementation, archived model-written linearizers (round 1–4) |
+| Study | Category | What |
+|-------|----------|------|
+| [`001/`](001/README.md) | LLM coding performance test | Trace analysis for asynchronous multi-threaded block I/O: models write linearizers and solvers; problem documents, algorithm survey, Python reference implementation and oracles |
+| [`002/`](002/README.md) | LLM response performance test | Deducing the outcomes of such a trace: models list every possible combination of asked values, with no tools; graded against an exact solver and an enumerator |
 
-Agent guidance, including the protocol for model tests, is in `AGENTS.md`.
+Agent guidance, including the protocol for both categories, is in `AGENTS.md`.
