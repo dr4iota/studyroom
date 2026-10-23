@@ -1,0 +1,30 @@
+Blocks: x, y, z.
+Thread A:
+  A1: write 5 to y
+  A2: write 1 to x
+  A3: write 2 to z
+  A4: read z
+  A5: write the value read by A4 to y
+  A6: read y, returned 5
+  A7: write the value read by A4 to y
+Thread B:
+  B1: write 5 to y
+  B2: write 5 to z
+  B3: read y, returned 5
+  B4: read y, returned 5
+  B5: write the value read by B4 to z
+  B6: write the value read by B4 to y
+  B7: write 1 to z
+  B8: write the value read by B4 to x
+Thread C:
+  C1: write 3 to x
+  C2: read z, returned 0
+  C3: read y, returned 5
+  C4: write the value read by C3 to y
+  C5: write the value read by C3 to y
+  C6: read x
+  C7: read z, returned 5
+  C8: write the value read by C6 to z
+Asked:
+  Q1: the value returned by C6
+  Q2: the final value of x
