@@ -54,7 +54,10 @@ DEFAULTS = {
     "p_copy": 0.0,       # chance that a write copies an earlier unobserved read of its thread
     "min_given": 1,      # with p_obs > 0, at least this many reads have a given result
     "min_copies": 0,     # at least this many writes copy a read
-    "adversarial": 0,    # 1: ask the locations whose answer holds the most traps (see traps())
+    "min_pruned": 0,     # the asked locations rule out at least this many plausible rows
+                         # (decoys + pruned, see traps())
+    "adversarial": 0,    # 1: ask the locations whose answer holds the most traps (see traps());
+                         # 2: the same for small answers, scored by score_few
     "mixed": 0,          # 1: keep only seeds where threads mix reads and writes, most start
                          #    with a write, and every block is written and used by two threads
     "max_queries": 3,    # asked locations: 1..max_queries
@@ -308,14 +311,40 @@ def outside_syncs(p):
     return q if topo_order(build_graph(q, effects=False)[0]) is not None else None
 
 
+def flow_candidates(p, queries):
+    """Per asked location, the values that could reach it if order were ignored: for a
+    block, 0 and the constants written to it, plus whatever its copies can carry; for a
+    final value, only what is written to the block (0 if nothing is)."""
+    ops = flat_ops(p)
+    byid = {o["id"]: o for o in ops}
+    reach = [{INIT} for _ in range(p["blocks"])]
+    written = [set() for _ in range(p["blocks"])]
+    changed = True
+    while changed:
+        changed = False
+        for o in ops:
+            if o["kind"] == "write":
+                d = o["data"]
+                vals = reach[byid[d]["block"]] if isinstance(d, str) else {d}
+                if not vals <= reach[o["block"]] or not vals <= written[o["block"]]:
+                    reach[o["block"]] |= vals
+                    written[o["block"]] |= vals
+                    changed = True
+    return [sorted(reach[byid[q["read"]]["block"]]) if "read" in q else sorted(written[q["final"]] or {INIT})
+            for q in queries]
+
+
 def traps(p, queries, answers=None):
     """The combinations a reader is likely to get wrong, by kind:
     - interval: combinations that change when a sync line inside an operation is read as
       outside it (hidden true rows, or impossible rows that reading admits);
     - depth2, depth1: true rows needing at least 2 (exactly 1) copy hops;
-    - decoys: impossible rows made of values each location can take on its own.
-    The score weighs them by how often models got such rows wrong in the first 610 runs
-    (about 35%, 4.7%, 2.3% and 1.2% of row-runs, against 0.3% for other rows)."""
+    - decoys: impossible rows made of values each location can take on its own;
+    - pruned: other impossible rows made of values that could reach each location if
+      order were ignored (flow_candidates), so ruling them out takes the ordering.
+    ``score`` weighs the first four by how often models got such rows wrong in the first
+    610 runs (about 35%, 4.7%, 2.3% and 1.2% of row-runs, against 0.3% for other rows).
+    ``score_few`` is for small answers: plausible rows that are ruled out count most."""
     answers = answers if answers is not None else solve(p, queries)[0]
     depths = copy_depths(p, queries)
     naive = outside_syncs(p)
@@ -328,9 +357,12 @@ def traps(p, queries, answers=None):
         "depth1": {k for k, d in depths.items() if d == 1} - interval,
         "decoys": decoys - interval,
     }
+    kinds["pruned"] = set(itertools.product(*flow_candidates(p, queries))) - answers - decoys - interval
     out = {k: sorted(v) for k, v in kinds.items()}
     out["score"] = 10 * len(kinds["interval"]) + 2 * len(kinds["depth2"]) + len(kinds["depth1"]) \
         + len(kinds["decoys"]) // 2
+    out["score_few"] = 10 * len(kinds["interval"]) + 4 * len(kinds["pruned"]) + 3 * len(kinds["decoys"]) \
+        + 3 * len(kinds["depth2"]) + len(kinds["depth1"])
     return out
 
 
@@ -414,7 +446,8 @@ def generate(params, seed):
 
     cands = [{"read": op["id"]} for op in ops if op["kind"] == "read" and op["obs"] is None]
     cands += [{"final": b} for b in range(M)]
-    subsets = [list(s) for k in range(1, P["max_queries"] + 1) for s in itertools.combinations(cands, k)]
+    subsets = [list(s) for k in range(1, P["max_queries"] + 1)
+               for s in itertools.combinations(cands, k)]
     rng.shuffle(subsets)
     best = None
     for qs in subsets:
@@ -424,12 +457,16 @@ def generate(params, seed):
         if not P["adversarial"]:
             p["queries"] = qs
             return p
-        score = traps(p, qs, ans)["score"]
+        score = traps(p, qs, ans)["score" if P["adversarial"] == 1 else "score_few"]
         if score and (best is None or score > best[0]):
             best = (score, qs)
     if best is None:
         return None
     p["queries"] = best[1]
+    if P["min_pruned"]:
+        t = traps(p, best[1])
+        if len(t["decoys"]) + len(t["pruned"]) < P["min_pruned"]:
+            return None
     return p
 
 
@@ -520,7 +557,7 @@ def trap_hits(truth, t, rows):
         return {}
     wrong = t ^ rows
     return {"trap_wrong": {k: len({tuple(r) for r in v} & wrong)
-                           for k, v in truth["traps"].items() if k != "score"}}
+                           for k, v in truth["traps"].items() if not k.startswith("score")}}
 
 
 # --------------------------------------------------------------------------- storage
@@ -541,10 +578,11 @@ def git_commit():
 
 
 def param_prefix(P):
-    """t<N>op<ops>b<M>v<V>[s<K>[p|a]][g<p_obs>][c<p_copy>][r<p_read>][x], the probabilities
+    """t<N>op<ops>b<M>v<V>[s<K>[p|a]][g<p_obs>][c<p_copy>][r<p_read>][x|x2][q<max_queries>]
+    [a<min_answers>_<max_answers>], the probabilities
     in tenths; zero or default fields are left out. A problem is named <prefix>-<case>,
     with case 01, 02, ... per prefix; its seed is in problem.json. Selection rules
-    (min_given, min_copies, mixed) only reject seeds, so they are not in the name;
+    (min_given, min_copies, min_pruned, mixed) only reject seeds, so they are not in the name;
     ``adversarial`` changes which locations are asked, so it is (x)."""
     P = {**DEFAULTS, **P}
     s = f"t{P['threads']}op{P['ops']}b{P['blocks']}v{P['values']}"
@@ -557,7 +595,11 @@ def param_prefix(P):
     if P["p_read"] != DEFAULTS["p_read"]:
         s += f"r{round(P['p_read'] * 10)}"
     if P["adversarial"]:
-        s += "x"
+        s += "x" if P["adversarial"] == 1 else f"x{P['adversarial']}"
+    if P["max_queries"] != DEFAULTS["max_queries"]:
+        s += f"q{P['max_queries']}"
+    if (P["min_answers"], P["max_answers"]) != (DEFAULTS["min_answers"], DEFAULTS["max_answers"]):
+        s += f"a{P['min_answers']}_{P['max_answers']}"
     return s
 
 
@@ -729,7 +771,7 @@ def cmd_report(a):
             out.append(f"| {model} | " + " | ".join("{}/{}".format(*totals.get((s, model), [0, 0]))
                                                    for s in (False, True)) + " |")
         out.append("")
-    kinds = ["interval", "depth2", "depth1", "decoys"]
+    kinds = ["interval", "depth2", "depth1", "decoys", "pruned"]
     for effort in efforts:
         out += [f"## Effort {effort}, wrong rows by trap kind", "",
                 "Rows a model got wrong (missed or impossible), and how many fall on each trap",
@@ -755,7 +797,7 @@ def cmd_report(a):
                 f"N={P['threads']} ops≤{P['ops']} M={P['blocks']} values={P['values']} "
                 f"syncs={P['syncs']} ({nev} events) p_obs={P['p_obs']} p_copy={P['p_copy']}; "
                 f"{len(p['queries'])} asked, {truth['size']} answers, brute agrees: {truth['agree']}"
-                + "".join(f"; selected: {k}={P[k]}" for k in ("min_given", "min_copies", "mixed")
+                + "".join(f"; selected: {k}={P[k]}" for k in ("min_given", "min_copies", "min_pruned", "mixed")
                           if P.get(k, 0) > 0 and (k != "min_given" or P["p_obs"])), ""]
         rows = {}
         for d in sorted((ATTEMPTS / pd.name).glob("*/meta.json")) if (ATTEMPTS / pd.name).exists() else []:

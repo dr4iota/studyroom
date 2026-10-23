@@ -1,0 +1,48 @@
+{
+ "answers": [
+  [
+   0
+  ],
+  [
+   4
+  ]
+ ],
+ "size": 2,
+ "solver": {
+  "states": 1414,
+  "seconds": 0.007
+ },
+ "brute": {
+  "states": 36766,
+  "seconds": 0.148,
+  "answers": [
+   [
+    0
+   ],
+   [
+    4
+   ]
+  ]
+ },
+ "agree": true,
+ "traps": {
+  "interval": [],
+  "depth2": [],
+  "depth1": [
+   [
+    4
+   ]
+  ],
+  "decoys": [],
+  "pruned": [
+   [
+    1
+   ],
+   [
+    2
+   ]
+  ],
+  "score": 1,
+  "score_few": 9
+ }
+}

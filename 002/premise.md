@@ -62,6 +62,7 @@ rate is how often such a row was answered wrongly; for other rows it was 0.3%.
 | `depth2` | true rows that every execution reaches through at least 2 copy hops | 4.7% |
 | `depth1` | true rows that need exactly 1 copy hop | 2.3% |
 | `decoys` | impossible rows made of values each asked location can take on its own | 1.2% |
+| `pruned` | other impossible rows made of values that could reach each location if order were ignored: for a block, 0, the constants written to it and what its copies can carry | (new) |
 
 Decoys account for 82 of the 107 impossible rows models listed in those runs. The grade
 counts, for each kind, how many of its rows the answer got wrong (`trap_wrong`).
@@ -71,6 +72,14 @@ locations that pass the size filter, pick the one with the highest score,
 `10·interval + 2·depth2 + depth1 + decoys/2`, roughly the expected number of wrong rows.
 Reject the seed if no set scores above 0. This changes which locations are asked, so it
 is part of the name.
+
+**Few-answer selection** (`adversarial: 2`, suffix `x2`). For small answers, with
+`max_queries` 1–2 and `min_answers`/`max_answers` around 2–6. The score is `score_few`,
+`10·interval + 4·pruned + 3·decoys + 3·depth2 + depth1`, so it favours a few true values
+among many plausible ones. With `min_pruned`, a seed is rejected unless the chosen
+locations rule out at least that many plausible rows (decoys plus pruned). Example:
+`t3op5b3v5g6c8x2q1a2_4-02` asks only for the final y. 0, 1, 2, 4 and 5 can all reach y,
+but program order and the given results leave only 2 and 5.
 
 ## 3. Generator parameters
 
@@ -87,7 +96,8 @@ is part of the name.
 | `p_copy` | chance that a write copies an earlier unobserved read (if one exists) | 0 |
 | `min_given` | with `p_obs > 0`, the least number of given results | 1 |
 | `min_copies` | the least number of writes that copy a read | 0 |
-| `adversarial` | 1: ask the locations with the most traps (§2) | 0 |
+| `adversarial` | 1: ask the locations with the most traps (§2); 2: the same for few answers, with `score_few` | 0 |
+| `min_pruned` | the asked locations rule out at least this many plausible rows (§2) | 0 |
 | `mixed` | 1: every thread both reads and writes, at least half the threads start with a write, and every block is written at least once and used by at least two threads | 0 |
 | `max_queries` | asked locations, 1..this | 3 |
 | `min_answers`, `max_answers` | accepted answer-set size | 12, 99 |
@@ -100,13 +110,14 @@ if its thread has read something earlier. So `c8` alone gives 0–3 copies per p
 `min_copies` sets a floor. Random traces can also be logically weak: a thread of only reads
 or only writes, or a block that one thread uses alone. `mixed` rejects those.
 
-`min_given`, `min_copies` and `mixed` are **selection rules**: they only reject seeds and never
+`min_given`, `min_copies`, `min_pruned` and `mixed` are **selection rules**: they only reject seeds and never
 change a draw. An accepted seed gives the same trace with or without them, so they are not
 part of the name. The report lists them for each problem as "selected".
 
 **Names.** A problem is named `<parameters>-<case>`. The parameter part is
 `t<threads>op<ops>b<blocks>v<values>`, followed by `s<syncs>`, `g<p_obs>`, `c<p_copy>`,
-`r<p_read>` and `x` (adversarial) when they are nonzero or not the default. Probabilities are in tenths. `s` takes
+`r<p_read>`, `x` or `x2` (adversarial), `q<max_queries>` and `a<min_answers>_<max_answers>`
+when they are nonzero or not the default. Probabilities are in tenths. `s` takes
 a suffix `p` (pairs only) or `a` (barriers only) when `relations` is restricted. The case
 number counts problems with the same parameters (`01`, `02`, …). The seed is recorded in
 `problem.json`.
