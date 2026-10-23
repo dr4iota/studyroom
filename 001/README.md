@@ -1,5 +1,7 @@
 # 001 — Trace analysis for asynchronous multi-threaded block I/O
 
+**Category: LLM coding performance test.**
+
 Threads issue asynchronous reads and writes on storage blocks, optionally coupled by
 sync points. Given such a trace, the study asks:
 
@@ -7,6 +9,10 @@ sync points. Given such a trace, the study asks:
 - Exactly which values can each read have returned, and which contents can each
   block end with? The answer must be "no more, no less".
 - How do partially observed read results narrow both?
+
+Models write code that answers these questions; their attempts live under
+`python/attempts/` and are graded by the harness. To grade them, the study surveys the
+known algorithms and builds a reference implementation and oracles.
 
 ## Reading order
 
