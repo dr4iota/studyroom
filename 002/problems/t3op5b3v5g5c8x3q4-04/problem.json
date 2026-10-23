@@ -1,0 +1,135 @@
+{
+ "id": "t3op5b3v5g5c8x3q4-04",
+ "seed": 1696997359,
+ "params": {
+  "threads": 3,
+  "ops": 5,
+  "blocks": 3,
+  "values": 5,
+  "syncs": 0,
+  "relations": "pair,at",
+  "p_read": 0.5,
+  "p_obs": 0.5,
+  "p_copy": 0.8,
+  "min_given": 2,
+  "min_copies": 2,
+  "min_pruned": 0,
+  "min_deep": 1,
+  "adversarial": 3,
+  "mixed": 1,
+  "max_queries": 4,
+  "min_answers": 2,
+  "max_answers": 5
+ },
+ "blocks": 3,
+ "syncs": 0,
+ "threads": [
+  {
+   "name": "A",
+   "ops": [
+    {
+     "id": "A1",
+     "kind": "read",
+     "block": 2,
+     "obs": null
+    },
+    {
+     "id": "A2",
+     "kind": "read",
+     "block": 2,
+     "obs": null
+    },
+    {
+     "id": "A3",
+     "kind": "write",
+     "block": 0,
+     "data": "A1"
+    },
+    {
+     "id": "A4",
+     "kind": "read",
+     "block": 2,
+     "obs": null
+    },
+    {
+     "id": "A5",
+     "kind": "write",
+     "block": 1,
+     "data": 3
+    }
+   ],
+   "events": []
+  },
+  {
+   "name": "B",
+   "ops": [
+    {
+     "id": "B1",
+     "kind": "write",
+     "block": 2,
+     "data": 5
+    },
+    {
+     "id": "B2",
+     "kind": "read",
+     "block": 0,
+     "obs": null
+    },
+    {
+     "id": "B3",
+     "kind": "write",
+     "block": 0,
+     "data": "B2"
+    },
+    {
+     "id": "B4",
+     "kind": "read",
+     "block": 0,
+     "obs": 0
+    }
+   ],
+   "events": []
+  },
+  {
+   "name": "C",
+   "ops": [
+    {
+     "id": "C1",
+     "kind": "write",
+     "block": 1,
+     "data": 4
+    },
+    {
+     "id": "C2",
+     "kind": "write",
+     "block": 2,
+     "data": 5
+    },
+    {
+     "id": "C3",
+     "kind": "write",
+     "block": 2,
+     "data": 1
+    },
+    {
+     "id": "C4",
+     "kind": "read",
+     "block": 0,
+     "obs": 0
+    }
+   ],
+   "events": []
+  }
+ ],
+ "queries": [
+  {
+   "read": "A4"
+  },
+  {
+   "read": "B2"
+  },
+  {
+   "final": 1
+  }
+ ]
+}
