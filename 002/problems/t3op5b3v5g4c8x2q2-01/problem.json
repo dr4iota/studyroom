@@ -1,0 +1,143 @@
+{
+ "id": "t3op5b3v5g4c8x2q2-01",
+ "seed": 1934327429,
+ "params": {
+  "threads": 3,
+  "ops": 5,
+  "blocks": 3,
+  "values": 5,
+  "syncs": 0,
+  "relations": "pair,at",
+  "p_read": 0.5,
+  "p_obs": 0.4,
+  "p_copy": 0.8,
+  "min_given": 2,
+  "min_copies": 2,
+  "min_pruned": 6,
+  "adversarial": 2,
+  "mixed": 1,
+  "max_queries": 2,
+  "min_answers": 3,
+  "max_answers": 6
+ },
+ "blocks": 3,
+ "syncs": 0,
+ "threads": [
+  {
+   "name": "A",
+   "ops": [
+    {
+     "id": "A1",
+     "kind": "read",
+     "block": 0,
+     "obs": null
+    },
+    {
+     "id": "A2",
+     "kind": "read",
+     "block": 2,
+     "obs": 0
+    },
+    {
+     "id": "A3",
+     "kind": "read",
+     "block": 0,
+     "obs": 5
+    },
+    {
+     "id": "A4",
+     "kind": "write",
+     "block": 1,
+     "data": "A1"
+    },
+    {
+     "id": "A5",
+     "kind": "read",
+     "block": 1,
+     "obs": null
+    }
+   ],
+   "events": []
+  },
+  {
+   "name": "B",
+   "ops": [
+    {
+     "id": "B1",
+     "kind": "write",
+     "block": 1,
+     "data": 2
+    },
+    {
+     "id": "B2",
+     "kind": "write",
+     "block": 0,
+     "data": 5
+    },
+    {
+     "id": "B3",
+     "kind": "write",
+     "block": 1,
+     "data": 1
+    },
+    {
+     "id": "B4",
+     "kind": "read",
+     "block": 1,
+     "obs": null
+    },
+    {
+     "id": "B5",
+     "kind": "write",
+     "block": 2,
+     "data": "B4"
+    }
+   ],
+   "events": []
+  },
+  {
+   "name": "C",
+   "ops": [
+    {
+     "id": "C1",
+     "kind": "write",
+     "block": 1,
+     "data": 1
+    },
+    {
+     "id": "C2",
+     "kind": "read",
+     "block": 0,
+     "obs": null
+    },
+    {
+     "id": "C3",
+     "kind": "read",
+     "block": 2,
+     "obs": null
+    },
+    {
+     "id": "C4",
+     "kind": "read",
+     "block": 2,
+     "obs": 0
+    },
+    {
+     "id": "C5",
+     "kind": "read",
+     "block": 1,
+     "obs": null
+    }
+   ],
+   "events": []
+  }
+ ],
+ "queries": [
+  {
+   "read": "C3"
+  },
+  {
+   "final": 2
+  }
+ ]
+}

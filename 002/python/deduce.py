@@ -672,12 +672,13 @@ def git_commit():
 
 
 def param_prefix(P):
-    """t<N>op<ops>b<M>v<V>[s<K>[p|a]][g<p_obs>][c<p_copy>][r<p_read>][x|x2|x3][q<max_queries>]
-    [a<min_answers>_<max_answers>], the probabilities
+    """t<N>op<ops>b<M>v<V>[s<K>[p|a]][g<p_obs>][c<p_copy>][r<p_read>][x|x2|x3][q<max_queries>],
+    the probabilities
     in tenths; zero or default fields are left out. A problem is named <prefix>-<case>,
     with case 01, 02, ... per prefix; its seed is in problem.json. Selection rules
     (min_given, min_copies, min_pruned, min_deep, mixed) only reject seeds, so they are not in the name;
-    ``adversarial`` changes which locations are asked, so it is (x)."""
+    ``adversarial`` and ``max_queries`` change which locations are asked, so they are in
+    it; the answer-size bounds also do, but are recorded only in problem.json."""
     P = {**DEFAULTS, **P}
     s = f"t{P['threads']}op{P['ops']}b{P['blocks']}v{P['values']}"
     if P["syncs"]:
@@ -692,8 +693,6 @@ def param_prefix(P):
         s += "x" if P["adversarial"] == 1 else f"x{P['adversarial']}"  # x, x2, x3
     if P["max_queries"] != DEFAULTS["max_queries"]:
         s += f"q{P['max_queries']}"
-    if (P["min_answers"], P["max_answers"]) != (DEFAULTS["min_answers"], DEFAULTS["max_answers"]):
-        s += f"a{P['min_answers']}_{P['max_answers']}"
     return s
 
 
@@ -899,7 +898,10 @@ def cmd_report(a):
                 f"syncs={P['syncs']} ({nev} events) p_obs={P['p_obs']} p_copy={P['p_copy']}; "
                 f"{len(p['queries'])} asked, {truth['size']} answers, brute agrees: {truth['agree']}"
                 + "".join(f"; selected: {k}={P[k]}" for k in ("min_given", "min_copies", "min_pruned", "min_deep", "mixed")
-                          if P.get(k, 0) > 0 and (k != "min_given" or P["p_obs"])), ""]
+                          if P.get(k, 0) > 0 and (k != "min_given" or P["p_obs"]))
+                + (f"; answers {P['min_answers']}..{P['max_answers']}"
+                   if (P["min_answers"], P["max_answers"]) != (DEFAULTS["min_answers"], DEFAULTS["max_answers"])
+                   else ""), ""]
         rows = {}
         for d in sorted((ATTEMPTS / pd.name).glob("*/meta.json")) if (ATTEMPTS / pd.name).exists() else []:
             d = d.parent

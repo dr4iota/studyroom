@@ -47,24 +47,24 @@ listed, `∅` is no readable answer.
 | t3op5b2v3c8-03 | 17 | ✓ | ✓ ✓ −0+4 | −0+1 ✓ −1+0 | −0+7 ✓ ✓ |
 | t3op5b2v3g3c5-01 | 12 | ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ |
 | t3op5b2v3g3c5-02 | 16 | ✓ | −2+0 −0+2 ✓ | −2+0 −0+2 −3+0 | −3+0 ✓ ✓ |
-| t3op5b3v5c8x3q1a2_4-01 | 3 | ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ |
-| t3op5b3v5c8x3q1a2_4-02 | 2 | ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ | −0+1 ✓ ✓ |
-| t3op5b3v5c8x2q1a2_4-01 | 3 | ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ | −1+0 −1+0 ✓ |
-| t3op5b3v5c8x2q1a2_4-02 | 2 | ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ |
+| t3op5b3v5c8x3q1-01 | 3 | ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ |
+| t3op5b3v5c8x3q1-02 | 2 | ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ | −0+1 ✓ ✓ |
+| t3op5b3v5c8x2q1-01 | 3 | ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ | −1+0 −1+0 ✓ |
+| t3op5b3v5c8x2q1-02 | 2 | ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ |
 | t3op5b3v5c8x-01 | 21 | −0+1 −0+1 −0+1 | −0+1 ✓ −3+1 −1+1 ✓ −0+1 ✓ ✓ −2+1 | −0+1 −0+6 ✓ −0+1 −1+0 ✓ −3+0 −1+0 −1+0 | ✓ ✓ ✓ ✓ −2+0 ✓ ✓ ✓ ✓ |
 | t3op5b3v5c8x-02 | 32 | ✓ | ✓ ✓ ✓ | ✓ −1+0 ✓ | ✓ −3+0 ✓ |
 | t3op5b3v5c8x-03 | 29 | ✓ | ✓ ✓ −0+1 | ✓ −0+1 −3+0 | ✓ ✓ ✓ |
 | t3op5b3v5c8-01 | 12 | ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ |
 | t3op5b3v5c8-02 | 14 | −0+10 | ✓ ✓ ✓ | ✓ −0+6 ✓ | ✓ −2+0 ✓ |
 | t3op5b3v5c8-03 | 20 | ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ | −0+2 ✓ ✓ |
-| t3op5b3v5g4c8x2q2a3_6-01 | 3 | ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ |
-| t3op5b3v5g4c8x2q2a3_6-02 | 5 | −0+3 | ✓ ✓ ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ |
-| t3op5b3v5g4c8x3q1a2_4-01 | 2 | ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ |
-| t3op5b3v5g4c8x3q1a2_4-02 | 3 | ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ |
-| t3op5b3v5g4c8x3q2a3_6-01 | 3 | ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ |
-| t3op5b3v5g4c8x3q2a3_6-02 | 6 | ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ |
-| t3op5b3v5g6c8x2q1a2_4-01 | 2 | ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ |
-| t3op5b3v5g6c8x2q1a2_4-02 | 2 | ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ |
+| t3op5b3v5g4c8x2q2-01 | 3 | ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ |
+| t3op5b3v5g4c8x2q2-02 | 5 | −0+3 | ✓ ✓ ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ |
+| t3op5b3v5g4c8x3q1-01 | 2 | ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ |
+| t3op5b3v5g4c8x3q1-02 | 3 | ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ |
+| t3op5b3v5g4c8x3q2-01 | 3 | ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ |
+| t3op5b3v5g4c8x3q2-02 | 6 | ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ |
+| t3op5b3v5g6c8x2q1-01 | 2 | ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ |
+| t3op5b3v5g6c8x2q1-02 | 2 | ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ |
 | t3op6b2v3c8-01 | 12 | ✓ | −2+0 ✓ −2+0 | ✓ ✓ ✓ | ✓ ✓ ✓ |
 | t3op6b2v3c8-02 | 15 | ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ | −6+0 ✓ ✓ |
 | t3op6b2v3c8-03 | 16 | ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ |
@@ -575,9 +575,9 @@ N=3 ops≤5 M=2 values=3 syncs=0 (0 events) p_obs=0.3 p_copy=0.5; 3 asked, 16 an
 | opus | low | -2 +0, -0 +2, ✓ | 2285, 1502, 2815 |
 | sonnet | low | -2 +0, -0 +2, -3 +0 | 1895, 1809, 2396 |
 
-## t3op5b3v5c8x3q1a2_4-01
+## t3op5b3v5c8x3q1-01
 
-N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 1 asked, 3 answers, brute agrees: True; selected: min_copies=2; selected: min_deep=1; selected: mixed=1
+N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 1 asked, 3 answers, brute agrees: True; selected: min_copies=2; selected: min_deep=1; selected: mixed=1; answers 2..4
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
@@ -586,9 +586,9 @@ N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 1 asked, 3 ans
 | opus | low | ✓, ✓, ✓ | 250, 303, 219 |
 | sonnet | low | ✓, ✓, ✓ | 488, 418, 420 |
 
-## t3op5b3v5c8x3q1a2_4-02
+## t3op5b3v5c8x3q1-02
 
-N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 1 asked, 2 answers, brute agrees: True; selected: min_copies=2; selected: min_deep=1; selected: mixed=1
+N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 1 asked, 2 answers, brute agrees: True; selected: min_copies=2; selected: min_deep=1; selected: mixed=1; answers 2..4
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
@@ -597,9 +597,9 @@ N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 1 asked, 2 ans
 | opus | low | ✓, ✓, ✓ | 213, 251, 228 |
 | sonnet | low | ✓, ✓, ✓ | 0, 315, 0 |
 
-## t3op5b3v5c8x2q1a2_4-01
+## t3op5b3v5c8x2q1-01
 
-N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 1 asked, 3 answers, brute agrees: True; selected: min_copies=2; selected: min_pruned=2; selected: mixed=1
+N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 1 asked, 3 answers, brute agrees: True; selected: min_copies=2; selected: min_pruned=2; selected: mixed=1; answers 2..4
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
@@ -608,9 +608,9 @@ N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 1 asked, 3 ans
 | opus | low | ✓, ✓, ✓ | 99, 0, 0 |
 | sonnet | low | ✓, ✓, ✓ | 0, 0, 0 |
 
-## t3op5b3v5c8x2q1a2_4-02
+## t3op5b3v5c8x2q1-02
 
-N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 1 asked, 2 answers, brute agrees: True; selected: min_copies=2; selected: min_pruned=2; selected: mixed=1
+N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 1 asked, 2 answers, brute agrees: True; selected: min_copies=2; selected: min_pruned=2; selected: mixed=1; answers 2..4
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
@@ -685,9 +685,9 @@ N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 3 asked, 20 an
 | opus | low | ✓, ✓, ✓ | 1106, 839, 1038 |
 | sonnet | low | ✓, ✓, ✓ | 1621, 1598, 1633 |
 
-## t3op5b3v5g4c8x2q2a3_6-01
+## t3op5b3v5g4c8x2q2-01
 
-N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.4 p_copy=0.8; 2 asked, 3 answers, brute agrees: True; selected: min_given=2; selected: min_copies=2; selected: min_pruned=6; selected: mixed=1
+N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.4 p_copy=0.8; 2 asked, 3 answers, brute agrees: True; selected: min_given=2; selected: min_copies=2; selected: min_pruned=6; selected: mixed=1; answers 3..6
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
@@ -696,9 +696,9 @@ N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.4 p_copy=0.8; 2 asked, 3 ans
 | opus | low | ✓, ✓, ✓ | 394, 456, 491 |
 | sonnet | low | ✓, ✓, ✓ | 646, 715, 731 |
 
-## t3op5b3v5g4c8x2q2a3_6-02
+## t3op5b3v5g4c8x2q2-02
 
-N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.4 p_copy=0.8; 2 asked, 5 answers, brute agrees: True; selected: min_given=2; selected: min_copies=2; selected: min_pruned=6; selected: mixed=1
+N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.4 p_copy=0.8; 2 asked, 5 answers, brute agrees: True; selected: min_given=2; selected: min_copies=2; selected: min_pruned=6; selected: mixed=1; answers 3..6
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
@@ -707,9 +707,9 @@ N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.4 p_copy=0.8; 2 asked, 5 ans
 | opus | low | ✓, ✓, ✓ | 461, 507, 481 |
 | sonnet | low | ✓, ✓, ✓ | 1054, 876, 834 |
 
-## t3op5b3v5g4c8x3q1a2_4-01
+## t3op5b3v5g4c8x3q1-01
 
-N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.4 p_copy=0.8; 1 asked, 2 answers, brute agrees: True; selected: min_given=2; selected: min_copies=2; selected: min_deep=1; selected: mixed=1
+N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.4 p_copy=0.8; 1 asked, 2 answers, brute agrees: True; selected: min_given=2; selected: min_copies=2; selected: min_deep=1; selected: mixed=1; answers 2..4
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
@@ -718,9 +718,9 @@ N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.4 p_copy=0.8; 1 asked, 2 ans
 | opus | low | ✓, ✓, ✓ | 431, 445, 510 |
 | sonnet | low | ✓, ✓, ✓ | 993, 866, 638 |
 
-## t3op5b3v5g4c8x3q1a2_4-02
+## t3op5b3v5g4c8x3q1-02
 
-N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.4 p_copy=0.8; 1 asked, 3 answers, brute agrees: True; selected: min_given=2; selected: min_copies=2; selected: min_deep=1; selected: mixed=1
+N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.4 p_copy=0.8; 1 asked, 3 answers, brute agrees: True; selected: min_given=2; selected: min_copies=2; selected: min_deep=1; selected: mixed=1; answers 2..4
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
@@ -729,9 +729,9 @@ N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.4 p_copy=0.8; 1 asked, 3 ans
 | opus | low | ✓, ✓, ✓ | 311, 358, 307 |
 | sonnet | low | ✓, ✓, ✓ | 546, 599, 685 |
 
-## t3op5b3v5g4c8x3q2a3_6-01
+## t3op5b3v5g4c8x3q2-01
 
-N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.4 p_copy=0.8; 2 asked, 3 answers, brute agrees: True; selected: min_given=2; selected: min_copies=2; selected: min_deep=1; selected: mixed=1
+N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.4 p_copy=0.8; 2 asked, 3 answers, brute agrees: True; selected: min_given=2; selected: min_copies=2; selected: min_deep=1; selected: mixed=1; answers 3..6
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
@@ -740,9 +740,9 @@ N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.4 p_copy=0.8; 2 asked, 3 ans
 | opus | low | ✓, ✓, ✓ | 460, 418, 466 |
 | sonnet | low | ✓, ✓, ✓ | 715, 653, 766 |
 
-## t3op5b3v5g4c8x3q2a3_6-02
+## t3op5b3v5g4c8x3q2-02
 
-N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.4 p_copy=0.8; 2 asked, 6 answers, brute agrees: True; selected: min_given=2; selected: min_copies=2; selected: min_deep=1; selected: mixed=1
+N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.4 p_copy=0.8; 2 asked, 6 answers, brute agrees: True; selected: min_given=2; selected: min_copies=2; selected: min_deep=1; selected: mixed=1; answers 3..6
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
@@ -751,9 +751,9 @@ N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.4 p_copy=0.8; 2 asked, 6 ans
 | opus | low | ✓, ✓, ✓ | 591, 639, 787 |
 | sonnet | low | ✓, ✓, ✓ | 973, 1067, 1037 |
 
-## t3op5b3v5g6c8x2q1a2_4-01
+## t3op5b3v5g6c8x2q1-01
 
-N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.6 p_copy=0.8; 1 asked, 2 answers, brute agrees: True; selected: min_given=2; selected: min_copies=2; selected: min_pruned=2; selected: mixed=1
+N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.6 p_copy=0.8; 1 asked, 2 answers, brute agrees: True; selected: min_given=2; selected: min_copies=2; selected: min_pruned=2; selected: mixed=1; answers 2..4
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
@@ -762,9 +762,9 @@ N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.6 p_copy=0.8; 1 asked, 2 ans
 | opus | low | ✓, ✓, ✓ | 217, 248, 247 |
 | sonnet | low | ✓, ✓, ✓ | 507, 500, 393 |
 
-## t3op5b3v5g6c8x2q1a2_4-02
+## t3op5b3v5g6c8x2q1-02
 
-N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.6 p_copy=0.8; 1 asked, 2 answers, brute agrees: True; selected: min_given=2; selected: min_copies=2; selected: min_pruned=2; selected: mixed=1
+N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.6 p_copy=0.8; 1 asked, 2 answers, brute agrees: True; selected: min_given=2; selected: min_copies=2; selected: min_pruned=2; selected: mixed=1; answers 2..4
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|

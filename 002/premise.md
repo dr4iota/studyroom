@@ -78,7 +78,7 @@ is part of the name.
 `10·interval + 4·pruned + 3·decoys + 3·depth2 + depth1`, so it favours a few true values
 among many plausible ones. With `min_pruned`, a seed is rejected unless the chosen
 locations rule out at least that many plausible rows (decoys plus pruned). Example:
-`t3op5b3v5g6c8x2q1a2_4-02` asks only for the final y. 0, 1, 2, 4 and 5 can all reach y,
+`t3op5b3v5g6c8x2q1-02` asks only for the final y. 0, 1, 2, 4 and 5 can all reach y,
 but program order and the given results leave only 2 and 5.
 
 ## 3. Generator parameters
@@ -136,8 +136,9 @@ many rows needing 3 or more groups. `truth.json` records each ruled-out row's gr
 
 **Names.** A problem is named `<parameters>-<case>`. The parameter part is
 `t<threads>op<ops>b<blocks>v<values>`, followed by `s<syncs>`, `g<p_obs>`, `c<p_copy>`,
-`r<p_read>`, `x`, `x2` or `x3` (adversarial), `q<max_queries>` and `a<min_answers>_<max_answers>`
-when they are nonzero or not the default. Probabilities are in tenths. `s` takes
+`r<p_read>`, `x`, `x2` or `x3` (adversarial) and `q<max_queries>` when they are nonzero or
+not the default. The answer-size bounds also change which locations are asked, but only
+`problem.json` and the report's details record them. Probabilities are in tenths. `s` takes
 a suffix `p` (pairs only) or `a` (barriers only) when `relations` is restricted. The case
 number counts problems with the same parameters (`01`, `02`, …). The seed is recorded in
 `problem.json`.
