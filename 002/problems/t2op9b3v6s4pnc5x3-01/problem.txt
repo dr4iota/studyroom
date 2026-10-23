@@ -1,0 +1,33 @@
+Blocks: x, y, z.
+Sync points: P, Q, R, S.
+Thread A:
+  -- after S
+  A1: write 6 to z
+  A2: write 6 to y
+  -- after R
+  A3: read y
+  -- after P
+  A4: read y
+  -- after Q
+  A5: write the value read by A4 to x
+  A6: read z
+  A7: write 4 to y
+  A8: read z
+Thread B:
+  B1: write 5 to x
+  B2: read z
+  -- before P
+  B3: write the value read by B2 to y
+  -- before R
+  B4: write 6 to y
+  -- before Q
+  B5: write 4 to y
+  B6: read y
+  B7: write 1 to z
+  -- before S
+  B8: write the value read by B2 to y
+  B9: read x
+Asked:
+  Q1: the value returned by A3
+  Q2: the value returned by A8
+  Q3: the value returned by B9

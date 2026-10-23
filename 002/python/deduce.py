@@ -49,6 +49,7 @@ DEFAULTS = {
     "values": 3,         # write constants are drawn from 1..values (repeats allowed)
     "syncs": 0,          # K sync points
     "relations": "pair,at",  # pair = before in one thread, after in another; at = barrier
+    "inside": 1,         # 0: sync lines only between operations, never inside one
     "p_read": 0.5,       # chance that an operation is a read
     "p_obs": 0.0,        # chance that a read's result is given
     "p_copy": 0.0,       # chance that a write copies an earlier unobserved read of its thread
@@ -378,7 +379,8 @@ def copy_sources(p):
 
 def refutations(p, queries, rows, poss=None):
     """For each impossible row, the constraint groups it needs: those whose removal alone
-    (solve_relaxed) makes it possible. Groups: "given", "order:<thread>", "copies". A row
+    (solve_relaxed) makes it possible. Groups: "given", "order:<thread>", "copies", and
+    "sync:<point>" (that sync point's lines removed). A row
     needing none is ruled out by several redundant reasons."""
     ops = flat_ops(p)
     groups = {}
@@ -390,6 +392,11 @@ def refutations(p, queries, rows, poss=None):
     poss = copy_sources(p) if poss is None else poss
     if poss:
         groups["copies"] = solve_relaxed(p, queries, decouple=poss)
+    for h in range(p["syncs"]):
+        q = json.loads(json.dumps(p))
+        for th in q["threads"]:
+            th["events"] = [e for e in th["events"] if e["sync"] != h]
+        groups[f"sync:{SYNCS[h]}"] = solve(q, queries)[0]
     return {r: sorted(g for g, ans in groups.items() if r in ans) for r in rows}
 
 
@@ -416,6 +423,11 @@ def flow_candidates(p, queries):
             for q in queries]
 
 
+def needs_sync(p, groups):
+    """With sync points, only rows that a sync point helps rule out count as traps."""
+    return not p["syncs"] or any(g.startswith("sync:") for g in groups)
+
+
 def traps(p, queries, answers=None, poss=None):
     """The combinations a reader is likely to get wrong, by kind:
     - interval: combinations that change when a sync line inside an operation is read as
@@ -429,7 +441,8 @@ def traps(p, queries, answers=None, poss=None):
     ``score_few`` is for small answers: plausible rows that are ruled out count most.
     ``refutation`` gives, for each decoy and pruned row, the constraint groups it needs
     (refutations()). ``score_deep`` weighs ruled-out rows by how many groups they need and
-    true rows by copy depth, at about 4x the rates at which models got such rows wrong in
+    true rows by copy depth (with sync points, only rows a sync point helps rule out count),
+    at about 4x the rates at which models got such rows wrong in
     the first 690 runs: 3.98% for 3+ groups, 0.69% for 2, 0.49% for 1, 0% for none; 4.7%
     and 0.8% for copy depth 2 and 1."""
     answers = answers if answers is not None else solve(p, queries)[0]
@@ -452,7 +465,8 @@ def traps(p, queries, answers=None, poss=None):
         + 3 * len(kinds["depth2"]) + len(kinds["depth1"])
     ref = refutations(p, queries, kinds["decoys"] | kinds["pruned"], poss)
     out["refutation"] = sorted([list(r), g] for r, g in ref.items())
-    by = [sum(1 for g in ref.values() if min(len(g), 3) == d) for d in (1, 2, 3)]
+    scored = [g for g in ref.values() if needs_sync(p, g)]
+    by = [sum(1 for g in scored if min(len(g), 3) == d) for d in (1, 2, 3)]
     out["score_deep"] = 16 * by[2] + 3 * by[1] + 2 * by[0] + 19 * len(kinds["depth2"]) + 3 * len(kinds["depth1"])
     return out
 
@@ -461,11 +475,15 @@ def traps(p, queries, answers=None, poss=None):
 
 
 def well_mixed(threads, M):
-    """Every thread both reads and writes, at least half start with a write, and every
-    block is written and used by at least two threads."""
+    """Every thread both reads and writes, at least half start with a write, every block
+    is written and used by at least two threads, and every sync line orders something."""
     if any(len({o["kind"] for o in th["ops"]}) < 2 for th in threads):
         return False
     if 2 * sum(th["ops"][0]["kind"] == "write" for th in threads) < len(threads):
+        return False
+    # A sync line that orders nothing: "before" above the first step, "after" below the last.
+    if any(e["rel"] == "before" and e["slot"] == 0 or e["rel"] == "after" and e["slot"] == 2 * len(th["ops"])
+           for th in threads for e in th["events"]):
         return False
     for b in range(M):
         users = [th for th in threads if any(o["block"] == b for o in th["ops"])]
@@ -562,7 +580,8 @@ def generate(params, seed):
             marks = [(t, "at") for t in rng.sample(range(N), rng.randint(2, N))]
         for t, rel in marks:
             th = threads[t]
-            th["events"].append({"slot": rng.randint(0, 2 * len(th["ops"])), "rel": rel, "sync": h})
+            slot = rng.randint(0, 2 * len(th["ops"])) if P["inside"] else 2 * rng.randint(0, len(th["ops"]))
+            th["events"].append({"slot": slot, "rel": rel, "sync": h})
     for th in threads:
         th["events"].sort(key=lambda e: e["slot"])
 
@@ -617,7 +636,7 @@ def generate(params, seed):
         t = traps(p, best[1], poss=poss)
         if len(t["decoys"]) + len(t["pruned"]) < P["min_pruned"]:
             return None
-        if sum(len(g) >= 3 for _, g in t["refutation"]) < P["min_deep"]:
+        if sum(len(g) >= 3 and needs_sync(p, g) for _, g in t["refutation"]) < P["min_deep"]:
             return None
     return p
 
@@ -744,7 +763,7 @@ def git_commit():
 
 
 def param_prefix(P):
-    """t<N>op<ops>b<M>v<V>[s<K>[p|a]][g<p_obs>][c<p_copy>][r<p_read>][x|x2|x3][q<max_queries>],
+    """t<N>op<ops>b<M>v<V>[s<K>[p|a][n]][g<p_obs>][c<p_copy>][r<p_read>][x|x2|x3][q<max_queries>],
     the probabilities
     in tenths; zero or default fields are left out. A problem is named <prefix>-<case>,
     with case 01, 02, ... per prefix; its seed is in problem.json. Selection rules
@@ -756,6 +775,8 @@ def param_prefix(P):
     if P["syncs"]:
         rels = set(P["relations"].split(","))
         s += f"s{P['syncs']}" + ("" if rels == {"pair", "at"} else "p" if rels == {"pair"} else "a")
+        if not P["inside"]:
+            s += "n"
     for key, letter in (("p_obs", "g"), ("p_copy", "c")):
         if P[key]:
             s += f"{letter}{round(P[key] * 10)}"
@@ -816,6 +837,11 @@ def cmd_gen(a):
         "agree": None if bans is None else bans == ans,
         "traps": traps(p, q, ans),
     }
+    if p["syncs"]:
+        free = json.loads(json.dumps(p))
+        for th in free["threads"]:
+            th["events"] = []
+        truth["without_syncs"] = len(solve(free, q)[0])
     d = PROBLEMS / pid
     d.mkdir(parents=True)
     dump(d / "problem.json", p)

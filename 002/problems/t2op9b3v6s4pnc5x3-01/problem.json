@@ -1,0 +1,196 @@
+{
+ "id": "t2op9b3v6s4pnc5x3-01",
+ "seed": 3851198073,
+ "params": {
+  "threads": 2,
+  "ops": 9,
+  "blocks": 3,
+  "values": 6,
+  "syncs": 4,
+  "relations": "pair",
+  "inside": 0,
+  "p_read": 0.5,
+  "p_obs": 0.0,
+  "p_copy": 0.5,
+  "min_given": 1,
+  "min_copies": 3,
+  "min_pruned": 0,
+  "min_deep": 1,
+  "adversarial": 3,
+  "mixed": 1,
+  "max_queries": 3,
+  "min_answers": 2,
+  "max_answers": 5
+ },
+ "blocks": 3,
+ "syncs": 4,
+ "threads": [
+  {
+   "name": "A",
+   "ops": [
+    {
+     "id": "A1",
+     "kind": "write",
+     "block": 2,
+     "data": 6
+    },
+    {
+     "id": "A2",
+     "kind": "write",
+     "block": 1,
+     "data": 6
+    },
+    {
+     "id": "A3",
+     "kind": "read",
+     "block": 1,
+     "obs": null
+    },
+    {
+     "id": "A4",
+     "kind": "read",
+     "block": 1,
+     "obs": null
+    },
+    {
+     "id": "A5",
+     "kind": "write",
+     "block": 0,
+     "data": "A4"
+    },
+    {
+     "id": "A6",
+     "kind": "read",
+     "block": 2,
+     "obs": null
+    },
+    {
+     "id": "A7",
+     "kind": "write",
+     "block": 1,
+     "data": 4
+    },
+    {
+     "id": "A8",
+     "kind": "read",
+     "block": 2,
+     "obs": null
+    }
+   ],
+   "events": [
+    {
+     "slot": 0,
+     "rel": "after",
+     "sync": 3
+    },
+    {
+     "slot": 4,
+     "rel": "after",
+     "sync": 2
+    },
+    {
+     "slot": 6,
+     "rel": "after",
+     "sync": 0
+    },
+    {
+     "slot": 8,
+     "rel": "after",
+     "sync": 1
+    }
+   ]
+  },
+  {
+   "name": "B",
+   "ops": [
+    {
+     "id": "B1",
+     "kind": "write",
+     "block": 0,
+     "data": 5
+    },
+    {
+     "id": "B2",
+     "kind": "read",
+     "block": 2,
+     "obs": null
+    },
+    {
+     "id": "B3",
+     "kind": "write",
+     "block": 1,
+     "data": "B2"
+    },
+    {
+     "id": "B4",
+     "kind": "write",
+     "block": 1,
+     "data": 6
+    },
+    {
+     "id": "B5",
+     "kind": "write",
+     "block": 1,
+     "data": 4
+    },
+    {
+     "id": "B6",
+     "kind": "read",
+     "block": 1,
+     "obs": null
+    },
+    {
+     "id": "B7",
+     "kind": "write",
+     "block": 2,
+     "data": 1
+    },
+    {
+     "id": "B8",
+     "kind": "write",
+     "block": 1,
+     "data": "B2"
+    },
+    {
+     "id": "B9",
+     "kind": "read",
+     "block": 0,
+     "obs": null
+    }
+   ],
+   "events": [
+    {
+     "slot": 4,
+     "rel": "before",
+     "sync": 0
+    },
+    {
+     "slot": 6,
+     "rel": "before",
+     "sync": 2
+    },
+    {
+     "slot": 8,
+     "rel": "before",
+     "sync": 1
+    },
+    {
+     "slot": 14,
+     "rel": "before",
+     "sync": 3
+    }
+   ]
+  }
+ ],
+ "queries": [
+  {
+   "read": "A3"
+  },
+  {
+   "read": "A8"
+  },
+  {
+   "read": "B9"
+  }
+ ]
+}

@@ -91,6 +91,7 @@ but program order and the given results leave only 2 and 5.
 | `values` | constants `1..V` | 3 |
 | `syncs` | `K`; each is a before/after pair on two threads or an `at` barrier on 2+ threads | 0 |
 | `relations` | allowed sync kinds, `pair,at` | both |
+| `inside` | 1: a sync line may sit inside an operation, between its start and end; 0: only between operations | 1 |
 | `p_read` | chance that an operation is a read | 0.5 |
 | `p_obs` | chance that a read's result is given | 0 |
 | `p_copy` | chance that a write copies an earlier unobserved read (if one exists) | 0 |
@@ -99,7 +100,7 @@ but program order and the given results leave only 2 and 5.
 | `adversarial` | 1: ask the locations with the most traps (§2); 2: the same for few answers, with `score_few`; 3: with `score_deep` (refutation depth) | 0 |
 | `min_pruned` | the asked locations rule out at least this many plausible rows (§2) | 0 |
 | `min_deep` | ... of which at least this many need 3 or more constraint groups (§3) | 0 |
-| `mixed` | 1: every thread both reads and writes, at least half the threads start with a write, and every block is written at least once and used by at least two threads | 0 |
+| `mixed` | 1: every thread both reads and writes, at least half the threads start with a write, every block is written at least once and used by at least two threads, and no sync line is vacuous (`before` above a thread's first step, `after` below its last) | 0 |
 | `max_queries` | asked locations, 1..this | 3 |
 | `min_answers`, `max_answers` | accepted answer-set size | 12, 99 |
 
@@ -118,8 +119,12 @@ part of the name. The report lists them for each problem as "selected".
 **Refutation depth** (`adversarial: 3`, suffix `x3`). For each ruled-out row (decoy or
 pruned), find the constraint groups it needs: those whose removal alone makes it possible.
 The groups are the given results, each thread's program order (relaxed: the thread's
-operations may take effect in any order, but a copy still follows its read), and the copy
-linkage (relaxed: a copy may write any value its read can return in some execution). In
+operations may take effect in any order, but a copy still follows its read), the copy
+linkage (relaxed: a copy may write any value its read can return in some execution), and
+each sync point (relaxed: its lines removed). With sync points, only rows that some sync
+point helps rule out count toward `score_deep` and `min_deep`, so the sync points do the
+pruning. `truth.json` then also records `without_syncs`: how many combinations would be
+possible without any sync point. In
 the first 690 runs, models listed impossible rows at these rates:
 
 | Groups needed | Listed |
@@ -139,7 +144,8 @@ many rows needing 3 or more groups. `truth.json` records each ruled-out row's gr
 `r<p_read>`, `x`, `x2` or `x3` (adversarial) and `q<max_queries>` when they are nonzero or
 not the default. The answer-size bounds also change which locations are asked, but only
 `problem.json` and the report's details record them. Probabilities are in tenths. `s` takes
-a suffix `p` (pairs only) or `a` (barriers only) when `relations` is restricted. The case
+a suffix `p` (pairs only) or `a` (barriers only) when `relations` is restricted, then `n`
+when `inside` is 0. The case
 number counts problems with the same parameters (`01`, `02`, …). The seed is recorded in
 `problem.json`.
 
