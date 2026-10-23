@@ -35,7 +35,7 @@ STUDY = HERE.parent  # data lives at the study level: it is not Python-specific
 PROBLEMS = STUDY / "problems"
 ATTEMPTS = STUDY / "attempts"
 PROMPTS = STUDY / "prompts"
-PROMPT_VERSION = "v1"
+PROMPT_VERSION = "v1"  # problems without a "prompt" field use this one
 
 THREADS = "ABCDEFGH"
 BLOCKS = "xyzwuv"
@@ -59,7 +59,8 @@ DEFAULTS = {
     "min_deep": 0,       # ... of which at least this many need 3 or more constraint groups
     "adversarial": 0,    # 1: ask the locations whose answer holds the most traps (see traps());
                          # 2: the same for small answers, scored by score_few;
-                         # 3: scored by score_deep (refutation depth, see refutations())
+                         # 3: scored by score_deep (refutation depth, see refutations());
+                         # 4: conditional, see conditional()
     "mixed": 0,          # 1: keep only seeds where threads mix reads and writes, most start
                          #    with a write, and every block is written and used by two threads
     "max_queries": 3,    # asked locations: 1..max_queries
@@ -165,6 +166,11 @@ def apply(op, contents, vals, pos):
     return contents[:b] + (x,) + contents[b + 1:], vals
 
 
+def final_ok(p, contents):
+    """Whether the final contents agree with the known final values ("At the end: ...")."""
+    return all(contents[g["block"]] == g["value"] for g in p.get("given_final", []))
+
+
 def project(queries, contents, vals, pos):
     return tuple(vals[pos[q["read"]]] if "read" in q else contents[q["final"]] for q in queries)
 
@@ -190,7 +196,8 @@ def solve_brute(p, queries, limit=3_000_000):
             raise RuntimeError(f"brute: more than {limit} states")
         mask, contents, vals = st
         if mask == full:
-            out.add(project(queries, contents, vals, pos))
+            if final_ok(p, contents):
+                out.add(project(queries, contents, vals, pos))
             continue
         for i in range(len(preds)):
             if mask >> i & 1 or preds[i] & ~mask:
@@ -252,7 +259,7 @@ def solve(p, queries):
                 nxt.add((m, r[0], v2))
         layer = nxt
         states += len(layer)
-    return {project(queries, c, v, pos) for _, c, v in layer}, states
+    return {project(queries, c, v, pos) for _, c, v in layer if final_ok(p, c)}, states
 
 
 # --------------------------------------------------------------------------- traps
@@ -294,6 +301,8 @@ def copy_depths(p, queries):
         layer = nxt
     out = {}
     for _, c, v in layer:
+        if not final_ok(p, tuple(x[0] for x in c)):
+            continue
         items = [v[pos[q["read"]]] if "read" in q else c[q["final"]] for q in queries]
         key, d = tuple(x[0] for x in items), max(x[1] for x in items)
         out[key] = min(out.get(key, d), d)
@@ -315,7 +324,7 @@ def outside_syncs(p):
 
 def solve_relaxed(p, queries, drop_obs=False, free=None, decouple=None):
     """``solve`` with one group of constraints removed, to see what that group rules out.
-    ``drop_obs`` ignores the given results. ``free`` (a thread index) lets that thread's
+    ``drop_obs`` ignores the given results, final values included. ``free`` (a thread index) lets that thread's
     operations take effect in any order, except that a copy still follows the read it
     copies. ``decouple`` maps each copied read to the values it can return, and lets every
     copy of it write any of them."""
@@ -357,7 +366,7 @@ def solve_relaxed(p, queries, drop_obs=False, free=None, decouple=None):
                     v2 = tuple(x if i in asked or users[i] & ~m else None for i, x in enumerate(v2))
                     nxt.add((m, c2, v2))
         layer = nxt
-    return {project(queries, c, v, pos) for _, c, v in layer}
+    return {project(queries, c, v, pos) for _, c, v in layer if drop_obs or final_ok(p, c)}
 
 
 def copy_sources(p):
@@ -373,7 +382,7 @@ def refutations(p, queries, rows, poss=None):
     needing none is ruled out by several redundant reasons."""
     ops = flat_ops(p)
     groups = {}
-    if any(o.get("obs") is not None for o in ops):
+    if any(o.get("obs") is not None for o in ops) or p.get("given_final"):
         groups["given"] = solve_relaxed(p, queries, drop_obs=True)
     for t, th in enumerate(p["threads"]):
         if len(th["ops"]) > 1:
@@ -466,6 +475,58 @@ def well_mixed(threads, M):
     return True
 
 
+def conditional(p, P, cands, rng, poss):
+    """Selection mode 4: a deep trap, asked as a slice. Over joint sets of 2..4 locations,
+    find impossible rows that need 3 or more constraint groups (refutations()). Fix the
+    coordinates such a row shares with some true row (the conditions), and ask for the
+    rest: the answer is the matching slice of the joint answer, and the row's remaining
+    values are a plausible wrong answer. A read condition becomes a given result, a final
+    one a known final value. Keeps the deepest trap, then the smallest answer."""
+    joints = [list(s) for k in range(2, min(4, P["max_queries"] + 2) + 1) for s in itertools.combinations(cands, k)]
+    rng.shuffle(joints)
+    best = None
+    for Q in joints:
+        T = solve(p, Q)[0]
+        if len(T) > 200:
+            continue
+        wrong = set(itertools.product(*flow_candidates(p, Q))) - T
+        if not wrong:
+            continue
+        for d, groups in refutations(p, Q, wrong, poss).items():
+            if len(groups) < 3:
+                continue
+            for k in range(1, len(Q)):
+                for S in itertools.combinations(range(len(Q)), k):
+                    rest = [i for i in range(len(Q)) if i not in S]
+                    if len(rest) > P["max_queries"]:
+                        continue
+                    sl = {tuple(t[i] for i in rest) for t in T if all(t[i] == d[i] for i in S)}
+                    if not P["min_answers"] <= len(sl) <= P["max_answers"]:
+                        continue
+                    key = (len(groups), -len(sl))
+                    if best is None or key > best[0]:
+                        best = (key, Q, S, rest, d, sl)
+    if best is None:
+        return None
+    _, Q, S, rest, d, sl = best
+    q = json.loads(json.dumps(p))
+    pos = {o["id"]: o for o in flat_ops(q)}
+    q["given_final"] = []
+    for i in S:
+        if "read" in Q[i]:
+            pos[Q[i]["read"]]["obs"] = d[i]
+        else:
+            q["given_final"].append({"block": Q[i]["final"], "value": d[i]})
+    if not q["given_final"]:
+        del q["given_final"]
+    q["queries"] = [Q[i] for i in rest]
+    q["conditions"] = [Q[i] for i in S]
+    q["trap"] = [d[i] for i in rest]
+    q["prompt"] = "v2"
+    assert solve(q, q["queries"])[0] == sl, "a conditioned problem must answer the slice"
+    return q
+
+
 def generate(params, seed):
     """One problem from ``params`` and ``seed``, or None if this seed does not work out
     (cyclic sync, or no choice of queries gives an answer set of the wanted size)."""
@@ -531,7 +592,9 @@ def generate(params, seed):
     subsets = [list(s) for k in range(1, P["max_queries"] + 1)
                for s in itertools.combinations(cands, k)]
     rng.shuffle(subsets)
-    poss = copy_sources(p) if P["adversarial"] == 3 else None
+    poss = copy_sources(p) if P["adversarial"] >= 3 else None
+    if P["adversarial"] == 4:
+        return conditional(p, P, cands, rng, poss)
     best = None
     for qs in subsets:
         ans = solve(p, qs)[0]
@@ -586,13 +649,19 @@ def render(p):
                 lines.append(f"  {x['id']}{' starts' if x['id'] in split else ''}: {describe(x)}")
             elif x["id"] in split:
                 lines.append(f"  {x['id']} ends")
+    if p.get("given_final"):
+        lines.append("At the end: " + ", ".join(f"{BLOCKS[g['block']]} = {g['value']}" for g in p["given_final"]) + ".")
     lines.append("Asked:")
     lines += [f"  Q{k + 1}: {describe_query(q)}" for k, q in enumerate(p["queries"])]
     return "\n".join(lines)
 
 
+def prompt_version(p):
+    return p.get("prompt", PROMPT_VERSION)
+
+
 def make_prompt(p):
-    return (PROMPTS / f"{PROMPT_VERSION}.md").read_text().replace("{instance}", render(p))
+    return (PROMPTS / f"{prompt_version(p)}.md").read_text().replace("{instance}", render(p))
 
 
 # --------------------------------------------------------------------------- grading
@@ -773,7 +842,7 @@ def ask(pid, model, effort, trial):
         return f"{d.relative_to(STUDY)}: exists, skipped"
     prompt = make_prompt(p)
     # One copy of the exact prompt per problem and prompt version, shared by all runs.
-    pf = ATTEMPTS / pid / f"prompt-{PROMPT_VERSION}.txt"
+    pf = ATTEMPTS / pid / f"prompt-{prompt_version(p)}.txt"
     if pf.exists() and pf.read_text() != prompt:
         return f"{pf.relative_to(STUDY)}: differs from the prompt now built; not run"
     cmd = ["claude", "-p", "--model", model, "--effort", effort, "--tools", "",
@@ -794,7 +863,7 @@ def ask(pid, model, effort, trial):
     (d / "reply.md").write_text(reply)
     dump(d / "meta.json", {
         "problem": pid, "model": model, "model_id": ",".join(resp.get("modelUsage", {})),
-        "effort": effort, "trial": trial, "prompt": PROMPT_VERSION, "harness": git_commit(),
+        "effort": effort, "trial": trial, "prompt": prompt_version(p), "harness": git_commit(),
         "started": started, "seconds": round(resp.get("duration_ms", 0) / 1000, 1),
         "cost_usd": resp.get("total_cost_usd"), "output_tokens": usage.get("output_tokens"),
         "thinking_tokens": usage.get("output_tokens_details", {}).get("thinking_tokens"),

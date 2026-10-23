@@ -125,6 +125,29 @@ class Traps(unittest.TestCase):
             self.assertGreater(D.traps(p, p["queries"])["score"], 0)
 
 
+class Conditional(unittest.TestCase):
+    def test_final_value_given(self):
+        p = problem({"A": ([("w", 0, 1), ("r", 0, None)], []), "B": ([("w", 0, 2)], [])},
+                    queries=[{"read": "A2"}])
+        p["given_final"] = [{"block": 0, "value": 1}]
+        # x ends as 1, so B1 came before A1, and A2 read 1.
+        a, b = both(p)
+        self.assertEqual(a, {(1,)})
+        self.assertEqual(a, b)
+        self.assertIn("At the end: x = 1.", D.render(p))
+
+    def test_conditional_selection(self):
+        params = {"threads": 3, "ops": 4, "blocks": 2, "values": 3, "p_copy": 0.8, "adversarial": 4,
+                  "max_queries": 1, "min_answers": 1, "max_answers": 4}
+        found = [p for p in (D.generate(params, s) for s in range(60)) if p]
+        self.assertTrue(found)
+        for p in found:
+            a, b = both(p)
+            self.assertEqual(a, b)
+            self.assertNotIn(tuple(p["trap"]), a)
+            self.assertEqual(p["prompt"], "v2")
+
+
 class SolverVsBrute(unittest.TestCase):
     def test_random(self):
         rng = random.Random(7)
