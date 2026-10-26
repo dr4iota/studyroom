@@ -171,6 +171,11 @@ change the instance (e.g. which questions are asked) are part of its name.
 with the truth exactly (for a set: every element and nothing more) and records the
 missing and the extra items. An unreadable answer is a failure.
 
+**Model versions.** Request each model by its exact versioned ID, not by an alias that
+can move to a newer release, and record in every attempt the model ID that answered and
+the version of the client used to call it. Compare models only on attempts made with the
+same IDs.
+
 **Trials and effort.** One trial is noisy. Run each model several times per problem
 (at least 3; about 9 to compare models), and record the effort setting and the thinking
 tokens used. The same effort setting can mean very different thinking budgets for
@@ -182,7 +187,8 @@ different models.
 - `attempts/<name>/prompt-v<N>.txt`: the exact prompt, stored once per problem and
   version;
 - `attempts/<name>/<model>-<effort>-<trial>/`: one run (the reply, the raw response,
-  the run record and the grade).
+  the run record and the grade). `<model>` carries the model's version, e.g. `opus55`,
+  so runs of different versions never share a name.
 
 ## Resource safety
 
