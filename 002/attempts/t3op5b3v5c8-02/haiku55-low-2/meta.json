@@ -1,0 +1,14 @@
+{
+ "problem": "t3op5b3v5c8-02",
+ "model": "haiku55",
+ "model_id": "claude-haiku-5-5",
+ "effort": "low",
+ "trial": 2,
+ "prompt": "v1",
+ "harness": "36349eb-dirty",
+ "started": "2026-10-23T14:14:27+00:00",
+ "seconds": 39.4,
+ "cost_usd": 0.00447112,
+ "output_tokens": 8788,
+ "thinking_tokens": 8202
+}

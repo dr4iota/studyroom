@@ -6,7 +6,7 @@ listed, `∅` is no readable answer.
 
 ## Effort low, no sync
 
-| problem | answers | fable | opus | sonnet | haiku |
+| problem | answers | fable51 | opus55 | sonnet55 | haiku55 |
 |---|---|---|---|---|---|
 | t2op3b1v3-01 | 12 | ✓ | ✓ ✓ ✓ | ✓ ✓ −0+6 | ✓ ✓ ✓ |
 | t2op4b2v3-01 | 20 | ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ |
@@ -94,7 +94,7 @@ listed, `∅` is no readable answer.
 
 ## Effort low, with sync
 
-| problem | answers | fable | opus | sonnet | haiku |
+| problem | answers | fable51 | opus55 | sonnet55 | haiku55 |
 |---|---|---|---|---|---|
 | t2op4b2v3s1pg3c5-01 | 14 | ✓ | −0+2 −0+2 −0+2 | ✓ ✓ ✓ | ✓ ✓ ✓ |
 | t2op4b2v3s1ag3c5-01 | 13 | ✓ | ✓ ✓ ✓ | ✓ ✓ −3+0 | ✓ −0+1 ✓ |
@@ -108,7 +108,7 @@ listed, `∅` is no readable answer.
 | t2op9b3v6s4pnc5x5q4-01 | 5 | −0+3 | ✓ ✓ ✓ | ✓ ✓ ✓ | ✓ −1+0 ✓ |
 | t2op9b3v6s4pnc5x5q4-02 | 6 | −0+2 | ✓ −2+0 ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ |
 | t2op9b3v6s4pnc5x5q4-03 | 5 | −0+1 | ✓ ✓ ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ |
-| t2op9b3v6s4pnc5x5q4-04 | 6 | −0+2 −0+2 −2+0 | ✓ −0+2 ✓ −2+0 ✓ ✓ ✓ ✓ −0+2 | −2+0 ✓ −2+0 −0+2 ✓ −2+0 ✓ ✓ ✓ | −0+2 ✓ ✓ −3+0 ✓ ✓ −3+0 ✓ ✓ |
+| t2op9b3v6s4pnc5x5q4-04 | 6 | −0+2 −0+2 −2+0 −2+0 −2+0 −4+0 −0+2 −2+0 −1+1 | ✓ −0+2 ✓ −2+0 ✓ ✓ ✓ ✓ −0+2 | −2+0 ✓ −2+0 −0+2 ✓ −2+0 ✓ ✓ ✓ | −0+2 ✓ ✓ −3+0 ✓ ✓ −3+0 ✓ ✓ |
 | t2op9b3v6s4pnc5x5q4-05 | 5 | ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ |
 | t2op9b3v6s4pnc5x5q4-06 | 6 | ✓ | ✓ ✓ ✓ | −1+0 −0+2 ✓ | ✓ −1+0 ✓ |
 | t3op4b2v3s2g3c5-01 | 14 | ✓ | ✓ ✓ ✓ | ✓ ✓ ✓ | ✓ ✓ −2+0 |
@@ -121,14 +121,14 @@ listed, `∅` is no readable answer.
 
 | model | no sync | with sync |
 |---|---|---|
-| fable | 72/85 | 12/22 |
-| opus | 236/255 | 51/66 |
-| sonnet | 223/255 | 49/66 |
-| haiku | 236/255 | 52/66 |
+| fable51 | 72/85 | 12/28 |
+| opus55 | 236/255 | 51/66 |
+| sonnet55 | 223/255 | 49/66 |
+| haiku55 | 236/255 | 52/66 |
 
 ## Effort medium, no sync
 
-| problem | answers | fable | opus | sonnet | haiku |
+| problem | answers | fable51 | opus55 | sonnet55 | haiku55 |
 |---|---|---|---|---|---|
 | t2op3b1v3-01 | 12 |  |  |  |  |
 | t2op4b2v3-01 | 20 |  |  |  |  |
@@ -216,7 +216,7 @@ listed, `∅` is no readable answer.
 
 ## Effort medium, with sync
 
-| problem | answers | fable | opus | sonnet | haiku |
+| problem | answers | fable51 | opus55 | sonnet55 | haiku55 |
 |---|---|---|---|---|---|
 | t2op4b2v3s1pg3c5-01 | 14 |  |  |  |  |
 | t2op4b2v3s1ag3c5-01 | 13 |  |  |  |  |
@@ -230,7 +230,7 @@ listed, `∅` is no readable answer.
 | t2op9b3v6s4pnc5x5q4-01 | 5 |  |  |  |  |
 | t2op9b3v6s4pnc5x5q4-02 | 6 |  |  |  |  |
 | t2op9b3v6s4pnc5x5q4-03 | 5 |  |  |  |  |
-| t2op9b3v6s4pnc5x5q4-04 | 6 | ✓ −0+2 −2+0 | ✓ ✓ ✓ ✓ ✓ −0+2 ✓ ✓ ✓ | −2+0 ✓ −2+0 ✓ −0+2 ✓ ✓ ✓ ✓ | ✓ ✓ ✓ ✓ ✓ −0+2 ✓ ✓ ✓ |
+| t2op9b3v6s4pnc5x5q4-04 | 6 | ✓ −0+2 −2+0 −0+2 −2+0 −2+0 −0+2 ✓ ✓ | ✓ ✓ ✓ ✓ ✓ −0+2 ✓ ✓ ✓ | −2+0 ✓ −2+0 ✓ −0+2 ✓ ✓ ✓ ✓ | ✓ ✓ ✓ ✓ ✓ −0+2 ✓ ✓ ✓ |
 | t2op9b3v6s4pnc5x5q4-05 | 5 |  |  |  |  |
 | t2op9b3v6s4pnc5x5q4-06 | 6 |  |  |  |  |
 | t3op4b2v3s2g3c5-01 | 14 |  |  |  |  |
@@ -243,14 +243,14 @@ listed, `∅` is no readable answer.
 
 | model | no sync | with sync |
 |---|---|---|
-| fable | 0/0 | 1/3 |
-| opus | 0/0 | 8/9 |
-| sonnet | 0/0 | 6/9 |
-| haiku | 0/0 | 8/9 |
+| fable51 | 0/0 | 3/9 |
+| opus55 | 0/0 | 8/9 |
+| sonnet55 | 0/0 | 6/9 |
+| haiku55 | 0/0 | 8/9 |
 
 ## Effort high, no sync
 
-| problem | answers | fable | opus | sonnet | haiku |
+| problem | answers | fable51 | opus55 | sonnet55 | haiku55 |
 |---|---|---|---|---|---|
 | t2op3b1v3-01 | 12 |  |  |  |  |
 | t2op4b2v3-01 | 20 |  |  |  |  |
@@ -338,7 +338,7 @@ listed, `∅` is no readable answer.
 
 ## Effort high, with sync
 
-| problem | answers | fable | opus | sonnet | haiku |
+| problem | answers | fable51 | opus55 | sonnet55 | haiku55 |
 |---|---|---|---|---|---|
 | t2op4b2v3s1pg3c5-01 | 14 |  |  |  |  |
 | t2op4b2v3s1ag3c5-01 | 13 |  |  |  |  |
@@ -352,7 +352,7 @@ listed, `∅` is no readable answer.
 | t2op9b3v6s4pnc5x5q4-01 | 5 |  |  |  |  |
 | t2op9b3v6s4pnc5x5q4-02 | 6 |  |  |  |  |
 | t2op9b3v6s4pnc5x5q4-03 | 5 |  |  |  |  |
-| t2op9b3v6s4pnc5x5q4-04 | 6 | ✓ −2+0 ✓ | ✓ ✓ ✓ ✓ ✓ ✓ ✓ −2+0 ✓ | −2+0 −2+0 ✓ ✓ ✓ ✓ ✓ ✓ −2+0 | ✓ ✓ ✓ ✓ ✓ ✓ ✓ ✓ ✓ |
+| t2op9b3v6s4pnc5x5q4-04 | 6 | ✓ −2+0 ✓ ✓ −0+2 ✓ ✓ ✓ ✓ | ✓ ✓ ✓ ✓ ✓ ✓ ✓ −2+0 ✓ | −2+0 −2+0 ✓ ✓ ✓ ✓ ✓ ✓ −2+0 | ✓ ✓ ✓ ✓ ✓ ✓ ✓ ✓ ✓ |
 | t2op9b3v6s4pnc5x5q4-05 | 5 |  |  |  |  |
 | t2op9b3v6s4pnc5x5q4-06 | 6 |  |  |  |  |
 | t3op4b2v3s2g3c5-01 | 14 |  |  |  |  |
@@ -365,10 +365,10 @@ listed, `∅` is no readable answer.
 
 | model | no sync | with sync |
 |---|---|---|
-| fable | 0/0 | 2/3 |
-| opus | 0/0 | 8/9 |
-| sonnet | 0/0 | 6/9 |
-| haiku | 0/0 | 9/9 |
+| fable51 | 0/0 | 7/9 |
+| opus55 | 0/0 | 8/9 |
+| sonnet55 | 0/0 | 6/9 |
+| haiku55 | 0/0 | 9/9 |
 
 ## Effort low, wrong rows by trap kind
 
@@ -381,10 +381,10 @@ that only a stale copy produces, and how many of them the model missed.
 
 | model | wrong rows | interval | depth2 | depth1 | decoys | pruned | other | deep listed | stale missed |
 |---|---|---|---|---|---|---|---|---|---|
-| fable | 51 | 0 | 4 | 2 | 31 | 4 | 10 | 16 of 192 | 3 of 334 |
-| opus | 99 | 30 | 11 | 12 | 30 | 14 | 2 | 25 of 576 | 45 of 1002 |
-| sonnet | 129 | 23 | 10 | 30 | 45 | 17 | 4 | 29 of 576 | 40 of 1002 |
-| haiku | 95 | 10 | 17 | 22 | 31 | 10 | 5 | 18 of 576 | 38 of 1002 |
+| fable51 | 65 | 0 | 15 | 2 | 34 | 4 | 10 | 19 of 204 | 10 of 358 |
+| opus55 | 99 | 30 | 11 | 12 | 30 | 14 | 2 | 25 of 576 | 45 of 1002 |
+| sonnet55 | 129 | 23 | 10 | 30 | 45 | 17 | 4 | 29 of 576 | 40 of 1002 |
+| haiku55 | 95 | 10 | 17 | 22 | 31 | 10 | 5 | 18 of 576 | 38 of 1002 |
 
 ## Effort medium, wrong rows by trap kind
 
@@ -397,10 +397,10 @@ that only a stale copy produces, and how many of them the model missed.
 
 | model | wrong rows | interval | depth2 | depth1 | decoys | pruned | other | deep listed | stale missed |
 |---|---|---|---|---|---|---|---|---|---|
-| fable | 4 | 0 | 2 | 0 | 2 | 0 | 0 | 2 of 6 | 2 of 12 |
-| opus | 2 | 0 | 0 | 0 | 2 | 0 | 0 | 2 of 18 | 0 of 36 |
-| sonnet | 6 | 0 | 4 | 0 | 2 | 0 | 0 | 2 of 18 | 2 of 36 |
-| haiku | 2 | 0 | 0 | 0 | 2 | 0 | 0 | 2 of 18 | 0 of 36 |
+| fable51 | 12 | 0 | 6 | 0 | 6 | 0 | 0 | 6 of 18 | 6 of 36 |
+| opus55 | 2 | 0 | 0 | 0 | 2 | 0 | 0 | 2 of 18 | 0 of 36 |
+| sonnet55 | 6 | 0 | 4 | 0 | 2 | 0 | 0 | 2 of 18 | 2 of 36 |
+| haiku55 | 2 | 0 | 0 | 0 | 2 | 0 | 0 | 2 of 18 | 0 of 36 |
 
 ## Effort high, wrong rows by trap kind
 
@@ -413,10 +413,10 @@ that only a stale copy produces, and how many of them the model missed.
 
 | model | wrong rows | interval | depth2 | depth1 | decoys | pruned | other | deep listed | stale missed |
 |---|---|---|---|---|---|---|---|---|---|
-| fable | 2 | 0 | 2 | 0 | 0 | 0 | 0 | 0 of 6 | 2 of 12 |
-| opus | 2 | 0 | 2 | 0 | 0 | 0 | 0 | 0 of 18 | 2 of 36 |
-| sonnet | 6 | 0 | 6 | 0 | 0 | 0 | 0 | 0 of 18 | 0 of 36 |
-| haiku | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 of 18 | 0 of 36 |
+| fable51 | 4 | 0 | 2 | 0 | 2 | 0 | 0 | 2 of 18 | 2 of 36 |
+| opus55 | 2 | 0 | 2 | 0 | 0 | 0 | 0 | 0 of 18 | 2 of 36 |
+| sonnet55 | 6 | 0 | 6 | 0 | 0 | 0 | 0 | 0 of 18 | 0 of 36 |
+| haiku55 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 of 18 | 0 of 36 |
 
 # Details
 
@@ -426,10 +426,10 @@ N=2 ops≤3 M=1 values=3 syncs=0 (0 events) p_obs=0.0 p_copy=0.0; 3 asked, 12 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 395 |
-| haiku | low | ✓, ✓, ✓ | 2268, 1861, 2375 |
-| opus | low | ✓, ✓, ✓ | 432, 388, 383 |
-| sonnet | low | ✓, ✓, -0 +6 | 686, 697, 1006 |
+| fable51 | low | ✓ | 395 |
+| haiku55 | low | ✓, ✓, ✓ | 2268, 1861, 2375 |
+| opus55 | low | ✓, ✓, ✓ | 432, 388, 383 |
+| sonnet55 | low | ✓, ✓, -0 +6 | 686, 697, 1006 |
 
 ## t2op4b2v3-01
 
@@ -437,10 +437,10 @@ N=2 ops≤4 M=2 values=3 syncs=0 (0 events) p_obs=0.0 p_copy=0.0; 3 asked, 20 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 0 |
-| haiku | low | ✓, ✓, ✓ | 848, 1208, 1370 |
-| opus | low | ✓, ✓, ✓ | 212, 199, 322 |
-| sonnet | low | ✓, ✓, ✓ | 554, 0, 465 |
+| fable51 | low | ✓ | 0 |
+| haiku55 | low | ✓, ✓, ✓ | 848, 1208, 1370 |
+| opus55 | low | ✓, ✓, ✓ | 212, 199, 322 |
+| sonnet55 | low | ✓, ✓, ✓ | 554, 0, 465 |
 
 ## t2op4b2v3g4-01
 
@@ -448,10 +448,10 @@ N=2 ops≤4 M=2 values=3 syncs=0 (0 events) p_obs=0.4 p_copy=0.0; 3 asked, 16 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 372 |
-| haiku | low | ✓, ✓, ✓ | 4165, 2557, 5327 |
-| opus | low | ✓, ✓, ✓ | 404, 417, 393 |
-| sonnet | low | ✓, ✓, ✓ | 774, 682, 813 |
+| fable51 | low | ✓ | 372 |
+| haiku55 | low | ✓, ✓, ✓ | 4165, 2557, 5327 |
+| opus55 | low | ✓, ✓, ✓ | 404, 417, 393 |
+| sonnet55 | low | ✓, ✓, ✓ | 774, 682, 813 |
 
 ## t2op4b2v3g4c6-01
 
@@ -459,10 +459,10 @@ N=2 ops≤4 M=2 values=3 syncs=0 (0 events) p_obs=0.4 p_copy=0.6; 3 asked, 16 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 667 |
-| haiku | low | ✓, ✓, ✓ | 3724, 4615, 3567 |
-| opus | low | ✓, ✓, ✓ | 570, 467, 475 |
-| sonnet | low | ✓, ✓, ✓ | 812, 729, 799 |
+| fable51 | low | ✓ | 667 |
+| haiku55 | low | ✓, ✓, ✓ | 3724, 4615, 3567 |
+| opus55 | low | ✓, ✓, ✓ | 570, 467, 475 |
+| sonnet55 | low | ✓, ✓, ✓ | 812, 729, 799 |
 
 ## t2op5b1v3-01
 
@@ -470,10 +470,10 @@ N=2 ops≤5 M=1 values=3 syncs=0 (0 events) p_obs=0.0 p_copy=0.0; 3 asked, 12 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 763 |
-| haiku | low | ✓, ✓, ✓ | 3889, 4742, 3776 |
-| opus | low | ✓, ✓, ✓ | 624, 922, 621 |
-| sonnet | low | ✓, ✓, ✓ | 1922, 1132, 1032 |
+| fable51 | low | ✓ | 763 |
+| haiku55 | low | ✓, ✓, ✓ | 3889, 4742, 3776 |
+| opus55 | low | ✓, ✓, ✓ | 624, 922, 621 |
+| sonnet55 | low | ✓, ✓, ✓ | 1922, 1132, 1032 |
 
 ## t2op5b1v3-02
 
@@ -481,10 +481,10 @@ N=2 ops≤5 M=1 values=3 syncs=0 (0 events) p_obs=0.0 p_copy=0.0; 3 asked, 18 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 869 |
-| haiku | low | ✓, ✓, ✓ | 2985, 4882, 3311 |
-| opus | low | ✓, ✓, ✓ | 485, 654, 704 |
-| sonnet | low | ✓, ✓, ✓ | 1031, 930, 1015 |
+| fable51 | low | ✓ | 869 |
+| haiku55 | low | ✓, ✓, ✓ | 2985, 4882, 3311 |
+| opus55 | low | ✓, ✓, ✓ | 485, 654, 704 |
+| sonnet55 | low | ✓, ✓, ✓ | 1031, 930, 1015 |
 
 ## t2op5b1v3c8-01
 
@@ -492,10 +492,10 @@ N=2 ops≤5 M=1 values=3 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 3 asked, 26 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 1273 |
-| haiku | low | ✓, ✓, ✓ | 6652, 6435, 6410 |
-| opus | low | ✓, ✓, ✓ | 832, 853, 714 |
-| sonnet | low | ✓, ✓, ✓ | 1608, 1352, 1675 |
+| fable51 | low | ✓ | 1273 |
+| haiku55 | low | ✓, ✓, ✓ | 6652, 6435, 6410 |
+| opus55 | low | ✓, ✓, ✓ | 832, 853, 714 |
+| sonnet55 | low | ✓, ✓, ✓ | 1608, 1352, 1675 |
 
 ## t2op5b1v3c8-02
 
@@ -503,10 +503,10 @@ N=2 ops≤5 M=1 values=3 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 3 asked, 26 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 1501 |
-| haiku | low | ✓, ✓, ✓ | 9080, 8753, 5148 |
-| opus | low | ✓, ✓, ✓ | 1023, 911, 858 |
-| sonnet | low | ✓, ✓, ✓ | 1415, 1618, 1863 |
+| fable51 | low | ✓ | 1501 |
+| haiku55 | low | ✓, ✓, ✓ | 9080, 8753, 5148 |
+| opus55 | low | ✓, ✓, ✓ | 1023, 911, 858 |
+| sonnet55 | low | ✓, ✓, ✓ | 1415, 1618, 1863 |
 
 ## t2op5b1v3c8-03
 
@@ -514,10 +514,10 @@ N=2 ops≤5 M=1 values=3 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 2 asked, 13 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 639 |
-| haiku | low | ✓, ✓, ✓ | 3781, 4401, 3793 |
-| opus | low | ✓, ✓, ✓ | 560, 631, 591 |
-| sonnet | low | ✓, ✓, ✓ | 1027, 991, 1158 |
+| fable51 | low | ✓ | 639 |
+| haiku55 | low | ✓, ✓, ✓ | 3781, 4401, 3793 |
+| opus55 | low | ✓, ✓, ✓ | 560, 631, 591 |
+| sonnet55 | low | ✓, ✓, ✓ | 1027, 991, 1158 |
 
 ## t2op5b2v3c8-01
 
@@ -525,10 +525,10 @@ N=2 ops≤5 M=2 values=3 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 3 asked, 12 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 807 |
-| haiku | low | ✓, ✓, ✓ | 6568, 4680, 5078 |
-| opus | low | ✓, ✓, ✓ | 450, 473, 500 |
-| sonnet | low | ✓, ✓, ✓ | 1001, 1006, 960 |
+| fable51 | low | ✓ | 807 |
+| haiku55 | low | ✓, ✓, ✓ | 6568, 4680, 5078 |
+| opus55 | low | ✓, ✓, ✓ | 450, 473, 500 |
+| sonnet55 | low | ✓, ✓, ✓ | 1001, 1006, 960 |
 
 ## t2op5b2v3c8-02
 
@@ -536,10 +536,10 @@ N=2 ops≤5 M=2 values=3 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 3 asked, 13 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 839 |
-| haiku | low | -0 +13, ✓, ✓ | 8049, 4753, 4128 |
-| opus | low | ✓, ✓, ✓ | 629, 600, 581 |
-| sonnet | low | ✓, ✓, ✓ | 927, 1299, 1429 |
+| fable51 | low | ✓ | 839 |
+| haiku55 | low | -0 +13, ✓, ✓ | 8049, 4753, 4128 |
+| opus55 | low | ✓, ✓, ✓ | 629, 600, 581 |
+| sonnet55 | low | ✓, ✓, ✓ | 927, 1299, 1429 |
 
 ## t2op5b2v3c8-03
 
@@ -547,10 +547,10 @@ N=2 ops≤5 M=2 values=3 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 3 asked, 12 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | -2 +0 | 940 |
-| haiku | low | ✓, ✓, ✓ | 4518, 5581, 4729 |
-| opus | low | -2 +0, ✓, ✓ | 572, 731, 643 |
-| sonnet | low | ✓, ✓, -2 +0 | 1049, 1225, 1045 |
+| fable51 | low | -2 +0 | 940 |
+| haiku55 | low | ✓, ✓, ✓ | 4518, 5581, 4729 |
+| opus55 | low | -2 +0, ✓, ✓ | 572, 731, 643 |
+| sonnet55 | low | ✓, ✓, -2 +0 | 1049, 1225, 1045 |
 
 ## t2op5b3v4-01
 
@@ -558,10 +558,10 @@ N=2 ops≤5 M=3 values=4 syncs=0 (0 events) p_obs=0.0 p_copy=0.0; 3 asked, 19 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 708 |
-| haiku | low | ✓, ✓, ✓ | 4870, 6369, 6042 |
-| opus | low | ✓, ✓, ✓ | 651, 681, 614 |
-| sonnet | low | ✓, ✓, ✓ | 943, 970, 942 |
+| fable51 | low | ✓ | 708 |
+| haiku55 | low | ✓, ✓, ✓ | 4870, 6369, 6042 |
+| opus55 | low | ✓, ✓, ✓ | 651, 681, 614 |
+| sonnet55 | low | ✓, ✓, ✓ | 943, 970, 942 |
 
 ## t2op5b3v4-02
 
@@ -569,10 +569,10 @@ N=2 ops≤5 M=3 values=4 syncs=0 (0 events) p_obs=0.0 p_copy=0.0; 3 asked, 12 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 0 |
-| haiku | low | ✓, ✓, ✓ | 2915, 1907, 2695 |
-| opus | low | ✓, ✓, ✓ | 336, 225, 256 |
-| sonnet | low | ✓, ✓, ✓ | 474, 521, 499 |
+| fable51 | low | ✓ | 0 |
+| haiku55 | low | ✓, ✓, ✓ | 2915, 1907, 2695 |
+| opus55 | low | ✓, ✓, ✓ | 336, 225, 256 |
+| sonnet55 | low | ✓, ✓, ✓ | 474, 521, 499 |
 
 ## t2op5b3v4-03
 
@@ -580,10 +580,10 @@ N=2 ops≤5 M=3 values=4 syncs=0 (0 events) p_obs=0.0 p_copy=0.0; 3 asked, 12 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 616 |
-| haiku | low | ✓, ✓, ✓ | 3278, 3211, 2535 |
-| opus | low | ✓, ✓, ✓ | 371, 469, 398 |
-| sonnet | low | ✓, ✓, ✓ | 728, 531, 673 |
+| fable51 | low | ✓ | 616 |
+| haiku55 | low | ✓, ✓, ✓ | 3278, 3211, 2535 |
+| opus55 | low | ✓, ✓, ✓ | 371, 469, 398 |
+| sonnet55 | low | ✓, ✓, ✓ | 728, 531, 673 |
 
 ## t2op5b3v4g3-01
 
@@ -591,10 +591,10 @@ N=2 ops≤5 M=3 values=4 syncs=0 (0 events) p_obs=0.3 p_copy=0.0; 3 asked, 12 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 337 |
-| haiku | low | ✓, ✓, ✓ | 4591, 2668, 2978 |
-| opus | low | ✓, ✓, ✓ | 353, 378, 377 |
-| sonnet | low | ✓, ✓, ✓ | 488, 616, 526 |
+| fable51 | low | ✓ | 337 |
+| haiku55 | low | ✓, ✓, ✓ | 4591, 2668, 2978 |
+| opus55 | low | ✓, ✓, ✓ | 353, 378, 377 |
+| sonnet55 | low | ✓, ✓, ✓ | 488, 616, 526 |
 
 ## t2op5b3v4g3-02
 
@@ -602,10 +602,10 @@ N=2 ops≤5 M=3 values=4 syncs=0 (0 events) p_obs=0.3 p_copy=0.0; 3 asked, 12 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 585 |
-| haiku | low | ✓, ✓, ✓ | 3231, 2943, 3486 |
-| opus | low | ✓, ✓, ✓ | 438, 392, 377 |
-| sonnet | low | ✓, ✓, ✓ | 831, 781, 746 |
+| fable51 | low | ✓ | 585 |
+| haiku55 | low | ✓, ✓, ✓ | 3231, 2943, 3486 |
+| opus55 | low | ✓, ✓, ✓ | 438, 392, 377 |
+| sonnet55 | low | ✓, ✓, ✓ | 831, 781, 746 |
 
 ## t2op5b3v4g3-03
 
@@ -613,10 +613,10 @@ N=2 ops≤5 M=3 values=4 syncs=0 (0 events) p_obs=0.3 p_copy=0.0; 3 asked, 12 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 370 |
-| haiku | low | ✓, ✓, ✓ | 2538, 2663, 3322 |
-| opus | low | ✓, ✓, ✓ | 311, 286, 311 |
-| sonnet | low | ✓, ✓, ✓ | 667, 525, 695 |
+| fable51 | low | ✓ | 370 |
+| haiku55 | low | ✓, ✓, ✓ | 2538, 2663, 3322 |
+| opus55 | low | ✓, ✓, ✓ | 311, 286, 311 |
+| sonnet55 | low | ✓, ✓, ✓ | 667, 525, 695 |
 
 ## t2op5b3v4g6-01
 
@@ -624,10 +624,10 @@ N=2 ops≤5 M=3 values=4 syncs=0 (0 events) p_obs=0.6 p_copy=0.0; 3 asked, 12 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 741 |
-| haiku | low | ✓, ✓, ✓ | 4270, 3021, 5259 |
-| opus | low | ✓, ✓, ✓ | 620, 624, 662 |
-| sonnet | low | ✓, ✓, ✓ | 1119, 1066, 934 |
+| fable51 | low | ✓ | 741 |
+| haiku55 | low | ✓, ✓, ✓ | 4270, 3021, 5259 |
+| opus55 | low | ✓, ✓, ✓ | 620, 624, 662 |
+| sonnet55 | low | ✓, ✓, ✓ | 1119, 1066, 934 |
 
 ## t2op5b3v4g6-02
 
@@ -635,10 +635,10 @@ N=2 ops≤5 M=3 values=4 syncs=0 (0 events) p_obs=0.6 p_copy=0.0; 3 asked, 12 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 535 |
-| haiku | low | ✓, ✓, ✓ | 2936, 3241, 2522 |
-| opus | low | ✓, ✓, ✓ | 385, 351, 491 |
-| sonnet | low | ✓, ✓, ✓ | 669, 653, 693 |
+| fable51 | low | ✓ | 535 |
+| haiku55 | low | ✓, ✓, ✓ | 2936, 3241, 2522 |
+| opus55 | low | ✓, ✓, ✓ | 385, 351, 491 |
+| sonnet55 | low | ✓, ✓, ✓ | 669, 653, 693 |
 
 ## t2op5b3v4g6-03
 
@@ -646,10 +646,10 @@ N=2 ops≤5 M=3 values=4 syncs=0 (0 events) p_obs=0.6 p_copy=0.0; 3 asked, 13 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | -0 +1 | 806 |
-| haiku | low | ✓, ✓, ✓ | 4705, 4987, 4074 |
-| opus | low | ✓, ✓, ✓ | 739, 678, 824 |
-| sonnet | low | ✓, ✓, ✓ | 1141, 1217, 1311 |
+| fable51 | low | -0 +1 | 806 |
+| haiku55 | low | ✓, ✓, ✓ | 4705, 4987, 4074 |
+| opus55 | low | ✓, ✓, ✓ | 739, 678, 824 |
+| sonnet55 | low | ✓, ✓, ✓ | 1141, 1217, 1311 |
 
 ## t2op6b1v3-01
 
@@ -657,10 +657,10 @@ N=2 ops≤6 M=1 values=3 syncs=0 (0 events) p_obs=0.0 p_copy=0.0; 3 asked, 13 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 460 |
-| haiku | low | ✓, ✓, ✓ | 3179, 3202, 2331 |
-| opus | low | ✓, ✓, ✓ | 380, 378, 432 |
-| sonnet | low | ✓, ✓, ✓ | 757, 699, 727 |
+| fable51 | low | ✓ | 460 |
+| haiku55 | low | ✓, ✓, ✓ | 3179, 3202, 2331 |
+| opus55 | low | ✓, ✓, ✓ | 380, 378, 432 |
+| sonnet55 | low | ✓, ✓, ✓ | 757, 699, 727 |
 
 ## t2op6b1v3-02
 
@@ -668,10 +668,10 @@ N=2 ops≤6 M=1 values=3 syncs=0 (0 events) p_obs=0.0 p_copy=0.0; 3 asked, 14 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 903 |
-| haiku | low | ✓, ✓, ✓ | 5516, 4590, 4053 |
-| opus | low | ✓, ✓, ✓ | 663, 612, 697 |
-| sonnet | low | ✓, ✓, -0 +4 | 1020, 1262, 978 |
+| fable51 | low | ✓ | 903 |
+| haiku55 | low | ✓, ✓, ✓ | 5516, 4590, 4053 |
+| opus55 | low | ✓, ✓, ✓ | 663, 612, 697 |
+| sonnet55 | low | ✓, ✓, -0 +4 | 1020, 1262, 978 |
 
 ## t2op6b2v3g3c5-01
 
@@ -679,10 +679,10 @@ N=2 ops≤6 M=2 values=3 syncs=0 (0 events) p_obs=0.3 p_copy=0.5; 3 asked, 12 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 1721 |
-| haiku | low | ✓, ✓, ✓ | 11662, 9026, 11156 |
-| opus | low | ✓, ✓, ✓ | 1410, 1350, 1326 |
-| sonnet | low | ✓, ✓, ✓ | 2096, 1892, 1555 |
+| fable51 | low | ✓ | 1721 |
+| haiku55 | low | ✓, ✓, ✓ | 11662, 9026, 11156 |
+| opus55 | low | ✓, ✓, ✓ | 1410, 1350, 1326 |
+| sonnet55 | low | ✓, ✓, ✓ | 2096, 1892, 1555 |
 
 ## t2op6b2v3g3c5-02
 
@@ -690,10 +690,10 @@ N=2 ops≤6 M=2 values=3 syncs=0 (0 events) p_obs=0.3 p_copy=0.5; 3 asked, 14 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 1375 |
-| haiku | low | ✓, -1 +0, ✓ | 9624, 10024, 8670 |
-| opus | low | ✓, ✓, ✓ | 1026, 834, 1064 |
-| sonnet | low | ✓, ✓, ✓ | 1527, 1890, 1870 |
+| fable51 | low | ✓ | 1375 |
+| haiku55 | low | ✓, -1 +0, ✓ | 9624, 10024, 8670 |
+| opus55 | low | ✓, ✓, ✓ | 1026, 834, 1064 |
+| sonnet55 | low | ✓, ✓, ✓ | 1527, 1890, 1870 |
 
 ## t2op8b2v3g3c5-01
 
@@ -701,10 +701,10 @@ N=2 ops≤8 M=2 values=3 syncs=0 (0 events) p_obs=0.3 p_copy=0.5; 3 asked, 12 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 665 |
-| haiku | low | ✓, ✓, ✓ | 6896, 5661, 3874 |
-| opus | low | ✓, ✓, ✓ | 683, 670, 584 |
-| sonnet | low | ✓, ✓, ✓ | 1328, 946, 836 |
+| fable51 | low | ✓ | 665 |
+| haiku55 | low | ✓, ✓, ✓ | 6896, 5661, 3874 |
+| opus55 | low | ✓, ✓, ✓ | 683, 670, 584 |
+| sonnet55 | low | ✓, ✓, ✓ | 1328, 946, 836 |
 
 ## t2op8b2v3g3c5-02
 
@@ -712,10 +712,10 @@ N=2 ops≤8 M=2 values=3 syncs=0 (0 events) p_obs=0.3 p_copy=0.5; 3 asked, 13 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 1122 |
-| haiku | low | ✓, ✓, ✓ | 8506, 13805, 5226 |
-| opus | low | ✓, ✓, ✓ | 709, 1177, 908 |
-| sonnet | low | ✓, ✓, ✓ | 1657, 2176, 1521 |
+| fable51 | low | ✓ | 1122 |
+| haiku55 | low | ✓, ✓, ✓ | 8506, 13805, 5226 |
+| opus55 | low | ✓, ✓, ✓ | 709, 1177, 908 |
+| sonnet55 | low | ✓, ✓, ✓ | 1657, 2176, 1521 |
 
 ## t2op4b2v3s1pg3c5-01
 
@@ -723,10 +723,10 @@ N=2 ops≤4 M=2 values=3 syncs=1 (2 events) p_obs=0.3 p_copy=0.5; 3 asked, 14 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 870 |
-| haiku | low | ✓, ✓, ✓ | 5581, 4381, 4210 |
-| opus | low | -0 +2, -0 +2, -0 +2 | 485, 539, 455 |
-| sonnet | low | ✓, ✓, ✓ | 1042, 915, 898 |
+| fable51 | low | ✓ | 870 |
+| haiku55 | low | ✓, ✓, ✓ | 5581, 4381, 4210 |
+| opus55 | low | -0 +2, -0 +2, -0 +2 | 485, 539, 455 |
+| sonnet55 | low | ✓, ✓, ✓ | 1042, 915, 898 |
 
 ## t2op4b2v3s1ag3c5-01
 
@@ -734,10 +734,10 @@ N=2 ops≤4 M=2 values=3 syncs=1 (2 events) p_obs=0.3 p_copy=0.5; 3 asked, 13 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 805 |
-| haiku | low | ✓, -0 +1, ✓ | 6105, 6899, 6944 |
-| opus | low | ✓, ✓, ✓ | 551, 636, 574 |
-| sonnet | low | ✓, ✓, -3 +0 | 1459, 1008, 835 |
+| fable51 | low | ✓ | 805 |
+| haiku55 | low | ✓, -0 +1, ✓ | 6105, 6899, 6944 |
+| opus55 | low | ✓, ✓, ✓ | 551, 636, 574 |
+| sonnet55 | low | ✓, ✓, -3 +0 | 1459, 1008, 835 |
 
 ## t2op5b2v3s2g3c5-01
 
@@ -745,10 +745,10 @@ N=2 ops≤5 M=2 values=3 syncs=2 (4 events) p_obs=0.3 p_copy=0.5; 3 asked, 13 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 1495 |
-| haiku | low | ✓, ✓, ✓ | 10140, 9401, 8105 |
-| opus | low | ✓, -0 +8, ✓ | 1066, 1326, 1006 |
-| sonnet | low | -5 +0, ✓, ✓ | 1573, 1953, 2127 |
+| fable51 | low | ✓ | 1495 |
+| haiku55 | low | ✓, ✓, ✓ | 10140, 9401, 8105 |
+| opus55 | low | ✓, -0 +8, ✓ | 1066, 1326, 1006 |
+| sonnet55 | low | -5 +0, ✓, ✓ | 1573, 1953, 2127 |
 
 ## t2op9b3v6s3pnc5x3-01
 
@@ -756,10 +756,10 @@ N=2 ops≤9 M=3 values=6 syncs=3 (6 events) p_obs=0.0 p_copy=0.5; 3 asked, 4 ans
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 1009 |
-| haiku | low | ✓, ✓, ✓ | 8000, 7548, 9819 |
-| opus | low | ✓, ✓, ✓ | 798, 890, 662 |
-| sonnet | low | ✓, ✓, ✓ | 1413, 1648, 1738 |
+| fable51 | low | ✓ | 1009 |
+| haiku55 | low | ✓, ✓, ✓ | 8000, 7548, 9819 |
+| opus55 | low | ✓, ✓, ✓ | 798, 890, 662 |
+| sonnet55 | low | ✓, ✓, ✓ | 1413, 1648, 1738 |
 
 ## t2op9b3v6s3pnc5x3-02
 
@@ -767,10 +767,10 @@ N=2 ops≤9 M=3 values=6 syncs=3 (6 events) p_obs=0.0 p_copy=0.5; 3 asked, 4 ans
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 866 |
-| haiku | low | ✓, ✓, ✓ | 6070, 3882, 4683 |
-| opus | low | ✓, ✓, ✓ | 472, 575, 494 |
-| sonnet | low | ✓, ✓, ✓ | 1250, 1088, 1050 |
+| fable51 | low | ✓ | 866 |
+| haiku55 | low | ✓, ✓, ✓ | 6070, 3882, 4683 |
+| opus55 | low | ✓, ✓, ✓ | 472, 575, 494 |
+| sonnet55 | low | ✓, ✓, ✓ | 1250, 1088, 1050 |
 
 ## t2op9b3v6s3pnc5x3-03
 
@@ -778,10 +778,10 @@ N=2 ops≤9 M=3 values=6 syncs=3 (6 events) p_obs=0.0 p_copy=0.5; 3 asked, 5 ans
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | -0 +2 | 1705 |
-| haiku | low | -0 +2, -0 +2, ✓ | 9164, 9353, 9518 |
-| opus | low | -0 +2, -0 +4, ✓ | 1033, 1135, 1193 |
-| sonnet | low | ✓, -0 +2, -0 +1 | 2117, 1990, 2329 |
+| fable51 | low | -0 +2 | 1705 |
+| haiku55 | low | -0 +2, -0 +2, ✓ | 9164, 9353, 9518 |
+| opus55 | low | -0 +2, -0 +4, ✓ | 1033, 1135, 1193 |
+| sonnet55 | low | ✓, -0 +2, -0 +1 | 2117, 1990, 2329 |
 
 ## t2op9b3v6s4pnc5x3-01
 
@@ -789,10 +789,10 @@ N=2 ops≤9 M=3 values=6 syncs=4 (8 events) p_obs=0.0 p_copy=0.5; 3 asked, 5 ans
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 853 |
-| haiku | low | -3 +0, -3 +0, -3 +0 | 4094, 3778, 3600 |
-| opus | low | ✓, ✓, ✓ | 650, 487, 580 |
-| sonnet | low | ✓, ✓, ✓ | 1099, 1333, 1181 |
+| fable51 | low | ✓ | 853 |
+| haiku55 | low | -3 +0, -3 +0, -3 +0 | 4094, 3778, 3600 |
+| opus55 | low | ✓, ✓, ✓ | 650, 487, 580 |
+| sonnet55 | low | ✓, ✓, ✓ | 1099, 1333, 1181 |
 
 ## t2op9b3v6s4pnc5x3-02
 
@@ -800,10 +800,10 @@ N=2 ops≤9 M=3 values=6 syncs=4 (8 events) p_obs=0.0 p_copy=0.5; 3 asked, 4 ans
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 914 |
-| haiku | low | ✓, ✓, ✓ | 6332, 8028, 5379 |
-| opus | low | ✓, ✓, ✓ | 619, 634, 578 |
-| sonnet | low | ✓, ✓, ✓ | 998, 1165, 874 |
+| fable51 | low | ✓ | 914 |
+| haiku55 | low | ✓, ✓, ✓ | 6332, 8028, 5379 |
+| opus55 | low | ✓, ✓, ✓ | 619, 634, 578 |
+| sonnet55 | low | ✓, ✓, ✓ | 998, 1165, 874 |
 
 ## t2op9b3v6s4pnc5x3-03
 
@@ -811,10 +811,10 @@ N=2 ops≤9 M=3 values=6 syncs=4 (8 events) p_obs=0.0 p_copy=0.5; 3 asked, 3 ans
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 742 |
-| haiku | low | ✓, ✓, ✓ | 4318, 5348, 5417 |
-| opus | low | ✓, ✓, ✓ | 486, 605, 431 |
-| sonnet | low | ✓, ✓, ✓ | 1109, 1130, 1008 |
+| fable51 | low | ✓ | 742 |
+| haiku55 | low | ✓, ✓, ✓ | 4318, 5348, 5417 |
+| opus55 | low | ✓, ✓, ✓ | 486, 605, 431 |
+| sonnet55 | low | ✓, ✓, ✓ | 1109, 1130, 1008 |
 
 ## t2op9b3v6s4pnc5x5q4-01
 
@@ -822,10 +822,10 @@ N=2 ops≤9 M=3 values=6 syncs=4 (8 events) p_obs=0.0 p_copy=0.5; 4 asked, 5 ans
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | -0 +3 | 913 |
-| haiku | low | ✓, -1 +0, ✓ | 4223, 4367, 5442 |
-| opus | low | ✓, ✓, ✓ | 458, 377, 436 |
-| sonnet | low | ✓, ✓, ✓ | 679, 671, 771 |
+| fable51 | low | -0 +3 | 913 |
+| haiku55 | low | ✓, -1 +0, ✓ | 4223, 4367, 5442 |
+| opus55 | low | ✓, ✓, ✓ | 458, 377, 436 |
+| sonnet55 | low | ✓, ✓, ✓ | 679, 671, 771 |
 
 ## t2op9b3v6s4pnc5x5q4-02
 
@@ -833,10 +833,10 @@ N=2 ops≤9 M=3 values=6 syncs=4 (8 events) p_obs=0.0 p_copy=0.5; 4 asked, 6 ans
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | -0 +2 | 1608 |
-| haiku | low | ✓, ✓, ✓ | 9928, 11168, 12239 |
-| opus | low | ✓, -2 +0, ✓ | 1181, 599, 1145 |
-| sonnet | low | ✓, ✓, ✓ | 1988, 2270, 1999 |
+| fable51 | low | -0 +2 | 1608 |
+| haiku55 | low | ✓, ✓, ✓ | 9928, 11168, 12239 |
+| opus55 | low | ✓, -2 +0, ✓ | 1181, 599, 1145 |
+| sonnet55 | low | ✓, ✓, ✓ | 1988, 2270, 1999 |
 
 ## t2op9b3v6s4pnc5x5q4-03
 
@@ -844,10 +844,10 @@ N=2 ops≤9 M=3 values=6 syncs=4 (8 events) p_obs=0.0 p_copy=0.5; 4 asked, 5 ans
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | -0 +1 | 1160 |
-| haiku | low | ✓, ✓, ✓ | 6869, 11150, 8156 |
-| opus | low | ✓, ✓, ✓ | 764, 848, 739 |
-| sonnet | low | ✓, ✓, ✓ | 2001, 1612, 1508 |
+| fable51 | low | -0 +1 | 1160 |
+| haiku55 | low | ✓, ✓, ✓ | 6869, 11150, 8156 |
+| opus55 | low | ✓, ✓, ✓ | 764, 848, 739 |
+| sonnet55 | low | ✓, ✓, ✓ | 2001, 1612, 1508 |
 
 ## t2op9b3v6s4pnc5x5q4-04
 
@@ -855,18 +855,18 @@ N=2 ops≤9 M=3 values=6 syncs=4 (8 events) p_obs=0.0 p_copy=0.5; 4 asked, 6 ans
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | high | ✓, -2 +0, ✓ | 2635, 1649, 2299 |
-| fable | low | -0 +2, -0 +2, -2 +0 | 1210, 1348, 1128 |
-| fable | medium | ✓, -0 +2, -2 +0 | 1682, 1862, 1099 |
-| haiku | high | ✓, ✓, ✓, ✓, ✓, ✓, ✓, ✓, ✓ | 13055, 16191, 18321, 13899, 13545, 12332, 13321, 11095, 14751 |
-| haiku | low | -0 +2, ✓, ✓, -3 +0, ✓, ✓, -3 +0, ✓, ✓ | 8561, 12010, 12052, 7179, 11019, 9859, 9052, 12422, 9863 |
-| haiku | medium | ✓, ✓, ✓, ✓, ✓, -0 +2, ✓, ✓, ✓ | 11493, 10984, 8966, 13957, 10273, 8535, 12535, 10110, 11197 |
-| opus | high | ✓, ✓, ✓, ✓, ✓, ✓, ✓, -2 +0, ✓ | 1474, 1690, 1477, 1545, 1393, 1518, 1409, 925, 1501 |
-| opus | low | ✓, -0 +2, ✓, -2 +0, ✓, ✓, ✓, ✓, -0 +2 | 973, 917, 933, 580, 903, 1008, 960, 911, 834 |
-| opus | medium | ✓, ✓, ✓, ✓, ✓, -0 +2, ✓, ✓, ✓ | 1177, 1573, 1525, 1401, 1668, 1304, 1225, 1391, 1398 |
-| sonnet | high | -2 +0, -2 +0, ✓, ✓, ✓, ✓, ✓, ✓, -2 +0 | 1820, 1878, 2841, 2161, 2276, 2866, 2456, 2638, 1514 |
-| sonnet | low | -2 +0, ✓, -2 +0, -0 +2, ✓, -2 +0, ✓, ✓, ✓ | 1365, 1687, 1227, 1549, 1772, 1286, 1735, 1815, 1891 |
-| sonnet | medium | -2 +0, ✓, -2 +0, ✓, -0 +2, ✓, ✓, ✓, ✓ | 1610, 1994, 1877, 1673, 1978, 2179, 1988, 1864, 1682 |
+| fable51 | high | ✓, -2 +0, ✓, ✓, -0 +2, ✓, ✓, ✓, ✓ | 2635, 1649, 2299, 2073, 1857, 3427, 2576, 3088, 2453 |
+| fable51 | low | -0 +2, -0 +2, -2 +0, -2 +0, -2 +0, -4 +0, -0 +2, -2 +0, -1 +1 | 1210, 1348, 1128, 1108, 1203, 754, 1490, 1303, 1546 |
+| fable51 | medium | ✓, -0 +2, -2 +0, -0 +2, -2 +0, -2 +0, -0 +2, ✓, ✓ | 1682, 1862, 1099, 1859, 1290, 1315, 1907, 1666, 1724 |
+| haiku55 | high | ✓, ✓, ✓, ✓, ✓, ✓, ✓, ✓, ✓ | 13055, 16191, 18321, 13899, 13545, 12332, 13321, 11095, 14751 |
+| haiku55 | low | -0 +2, ✓, ✓, -3 +0, ✓, ✓, -3 +0, ✓, ✓ | 8561, 12010, 12052, 7179, 11019, 9859, 9052, 12422, 9863 |
+| haiku55 | medium | ✓, ✓, ✓, ✓, ✓, -0 +2, ✓, ✓, ✓ | 11493, 10984, 8966, 13957, 10273, 8535, 12535, 10110, 11197 |
+| opus55 | high | ✓, ✓, ✓, ✓, ✓, ✓, ✓, -2 +0, ✓ | 1474, 1690, 1477, 1545, 1393, 1518, 1409, 925, 1501 |
+| opus55 | low | ✓, -0 +2, ✓, -2 +0, ✓, ✓, ✓, ✓, -0 +2 | 973, 917, 933, 580, 903, 1008, 960, 911, 834 |
+| opus55 | medium | ✓, ✓, ✓, ✓, ✓, -0 +2, ✓, ✓, ✓ | 1177, 1573, 1525, 1401, 1668, 1304, 1225, 1391, 1398 |
+| sonnet55 | high | -2 +0, -2 +0, ✓, ✓, ✓, ✓, ✓, ✓, -2 +0 | 1820, 1878, 2841, 2161, 2276, 2866, 2456, 2638, 1514 |
+| sonnet55 | low | -2 +0, ✓, -2 +0, -0 +2, ✓, -2 +0, ✓, ✓, ✓ | 1365, 1687, 1227, 1549, 1772, 1286, 1735, 1815, 1891 |
+| sonnet55 | medium | -2 +0, ✓, -2 +0, ✓, -0 +2, ✓, ✓, ✓, ✓ | 1610, 1994, 1877, 1673, 1978, 2179, 1988, 1864, 1682 |
 
 ## t2op9b3v6s4pnc5x5q4-05
 
@@ -874,10 +874,10 @@ N=2 ops≤9 M=3 values=6 syncs=4 (8 events) p_obs=0.0 p_copy=0.5; 4 asked, 5 ans
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 1637 |
-| haiku | low | ✓, ✓, ✓ | 12281, 11476, 13860 |
-| opus | low | ✓, ✓, ✓ | 1093, 1098, 1198 |
-| sonnet | low | ✓, ✓, ✓ | 2307, 2236, 2527 |
+| fable51 | low | ✓ | 1637 |
+| haiku55 | low | ✓, ✓, ✓ | 12281, 11476, 13860 |
+| opus55 | low | ✓, ✓, ✓ | 1093, 1098, 1198 |
+| sonnet55 | low | ✓, ✓, ✓ | 2307, 2236, 2527 |
 
 ## t2op9b3v6s4pnc5x5q4-06
 
@@ -885,10 +885,10 @@ N=2 ops≤9 M=3 values=6 syncs=4 (8 events) p_obs=0.0 p_copy=0.5; 4 asked, 6 ans
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 1677 |
-| haiku | low | ✓, -1 +0, ✓ | 10183, 8622, 8907 |
-| opus | low | ✓, ✓, ✓ | 1175, 1263, 1214 |
-| sonnet | low | -1 +0, -0 +2, ✓ | 1687, 1760, 2322 |
+| fable51 | low | ✓ | 1677 |
+| haiku55 | low | ✓, -1 +0, ✓ | 10183, 8622, 8907 |
+| opus55 | low | ✓, ✓, ✓ | 1175, 1263, 1214 |
+| sonnet55 | low | -1 +0, -0 +2, ✓ | 1687, 1760, 2322 |
 
 ## t3op3b2v3g3c5-01
 
@@ -896,10 +896,10 @@ N=3 ops≤3 M=2 values=3 syncs=0 (0 events) p_obs=0.3 p_copy=0.5; 3 asked, 21 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 709 |
-| haiku | low | ✓, ✓, ✓ | 2823, 3756, 3724 |
-| opus | low | ✓, ✓, ✓ | 600, 561, 509 |
-| sonnet | low | ✓, ✓, ✓ | 989, 784, 930 |
+| fable51 | low | ✓ | 709 |
+| haiku55 | low | ✓, ✓, ✓ | 2823, 3756, 3724 |
+| opus55 | low | ✓, ✓, ✓ | 600, 561, 509 |
+| sonnet55 | low | ✓, ✓, ✓ | 989, 784, 930 |
 
 ## t3op4b1v3g3c8-01
 
@@ -907,10 +907,10 @@ N=3 ops≤4 M=1 values=3 syncs=0 (0 events) p_obs=0.3 p_copy=0.8; 2 asked, 12 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 1962 |
-| haiku | low | ✓, -2 +0, ✓ | 18621, 14250, 16815 |
-| opus | low | ✓, -1 +0, -2 +0 | 1685, 1439, 1383 |
-| sonnet | low | -1 +0, -0 +1, -1 +1 | 3338, 1652, 1492 |
+| fable51 | low | ✓ | 1962 |
+| haiku55 | low | ✓, -2 +0, ✓ | 18621, 14250, 16815 |
+| opus55 | low | ✓, -1 +0, -2 +0 | 1685, 1439, 1383 |
+| sonnet55 | low | -1 +0, -0 +1, -1 +1 | 3338, 1652, 1492 |
 
 ## t3op4b1v3g3c8-02
 
@@ -918,10 +918,10 @@ N=3 ops≤4 M=1 values=3 syncs=0 (0 events) p_obs=0.3 p_copy=0.8; 3 asked, 14 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 2034 |
-| haiku | low | ✓, ✓, ✓ | 31155, 18723, 20612 |
-| opus | low | ✓, ✓, ✓ | 1466, 1775, 1627 |
-| sonnet | low | ✓, ✓, -0 +1 | 3411, 2975, 1962 |
+| fable51 | low | ✓ | 2034 |
+| haiku55 | low | ✓, ✓, ✓ | 31155, 18723, 20612 |
+| opus55 | low | ✓, ✓, ✓ | 1466, 1775, 1627 |
+| sonnet55 | low | ✓, ✓, -0 +1 | 3411, 2975, 1962 |
 
 ## t3op4b1v3g3c8-03
 
@@ -929,10 +929,10 @@ N=3 ops≤4 M=1 values=3 syncs=0 (0 events) p_obs=0.3 p_copy=0.8; 3 asked, 29 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 1494 |
-| haiku | low | ✓, ✓, ✓ | 10957, 12167, 20343 |
-| opus | low | ✓, ✓, ✓ | 1367, 1381, 1213 |
-| sonnet | low | ✓, ✓, ✓ | 2371, 2223, 2373 |
+| fable51 | low | ✓ | 1494 |
+| haiku55 | low | ✓, ✓, ✓ | 10957, 12167, 20343 |
+| opus55 | low | ✓, ✓, ✓ | 1367, 1381, 1213 |
+| sonnet55 | low | ✓, ✓, ✓ | 2371, 2223, 2373 |
 
 ## t3op4b2v3c8-01
 
@@ -940,10 +940,10 @@ N=3 ops≤4 M=2 values=3 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 3 asked, 15 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 1848 |
-| haiku | low | -1 +0, ✓, ✓ | 7722, 11477, 13576 |
-| opus | low | -1 +0, -1 +1, ✓ | 945, 1336, 1192 |
-| sonnet | low | ✓, -0 +1, ✓ | 1795, 1606, 1800 |
+| fable51 | low | ✓ | 1848 |
+| haiku55 | low | -1 +0, ✓, ✓ | 7722, 11477, 13576 |
+| opus55 | low | -1 +0, -1 +1, ✓ | 945, 1336, 1192 |
+| sonnet55 | low | ✓, -0 +1, ✓ | 1795, 1606, 1800 |
 
 ## t3op4b2v3c8-02
 
@@ -951,10 +951,10 @@ N=3 ops≤4 M=2 values=3 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 3 asked, 25 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | -0 +1 | 1996 |
-| haiku | low | ✓, ✓, ✓ | 33384, 18249, 29386 |
-| opus | low | ✓, ✓, -0 +2 | 2001, 1602, 1367 |
-| sonnet | low | -3 +0, ✓, ✓ | 2556, 2536, 2172 |
+| fable51 | low | -0 +1 | 1996 |
+| haiku55 | low | ✓, ✓, ✓ | 33384, 18249, 29386 |
+| opus55 | low | ✓, ✓, -0 +2 | 2001, 1602, 1367 |
+| sonnet55 | low | -3 +0, ✓, ✓ | 2556, 2536, 2172 |
 
 ## t3op4b2v3c8-03
 
@@ -962,10 +962,10 @@ N=3 ops≤4 M=2 values=3 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 3 asked, 12 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 1871 |
-| haiku | low | ✓, ✓, ✓ | 24891, 14714, 10843 |
-| opus | low | ✓, ✓, ✓ | 1600, 1118, 1165 |
-| sonnet | low | ✓, -1 +0, ✓ | 2108, 1807, 2154 |
+| fable51 | low | ✓ | 1871 |
+| haiku55 | low | ✓, ✓, ✓ | 24891, 14714, 10843 |
+| opus55 | low | ✓, ✓, ✓ | 1600, 1118, 1165 |
+| sonnet55 | low | ✓, -1 +0, ✓ | 2108, 1807, 2154 |
 
 ## t3op5b2v3c8-01
 
@@ -973,10 +973,10 @@ N=3 ops≤5 M=2 values=3 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 3 asked, 27 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 1060 |
-| haiku | low | ✓, ✓, ✓ | 13506, 13445, 15706 |
-| opus | low | ✓, ✓, ✓ | 1342, 1873, 1356 |
-| sonnet | low | ✓, ✓, ✓ | 1219, 1556, 1509 |
+| fable51 | low | ✓ | 1060 |
+| haiku55 | low | ✓, ✓, ✓ | 13506, 13445, 15706 |
+| opus55 | low | ✓, ✓, ✓ | 1342, 1873, 1356 |
+| sonnet55 | low | ✓, ✓, ✓ | 1219, 1556, 1509 |
 
 ## t3op5b2v3c8-02
 
@@ -984,10 +984,10 @@ N=3 ops≤5 M=2 values=3 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 3 asked, 29 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | -2 +0 | 1862 |
-| haiku | low | ✓, ✓, ✓ | 21756, 24110, 23156 |
-| opus | low | ✓, ✓, ✓ | 1428, 1381, 1292 |
-| sonnet | low | ✓, -1 +0, ✓ | 2005, 3242, 2494 |
+| fable51 | low | -2 +0 | 1862 |
+| haiku55 | low | ✓, ✓, ✓ | 21756, 24110, 23156 |
+| opus55 | low | ✓, ✓, ✓ | 1428, 1381, 1292 |
+| sonnet55 | low | ✓, -1 +0, ✓ | 2005, 3242, 2494 |
 
 ## t3op5b2v3c8-03
 
@@ -995,10 +995,10 @@ N=3 ops≤5 M=2 values=3 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 3 asked, 17 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 2386 |
-| haiku | low | -0 +7, ✓, ✓ | 13668, 14483, 14378 |
-| opus | low | ✓, ✓, -0 +4 | 1624, 1239, 1404 |
-| sonnet | low | -0 +1, ✓, -1 +0 | 2686, 2457, 2596 |
+| fable51 | low | ✓ | 2386 |
+| haiku55 | low | -0 +7, ✓, ✓ | 13668, 14483, 14378 |
+| opus55 | low | ✓, ✓, -0 +4 | 1624, 1239, 1404 |
+| sonnet55 | low | -0 +1, ✓, -1 +0 | 2686, 2457, 2596 |
 
 ## t3op5b2v3g3c5-01
 
@@ -1006,10 +1006,10 @@ N=3 ops≤5 M=2 values=3 syncs=0 (0 events) p_obs=0.3 p_copy=0.5; 3 asked, 12 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 1085 |
-| haiku | low | ✓, ✓, ✓ | 6477, 6640, 5721 |
-| opus | low | ✓, ✓, ✓ | 591, 580, 663 |
-| sonnet | low | ✓, ✓, ✓ | 1155, 1092, 967 |
+| fable51 | low | ✓ | 1085 |
+| haiku55 | low | ✓, ✓, ✓ | 6477, 6640, 5721 |
+| opus55 | low | ✓, ✓, ✓ | 591, 580, 663 |
+| sonnet55 | low | ✓, ✓, ✓ | 1155, 1092, 967 |
 
 ## t3op5b2v3g3c5-02
 
@@ -1017,10 +1017,10 @@ N=3 ops≤5 M=2 values=3 syncs=0 (0 events) p_obs=0.3 p_copy=0.5; 3 asked, 16 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 3811 |
-| haiku | low | -3 +0, ✓, ✓ | 21776, 13992, 26375 |
-| opus | low | -2 +0, -0 +2, ✓ | 2285, 1502, 2815 |
-| sonnet | low | -2 +0, -0 +2, -3 +0 | 1895, 1809, 2396 |
+| fable51 | low | ✓ | 3811 |
+| haiku55 | low | -3 +0, ✓, ✓ | 21776, 13992, 26375 |
+| opus55 | low | -2 +0, -0 +2, ✓ | 2285, 1502, 2815 |
+| sonnet55 | low | -2 +0, -0 +2, -3 +0 | 1895, 1809, 2396 |
 
 ## t3op5b3v5c8x3q1-01
 
@@ -1028,10 +1028,10 @@ N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 1 asked, 3 ans
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 348 |
-| haiku | low | ✓, ✓, ✓ | 2227, 1772, 2326 |
-| opus | low | ✓, ✓, ✓ | 250, 303, 219 |
-| sonnet | low | ✓, ✓, ✓ | 488, 418, 420 |
+| fable51 | low | ✓ | 348 |
+| haiku55 | low | ✓, ✓, ✓ | 2227, 1772, 2326 |
+| opus55 | low | ✓, ✓, ✓ | 250, 303, 219 |
+| sonnet55 | low | ✓, ✓, ✓ | 488, 418, 420 |
 
 ## t3op5b3v5c8x3q1-02
 
@@ -1039,10 +1039,10 @@ N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 1 asked, 2 ans
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 0 |
-| haiku | low | -0 +1, ✓, ✓ | 919, 1320, 1070 |
-| opus | low | ✓, ✓, ✓ | 213, 251, 228 |
-| sonnet | low | ✓, ✓, ✓ | 0, 315, 0 |
+| fable51 | low | ✓ | 0 |
+| haiku55 | low | -0 +1, ✓, ✓ | 919, 1320, 1070 |
+| opus55 | low | ✓, ✓, ✓ | 213, 251, 228 |
+| sonnet55 | low | ✓, ✓, ✓ | 0, 315, 0 |
 
 ## t3op5b3v5c8x2q1-01
 
@@ -1050,10 +1050,10 @@ N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 1 asked, 3 ans
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 0 |
-| haiku | low | -1 +0, -1 +0, ✓ | 444, 412, 591 |
-| opus | low | ✓, ✓, ✓ | 99, 0, 0 |
-| sonnet | low | ✓, ✓, ✓ | 0, 0, 0 |
+| fable51 | low | ✓ | 0 |
+| haiku55 | low | -1 +0, -1 +0, ✓ | 444, 412, 591 |
+| opus55 | low | ✓, ✓, ✓ | 99, 0, 0 |
+| sonnet55 | low | ✓, ✓, ✓ | 0, 0, 0 |
 
 ## t3op5b3v5c8x2q1-02
 
@@ -1061,10 +1061,10 @@ N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 1 asked, 2 ans
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 725 |
-| haiku | low | ✓, ✓, ✓ | 2045, 2130, 2927 |
-| opus | low | ✓, ✓, ✓ | 370, 370, 395 |
-| sonnet | low | ✓, ✓, ✓ | 485, 564, 631 |
+| fable51 | low | ✓ | 725 |
+| haiku55 | low | ✓, ✓, ✓ | 2045, 2130, 2927 |
+| opus55 | low | ✓, ✓, ✓ | 370, 370, 395 |
+| sonnet55 | low | ✓, ✓, ✓ | 485, 564, 631 |
 
 ## t3op5b3v5c8x4q1-01
 
@@ -1072,10 +1072,10 @@ N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 1 asked, 1 ans
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 709 |
-| haiku | low | ✓, ✓, ✓ | 6394, 5368, 8327 |
-| opus | low | ✓, ✓, ✓ | 646, 602, 735 |
-| sonnet | low | ✓, ✓, ✓ | 1267, 1267, 1587 |
+| fable51 | low | ✓ | 709 |
+| haiku55 | low | ✓, ✓, ✓ | 6394, 5368, 8327 |
+| opus55 | low | ✓, ✓, ✓ | 646, 602, 735 |
+| sonnet55 | low | ✓, ✓, ✓ | 1267, 1267, 1587 |
 
 ## t3op5b3v5c8x4q1-02
 
@@ -1083,10 +1083,10 @@ N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 1 asked, 1 ans
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 567 |
-| haiku | low | ✓, ✓, ✓ | 2405, 1743, 1758 |
-| opus | low | ✓, ✓, ✓ | 308, 271, 330 |
-| sonnet | low | ✓, ✓, ✓ | 591, 527, 544 |
+| fable51 | low | ✓ | 567 |
+| haiku55 | low | ✓, ✓, ✓ | 2405, 1743, 1758 |
+| opus55 | low | ✓, ✓, ✓ | 308, 271, 330 |
+| sonnet55 | low | ✓, ✓, ✓ | 591, 527, 544 |
 
 ## t3op5b3v5c8x4q1-03
 
@@ -1094,10 +1094,10 @@ N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 1 asked, 1 ans
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | -0 +1 | 419 |
-| haiku | low | ✓, -0 +1, ✓ | 4114, 1849, 6116 |
-| opus | low | ✓, ✓, ✓ | 528, 580, 450 |
-| sonnet | low | ✓, ✓, ✓ | 850, 554, 750 |
+| fable51 | low | -0 +1 | 419 |
+| haiku55 | low | ✓, -0 +1, ✓ | 4114, 1849, 6116 |
+| opus55 | low | ✓, ✓, ✓ | 528, 580, 450 |
+| sonnet55 | low | ✓, ✓, ✓ | 850, 554, 750 |
 
 ## t3op5b3v5c8x4q1-04
 
@@ -1105,10 +1105,10 @@ N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 1 asked, 2 ans
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 817 |
-| haiku | low | ✓, ✓, ✓ | 6362, 6456, 3783 |
-| opus | low | ✓, ✓, ✓ | 518, 408, 572 |
-| sonnet | low | ✓, ✓, ✓ | 1097, 725, 1081 |
+| fable51 | low | ✓ | 817 |
+| haiku55 | low | ✓, ✓, ✓ | 6362, 6456, 3783 |
+| opus55 | low | ✓, ✓, ✓ | 518, 408, 572 |
+| sonnet55 | low | ✓, ✓, ✓ | 1097, 725, 1081 |
 
 ## t3op5b3v5c8x4q1-05
 
@@ -1116,10 +1116,10 @@ N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 1 asked, 2 ans
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 443 |
-| haiku | low | -0 +1, ✓, -0 +1 | 2214, 2865, 2109 |
-| opus | low | ✓, ✓, ✓ | 385, 309, 314 |
-| sonnet | low | ✓, ✓, ✓ | 596, 582, 719 |
+| fable51 | low | ✓ | 443 |
+| haiku55 | low | -0 +1, ✓, -0 +1 | 2214, 2865, 2109 |
+| opus55 | low | ✓, ✓, ✓ | 385, 309, 314 |
+| sonnet55 | low | ✓, ✓, ✓ | 596, 582, 719 |
 
 ## t3op5b3v5c8x4q1-06
 
@@ -1127,10 +1127,10 @@ N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 1 asked, 2 ans
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 497 |
-| haiku | low | ✓, ✓, ✓ | 2418, 2076, 2479 |
-| opus | low | ✓, ✓, ✓ | 307, 317, 329 |
-| sonnet | low | ✓, ✓, ✓ | 659, 565, 572 |
+| fable51 | low | ✓ | 497 |
+| haiku55 | low | ✓, ✓, ✓ | 2418, 2076, 2479 |
+| opus55 | low | ✓, ✓, ✓ | 307, 317, 329 |
+| sonnet55 | low | ✓, ✓, ✓ | 659, 565, 572 |
 
 ## t3op5b3v5c8x-01
 
@@ -1138,10 +1138,10 @@ N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 3 asked, 21 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | -0 +1, -0 +1, -0 +1 | 2108, 1738, 1836 |
-| haiku | low | ✓, ✓, ✓, ✓, -2 +0, ✓, ✓, ✓, ✓ | 49828, 29889, 35520, 31458, 25460, 33873, 28810, 28043, 27850 |
-| opus | low | -0 +1, ✓, -3 +1, -1 +1, ✓, -0 +1, ✓, ✓, -2 +1 | 1671, 3476, 1435, 2048, 3320, 2187, 2882, 2078, 1911 |
-| sonnet | low | -0 +1, -0 +6, ✓, -0 +1, -1 +0, ✓, -3 +0, -1 +0, -1 +0 | 2591, 1955, 2986, 2445, 3069, 7492, 4038, 3810, 4700 |
+| fable51 | low | -0 +1, -0 +1, -0 +1 | 2108, 1738, 1836 |
+| haiku55 | low | ✓, ✓, ✓, ✓, -2 +0, ✓, ✓, ✓, ✓ | 49828, 29889, 35520, 31458, 25460, 33873, 28810, 28043, 27850 |
+| opus55 | low | -0 +1, ✓, -3 +1, -1 +1, ✓, -0 +1, ✓, ✓, -2 +1 | 1671, 3476, 1435, 2048, 3320, 2187, 2882, 2078, 1911 |
+| sonnet55 | low | -0 +1, -0 +6, ✓, -0 +1, -1 +0, ✓, -3 +0, -1 +0, -1 +0 | 2591, 1955, 2986, 2445, 3069, 7492, 4038, 3810, 4700 |
 
 ## t3op5b3v5c8x-02
 
@@ -1149,10 +1149,10 @@ N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 3 asked, 32 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 2208 |
-| haiku | low | ✓, -3 +0, ✓ | 11206, 17937, 10263 |
-| opus | low | ✓, ✓, ✓ | 1607, 1855, 1739 |
-| sonnet | low | ✓, -1 +0, ✓ | 2663, 3442, 3313 |
+| fable51 | low | ✓ | 2208 |
+| haiku55 | low | ✓, -3 +0, ✓ | 11206, 17937, 10263 |
+| opus55 | low | ✓, ✓, ✓ | 1607, 1855, 1739 |
+| sonnet55 | low | ✓, -1 +0, ✓ | 2663, 3442, 3313 |
 
 ## t3op5b3v5c8x-03
 
@@ -1160,10 +1160,10 @@ N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 3 asked, 29 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 2413 |
-| haiku | low | ✓, ✓, ✓ | 17383, 24027, 17266 |
-| opus | low | ✓, ✓, -0 +1 | 1547, 1758, 1498 |
-| sonnet | low | ✓, -0 +1, -3 +0 | 2217, 2266, 2298 |
+| fable51 | low | ✓ | 2413 |
+| haiku55 | low | ✓, ✓, ✓ | 17383, 24027, 17266 |
+| opus55 | low | ✓, ✓, -0 +1 | 1547, 1758, 1498 |
+| sonnet55 | low | ✓, -0 +1, -3 +0 | 2217, 2266, 2298 |
 
 ## t3op5b3v5c8-01
 
@@ -1171,10 +1171,10 @@ N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 3 asked, 12 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 1113 |
-| haiku | low | ✓, ✓, ✓ | 8612, 11753, 11526 |
-| opus | low | ✓, ✓, ✓ | 1195, 792, 793 |
-| sonnet | low | ✓, ✓, ✓ | 1937, 1909, 1319 |
+| fable51 | low | ✓ | 1113 |
+| haiku55 | low | ✓, ✓, ✓ | 8612, 11753, 11526 |
+| opus55 | low | ✓, ✓, ✓ | 1195, 792, 793 |
+| sonnet55 | low | ✓, ✓, ✓ | 1937, 1909, 1319 |
 
 ## t3op5b3v5c8-02
 
@@ -1182,10 +1182,10 @@ N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 3 asked, 14 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | -0 +10 | 948 |
-| haiku | low | ✓, -2 +0, ✓ | 9276, 8202, 10511 |
-| opus | low | ✓, ✓, ✓ | 763, 881, 906 |
-| sonnet | low | ✓, -0 +6, ✓ | 1671, 1243, 1592 |
+| fable51 | low | -0 +10 | 948 |
+| haiku55 | low | ✓, -2 +0, ✓ | 9276, 8202, 10511 |
+| opus55 | low | ✓, ✓, ✓ | 763, 881, 906 |
+| sonnet55 | low | ✓, -0 +6, ✓ | 1671, 1243, 1592 |
 
 ## t3op5b3v5c8-03
 
@@ -1193,10 +1193,10 @@ N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 3 asked, 20 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 1135 |
-| haiku | low | -0 +2, ✓, ✓ | 6860, 6397, 7048 |
-| opus | low | ✓, ✓, ✓ | 1106, 839, 1038 |
-| sonnet | low | ✓, ✓, ✓ | 1621, 1598, 1633 |
+| fable51 | low | ✓ | 1135 |
+| haiku55 | low | -0 +2, ✓, ✓ | 6860, 6397, 7048 |
+| opus55 | low | ✓, ✓, ✓ | 1106, 839, 1038 |
+| sonnet55 | low | ✓, ✓, ✓ | 1621, 1598, 1633 |
 
 ## t3op5b3v5g4c8x2q2-01
 
@@ -1204,10 +1204,10 @@ N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.4 p_copy=0.8; 2 asked, 3 ans
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 551 |
-| haiku | low | ✓, ✓, ✓ | 3254, 3534, 3953 |
-| opus | low | ✓, ✓, ✓ | 394, 456, 491 |
-| sonnet | low | ✓, ✓, ✓ | 646, 715, 731 |
+| fable51 | low | ✓ | 551 |
+| haiku55 | low | ✓, ✓, ✓ | 3254, 3534, 3953 |
+| opus55 | low | ✓, ✓, ✓ | 394, 456, 491 |
+| sonnet55 | low | ✓, ✓, ✓ | 646, 715, 731 |
 
 ## t3op5b3v5g4c8x2q2-02
 
@@ -1215,10 +1215,10 @@ N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.4 p_copy=0.8; 2 asked, 5 ans
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | -0 +3 | 677 |
-| haiku | low | ✓, ✓, ✓ | 6391, 6014, 5912 |
-| opus | low | ✓, ✓, ✓ | 461, 507, 481 |
-| sonnet | low | ✓, ✓, ✓ | 1054, 876, 834 |
+| fable51 | low | -0 +3 | 677 |
+| haiku55 | low | ✓, ✓, ✓ | 6391, 6014, 5912 |
+| opus55 | low | ✓, ✓, ✓ | 461, 507, 481 |
+| sonnet55 | low | ✓, ✓, ✓ | 1054, 876, 834 |
 
 ## t3op5b3v5g4c8x3q1-01
 
@@ -1226,10 +1226,10 @@ N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.4 p_copy=0.8; 1 asked, 2 ans
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 811 |
-| haiku | low | ✓, ✓, ✓ | 3650, 2784, 3444 |
-| opus | low | ✓, ✓, ✓ | 431, 445, 510 |
-| sonnet | low | ✓, ✓, ✓ | 993, 866, 638 |
+| fable51 | low | ✓ | 811 |
+| haiku55 | low | ✓, ✓, ✓ | 3650, 2784, 3444 |
+| opus55 | low | ✓, ✓, ✓ | 431, 445, 510 |
+| sonnet55 | low | ✓, ✓, ✓ | 993, 866, 638 |
 
 ## t3op5b3v5g4c8x3q1-02
 
@@ -1237,10 +1237,10 @@ N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.4 p_copy=0.8; 1 asked, 3 ans
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 397 |
-| haiku | low | ✓, ✓, ✓ | 2984, 3197, 2288 |
-| opus | low | ✓, ✓, ✓ | 311, 358, 307 |
-| sonnet | low | ✓, ✓, ✓ | 546, 599, 685 |
+| fable51 | low | ✓ | 397 |
+| haiku55 | low | ✓, ✓, ✓ | 2984, 3197, 2288 |
+| opus55 | low | ✓, ✓, ✓ | 311, 358, 307 |
+| sonnet55 | low | ✓, ✓, ✓ | 546, 599, 685 |
 
 ## t3op5b3v5g4c8x3q2-01
 
@@ -1248,10 +1248,10 @@ N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.4 p_copy=0.8; 2 asked, 3 ans
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 547 |
-| haiku | low | ✓, ✓, ✓ | 4119, 3918, 3577 |
-| opus | low | ✓, ✓, ✓ | 460, 418, 466 |
-| sonnet | low | ✓, ✓, ✓ | 715, 653, 766 |
+| fable51 | low | ✓ | 547 |
+| haiku55 | low | ✓, ✓, ✓ | 4119, 3918, 3577 |
+| opus55 | low | ✓, ✓, ✓ | 460, 418, 466 |
+| sonnet55 | low | ✓, ✓, ✓ | 715, 653, 766 |
 
 ## t3op5b3v5g4c8x3q2-02
 
@@ -1259,10 +1259,10 @@ N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.4 p_copy=0.8; 2 asked, 6 ans
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 1384 |
-| haiku | low | ✓, ✓, ✓ | 4939, 7547, 5006 |
-| opus | low | ✓, ✓, ✓ | 591, 639, 787 |
-| sonnet | low | ✓, ✓, ✓ | 973, 1067, 1037 |
+| fable51 | low | ✓ | 1384 |
+| haiku55 | low | ✓, ✓, ✓ | 4939, 7547, 5006 |
+| opus55 | low | ✓, ✓, ✓ | 591, 639, 787 |
+| sonnet55 | low | ✓, ✓, ✓ | 973, 1067, 1037 |
 
 ## t3op5b3v5g5c8x3q4-01
 
@@ -1270,10 +1270,10 @@ N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.5 p_copy=0.8; 3 asked, 4 ans
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 916 |
-| haiku | low | ✓, ✓, ✓ | 3993, 2973, 3364 |
-| opus | low | ✓, ✓, ✓ | 366, 449, 437 |
-| sonnet | low | ✓, ✓, ✓ | 929, 778, 866 |
+| fable51 | low | ✓ | 916 |
+| haiku55 | low | ✓, ✓, ✓ | 3993, 2973, 3364 |
+| opus55 | low | ✓, ✓, ✓ | 366, 449, 437 |
+| sonnet55 | low | ✓, ✓, ✓ | 929, 778, 866 |
 
 ## t3op5b3v5g5c8x3q4-02
 
@@ -1281,10 +1281,10 @@ N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.5 p_copy=0.8; 3 asked, 5 ans
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 862 |
-| haiku | low | ✓, ✓, ✓ | 4320, 4301, 4645 |
-| opus | low | ✓, ✓, ✓ | 548, 548, 501 |
-| sonnet | low | ✓, ✓, ✓ | 1027, 792, 898 |
+| fable51 | low | ✓ | 862 |
+| haiku55 | low | ✓, ✓, ✓ | 4320, 4301, 4645 |
+| opus55 | low | ✓, ✓, ✓ | 548, 548, 501 |
+| sonnet55 | low | ✓, ✓, ✓ | 1027, 792, 898 |
 
 ## t3op5b3v5g5c8x3q4-03
 
@@ -1292,10 +1292,10 @@ N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.5 p_copy=0.8; 4 asked, 4 ans
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 878 |
-| haiku | low | ✓, ✓, ✓ | 5556, 4760, 4983 |
-| opus | low | ✓, ✓, ✓ | 724, 579, 665 |
-| sonnet | low | ✓, ✓, ✓ | 1197, 914, 923 |
+| fable51 | low | ✓ | 878 |
+| haiku55 | low | ✓, ✓, ✓ | 5556, 4760, 4983 |
+| opus55 | low | ✓, ✓, ✓ | 724, 579, 665 |
+| sonnet55 | low | ✓, ✓, ✓ | 1197, 914, 923 |
 
 ## t3op5b3v5g5c8x3q4-04
 
@@ -1303,10 +1303,10 @@ N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.5 p_copy=0.8; 3 asked, 5 ans
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 1127 |
-| haiku | low | ✓, ✓, ✓ | 4925, 8773, 6136 |
-| opus | low | ✓, ✓, -0 +1 | 563, 745, 591 |
-| sonnet | low | ✓, -0 +1, ✓ | 1456, 1072, 1094 |
+| fable51 | low | ✓ | 1127 |
+| haiku55 | low | ✓, ✓, ✓ | 4925, 8773, 6136 |
+| opus55 | low | ✓, ✓, -0 +1 | 563, 745, 591 |
+| sonnet55 | low | ✓, -0 +1, ✓ | 1456, 1072, 1094 |
 
 ## t3op5b3v5g5c8x3q4-05
 
@@ -1314,10 +1314,10 @@ N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.5 p_copy=0.8; 4 asked, 3 ans
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 1041 |
-| haiku | low | ✓, ✓, ✓ | 6475, 7987, 4247 |
-| opus | low | ✓, ✓, ✓ | 817, 779, 872 |
-| sonnet | low | ✓, ✓, ✓ | 1465, 1372, 1546 |
+| fable51 | low | ✓ | 1041 |
+| haiku55 | low | ✓, ✓, ✓ | 6475, 7987, 4247 |
+| opus55 | low | ✓, ✓, ✓ | 817, 779, 872 |
+| sonnet55 | low | ✓, ✓, ✓ | 1465, 1372, 1546 |
 
 ## t3op5b3v5g5c8x3q4-06
 
@@ -1325,10 +1325,10 @@ N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.5 p_copy=0.8; 3 asked, 5 ans
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | -0 +1 | 764 |
-| haiku | low | ✓, ✓, ✓ | 10740, 9983, 6353 |
-| opus | low | ✓, ✓, ✓ | 1016, 975, 1127 |
-| sonnet | low | ✓, ✓, ✓ | 1647, 1423, 1814 |
+| fable51 | low | -0 +1 | 764 |
+| haiku55 | low | ✓, ✓, ✓ | 10740, 9983, 6353 |
+| opus55 | low | ✓, ✓, ✓ | 1016, 975, 1127 |
+| sonnet55 | low | ✓, ✓, ✓ | 1647, 1423, 1814 |
 
 ## t3op5b3v5g6c8x2q1-01
 
@@ -1336,10 +1336,10 @@ N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.6 p_copy=0.8; 1 asked, 2 ans
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 342 |
-| haiku | low | ✓, ✓, ✓ | 2216, 2692, 2875 |
-| opus | low | ✓, ✓, ✓ | 217, 248, 247 |
-| sonnet | low | ✓, ✓, ✓ | 507, 500, 393 |
+| fable51 | low | ✓ | 342 |
+| haiku55 | low | ✓, ✓, ✓ | 2216, 2692, 2875 |
+| opus55 | low | ✓, ✓, ✓ | 217, 248, 247 |
+| sonnet55 | low | ✓, ✓, ✓ | 507, 500, 393 |
 
 ## t3op5b3v5g6c8x2q1-02
 
@@ -1347,10 +1347,10 @@ N=3 ops≤5 M=3 values=5 syncs=0 (0 events) p_obs=0.6 p_copy=0.8; 1 asked, 2 ans
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 452 |
-| haiku | low | ✓, ✓, ✓ | 3954, 2702, 3173 |
-| opus | low | ✓, ✓, ✓ | 395, 482, 432 |
-| sonnet | low | ✓, ✓, ✓ | 594, 614, 719 |
+| fable51 | low | ✓ | 452 |
+| haiku55 | low | ✓, ✓, ✓ | 3954, 2702, 3173 |
+| opus55 | low | ✓, ✓, ✓ | 395, 482, 432 |
+| sonnet55 | low | ✓, ✓, ✓ | 594, 614, 719 |
 
 ## t3op6b2v3c8-01
 
@@ -1358,10 +1358,10 @@ N=3 ops≤6 M=2 values=3 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 3 asked, 12 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 993 |
-| haiku | low | ✓, ✓, ✓ | 13562, 13345, 9941 |
-| opus | low | -2 +0, ✓, -2 +0 | 914, 1020, 630 |
-| sonnet | low | ✓, ✓, ✓ | 1309, 1443, 1602 |
+| fable51 | low | ✓ | 993 |
+| haiku55 | low | ✓, ✓, ✓ | 13562, 13345, 9941 |
+| opus55 | low | -2 +0, ✓, -2 +0 | 914, 1020, 630 |
+| sonnet55 | low | ✓, ✓, ✓ | 1309, 1443, 1602 |
 
 ## t3op6b2v3c8-02
 
@@ -1369,10 +1369,10 @@ N=3 ops≤6 M=2 values=3 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 3 asked, 15 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 787 |
-| haiku | low | -6 +0, ✓, ✓ | 8833, 12453, 11860 |
-| opus | low | ✓, ✓, ✓ | 721, 934, 878 |
-| sonnet | low | ✓, ✓, ✓ | 1672, 1642, 1441 |
+| fable51 | low | ✓ | 787 |
+| haiku55 | low | -6 +0, ✓, ✓ | 8833, 12453, 11860 |
+| opus55 | low | ✓, ✓, ✓ | 721, 934, 878 |
+| sonnet55 | low | ✓, ✓, ✓ | 1672, 1642, 1441 |
 
 ## t3op6b2v3c8-03
 
@@ -1380,10 +1380,10 @@ N=3 ops≤6 M=2 values=3 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 3 asked, 16 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 1396 |
-| haiku | low | ✓, ✓, ✓ | 29393, 19152, 47589 |
-| opus | low | ✓, ✓, ✓ | 1171, 1432, 1319 |
-| sonnet | low | ✓, ✓, ✓ | 2750, 1853, 1802 |
+| fable51 | low | ✓ | 1396 |
+| haiku55 | low | ✓, ✓, ✓ | 29393, 19152, 47589 |
+| opus55 | low | ✓, ✓, ✓ | 1171, 1432, 1319 |
+| sonnet55 | low | ✓, ✓, ✓ | 2750, 1853, 1802 |
 
 ## t3op6b2v3g3c5-01
 
@@ -1391,10 +1391,10 @@ N=3 ops≤6 M=2 values=3 syncs=0 (0 events) p_obs=0.3 p_copy=0.5; 3 asked, 14 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 1200 |
-| haiku | low | ✓, ✓, ✓ | 8177, 12086, 11357 |
-| opus | low | ✓, ✓, ✓ | 913, 809, 914 |
-| sonnet | low | ✓, ✓, ✓ | 1385, 1355, 1256 |
+| fable51 | low | ✓ | 1200 |
+| haiku55 | low | ✓, ✓, ✓ | 8177, 12086, 11357 |
+| opus55 | low | ✓, ✓, ✓ | 913, 809, 914 |
+| sonnet55 | low | ✓, ✓, ✓ | 1385, 1355, 1256 |
 
 ## t3op6b2v3g3c5-02
 
@@ -1402,10 +1402,10 @@ N=3 ops≤6 M=2 values=3 syncs=0 (0 events) p_obs=0.3 p_copy=0.5; 3 asked, 12 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 1088 |
-| haiku | low | ✓, ✓, ✓ | 13693, 10642, 11777 |
-| opus | low | ✓, ✓, ✓ | 681, 554, 965 |
-| sonnet | low | ✓, ✓, ✓ | 1016, 1061, 1269 |
+| fable51 | low | ✓ | 1088 |
+| haiku55 | low | ✓, ✓, ✓ | 13693, 10642, 11777 |
+| opus55 | low | ✓, ✓, ✓ | 681, 554, 965 |
+| sonnet55 | low | ✓, ✓, ✓ | 1016, 1061, 1269 |
 
 ## t3op8b3v5g6c8x4q2-01
 
@@ -1413,10 +1413,10 @@ N=3 ops≤8 M=3 values=5 syncs=0 (0 events) p_obs=0.6 p_copy=0.8; 2 asked, 2 ans
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 1052 |
-| haiku | low | ✓, ✓, ✓ | 6892, 12131, 8498 |
-| opus | low | ✓, ✓, ✓ | 1209, 1588, 1281 |
-| sonnet | low | ✓, ✓, ✓ | 1105, 2837, 2970 |
+| fable51 | low | ✓ | 1052 |
+| haiku55 | low | ✓, ✓, ✓ | 6892, 12131, 8498 |
+| opus55 | low | ✓, ✓, ✓ | 1209, 1588, 1281 |
+| sonnet55 | low | ✓, ✓, ✓ | 1105, 2837, 2970 |
 
 ## t3op8b3v5g6c8x4q2-02
 
@@ -1424,10 +1424,10 @@ N=3 ops≤8 M=3 values=5 syncs=0 (0 events) p_obs=0.6 p_copy=0.8; 2 asked, 2 ans
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 2101 |
-| haiku | low | ✓, ✓, ✓ | 16643, 9000, 8828 |
-| opus | low | ✓, ✓, ✓ | 1386, 1048, 1275 |
-| sonnet | low | -0 +1, ✓, ✓ | 2024, 1713, 2394 |
+| fable51 | low | ✓ | 2101 |
+| haiku55 | low | ✓, ✓, ✓ | 16643, 9000, 8828 |
+| opus55 | low | ✓, ✓, ✓ | 1386, 1048, 1275 |
+| sonnet55 | low | -0 +1, ✓, ✓ | 2024, 1713, 2394 |
 
 ## t3op8b3v5g6c8x4q2-03
 
@@ -1435,10 +1435,10 @@ N=3 ops≤8 M=3 values=5 syncs=0 (0 events) p_obs=0.6 p_copy=0.8; 2 asked, 2 ans
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 1675 |
-| haiku | low | -0 +5, ✓, ✓ | 33392, 8504, 10019 |
-| opus | low | ✓, ✓, ✓ | 601, 884, 676 |
-| sonnet | low | ✓, ✓, ✓ | 1629, 1726, 1296 |
+| fable51 | low | ✓ | 1675 |
+| haiku55 | low | -0 +5, ✓, ✓ | 33392, 8504, 10019 |
+| opus55 | low | ✓, ✓, ✓ | 601, 884, 676 |
+| sonnet55 | low | ✓, ✓, ✓ | 1629, 1726, 1296 |
 
 ## t3op8b3v5g6c8x4q2-04
 
@@ -1446,10 +1446,10 @@ N=3 ops≤8 M=3 values=5 syncs=0 (0 events) p_obs=0.6 p_copy=0.8; 2 asked, 2 ans
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | -0 +1 | 1215 |
-| haiku | low | ✓, ✓, ✓ | 9039, 12857, 17703 |
-| opus | low | ✓, -0 +1, ✓ | 1579, 717, 996 |
-| sonnet | low | ✓, ✓, ✓ | 2077, 3456, 1588 |
+| fable51 | low | -0 +1 | 1215 |
+| haiku55 | low | ✓, ✓, ✓ | 9039, 12857, 17703 |
+| opus55 | low | ✓, -0 +1, ✓ | 1579, 717, 996 |
+| sonnet55 | low | ✓, ✓, ✓ | 2077, 3456, 1588 |
 
 ## t3op8b3v5g6c8x4q2-05
 
@@ -1457,10 +1457,10 @@ N=3 ops≤8 M=3 values=5 syncs=0 (0 events) p_obs=0.6 p_copy=0.8; 2 asked, 2 ans
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 1358 |
-| haiku | low | ✓, ✓, ✓ | 7152, 6297, 7256 |
-| opus | low | ✓, ✓, ✓ | 633, 561, 726 |
-| sonnet | low | ✓, ✓, ✓ | 1031, 1122, 1015 |
+| fable51 | low | ✓ | 1358 |
+| haiku55 | low | ✓, ✓, ✓ | 7152, 6297, 7256 |
+| opus55 | low | ✓, ✓, ✓ | 633, 561, 726 |
+| sonnet55 | low | ✓, ✓, ✓ | 1031, 1122, 1015 |
 
 ## t3op8b3v5g6c8x4q2-06
 
@@ -1468,10 +1468,10 @@ N=3 ops≤8 M=3 values=5 syncs=0 (0 events) p_obs=0.6 p_copy=0.8; 2 asked, 2 ans
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | -2 +0 | 527 |
-| haiku | low | ✓, -2 +0, ✓ | 17636, 3228, 14242 |
-| opus | low | ✓, ✓, ✓ | 1715, 1048, 1224 |
-| sonnet | low | -0 +1, -0 +1, -0 +1 | 2775, 2873, 2189 |
+| fable51 | low | -2 +0 | 527 |
+| haiku55 | low | ✓, -2 +0, ✓ | 17636, 3228, 14242 |
+| opus55 | low | ✓, ✓, ✓ | 1715, 1048, 1224 |
+| sonnet55 | low | -0 +1, -0 +1, -0 +1 | 2775, 2873, 2189 |
 
 ## t3op4b2v3s2g3c5-01
 
@@ -1479,10 +1479,10 @@ N=3 ops≤4 M=2 values=3 syncs=2 (4 events) p_obs=0.3 p_copy=0.5; 3 asked, 14 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 1050 |
-| haiku | low | ✓, ✓, -2 +0 | 13914, 15455, 11483 |
-| opus | low | ✓, ✓, ✓ | 972, 987, 700 |
-| sonnet | low | ✓, ✓, ✓ | 2295, 1688, 1608 |
+| fable51 | low | ✓ | 1050 |
+| haiku55 | low | ✓, ✓, -2 +0 | 13914, 15455, 11483 |
+| opus55 | low | ✓, ✓, ✓ | 972, 987, 700 |
+| sonnet55 | low | ✓, ✓, ✓ | 2295, 1688, 1608 |
 
 ## t3op5b2v3s3g3c5-01
 
@@ -1490,10 +1490,10 @@ N=3 ops≤5 M=2 values=3 syncs=3 (6 events) p_obs=0.3 p_copy=0.5; 3 asked, 13 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | -1 +0 | 1427 |
-| haiku | low | ✓, -1 +0, ✓ | 17865, 9218, 10726 |
-| opus | low | ✓, -1 +0, -1 +0 | 1345, 736, 753 |
-| sonnet | low | ✓, ✓, -1 +0 | 2267, 2553, 1244 |
+| fable51 | low | -1 +0 | 1427 |
+| haiku55 | low | ✓, -1 +0, ✓ | 17865, 9218, 10726 |
+| opus55 | low | ✓, -1 +0, -1 +0 | 1345, 736, 753 |
+| sonnet55 | low | ✓, ✓, -1 +0 | 2267, 2553, 1244 |
 
 ## t3op7b2v3s3g3c5-01
 
@@ -1501,10 +1501,10 @@ N=3 ops≤7 M=2 values=3 syncs=3 (6 events) p_obs=0.3 p_copy=0.5; 3 asked, 15 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 2819 |
-| haiku | low | ✓, ✓, ✓ | 29410, 30262, 25214 |
-| opus | low | ✓, ✓, ✓ | 1987, 1714, 1549 |
-| sonnet | low | -3 +0, -0 +9, -3 +0 | 3629, 4133, 3266 |
+| fable51 | low | ✓ | 2819 |
+| haiku55 | low | ✓, ✓, ✓ | 29410, 30262, 25214 |
+| opus55 | low | ✓, ✓, ✓ | 1987, 1714, 1549 |
+| sonnet55 | low | -3 +0, -0 +9, -3 +0 | 3629, 4133, 3266 |
 
 ## t4op4b2v3c8-01
 
@@ -1512,10 +1512,10 @@ N=4 ops≤4 M=2 values=3 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 3 asked, 27 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 2027 |
-| haiku | low | ✓, ✓, ✓ | 36928, 21716, 19188 |
-| opus | low | ✓, ✓, ✓ | 1173, 743, 1004 |
-| sonnet | low | ✓, ✓, ✓ | 1359, 2323, 1615 |
+| fable51 | low | ✓ | 2027 |
+| haiku55 | low | ✓, ✓, ✓ | 36928, 21716, 19188 |
+| opus55 | low | ✓, ✓, ✓ | 1173, 743, 1004 |
+| sonnet55 | low | ✓, ✓, ✓ | 1359, 2323, 1615 |
 
 ## t4op4b2v3c8-02
 
@@ -1523,10 +1523,10 @@ N=4 ops≤4 M=2 values=3 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 3 asked, 27 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 1135 |
-| haiku | low | ✓, ✓, ✓ | 16368, 33315, 23180 |
-| opus | low | ✓, ✓, ✓ | 911, 986, 1485 |
-| sonnet | low | ✓, ✓, ✓ | 1588, 1769, 2054 |
+| fable51 | low | ✓ | 1135 |
+| haiku55 | low | ✓, ✓, ✓ | 16368, 33315, 23180 |
+| opus55 | low | ✓, ✓, ✓ | 911, 986, 1485 |
+| sonnet55 | low | ✓, ✓, ✓ | 1588, 1769, 2054 |
 
 ## t4op4b2v3c8-03
 
@@ -1534,10 +1534,10 @@ N=4 ops≤4 M=2 values=3 syncs=0 (0 events) p_obs=0.0 p_copy=0.8; 3 asked, 14 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | ✓ | 1168 |
-| haiku | low | ✓, ✓, ✓ | 9197, 10157, 9280 |
-| opus | low | ✓, ✓, ✓ | 1072, 818, 768 |
-| sonnet | low | ✓, ✓, ✓ | 1741, 2299, 1617 |
+| fable51 | low | ✓ | 1168 |
+| haiku55 | low | ✓, ✓, ✓ | 9197, 10157, 9280 |
+| opus55 | low | ✓, ✓, ✓ | 1072, 818, 768 |
+| sonnet55 | low | ✓, ✓, ✓ | 1741, 2299, 1617 |
 
 ## t4op4b2v3s3g3c5-01
 
@@ -1545,10 +1545,10 @@ N=4 ops≤4 M=2 values=3 syncs=3 (6 events) p_obs=0.3 p_copy=0.5; 3 asked, 14 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | -0 +2 | 1290 |
-| haiku | low | ✓, ✓, ✓ | 12340, 20966, 12159 |
-| opus | low | ✓, ✓, ✓ | 994, 1054, 1075 |
-| sonnet | low | ✓, ✓, ✓ | 1616, 1953, 2212 |
+| fable51 | low | -0 +2 | 1290 |
+| haiku55 | low | ✓, ✓, ✓ | 12340, 20966, 12159 |
+| opus55 | low | ✓, ✓, ✓ | 994, 1054, 1075 |
+| sonnet55 | low | ✓, ✓, ✓ | 1616, 1953, 2212 |
 
 ## t4op6b3v3s4g3c5-01
 
@@ -1556,7 +1556,7 @@ N=4 ops≤6 M=3 values=3 syncs=4 (8 events) p_obs=0.3 p_copy=0.5; 3 asked, 17 an
 
 | model | effort | trials | thinking tokens |
 |---|---|---|---|
-| fable | low | -7 +0 | 1625 |
-| haiku | low | -10 +3, ✓, ✓ | 15615, 23466, 17259 |
-| opus | low | -10 +0, -10 +3, -10 +0 | 955, 1239, 1015 |
-| sonnet | low | -10 +3, -10 +3, -0 +3 | 2394, 2110, 2853 |
+| fable51 | low | -7 +0 | 1625 |
+| haiku55 | low | -10 +3, ✓, ✓ | 15615, 23466, 17259 |
+| opus55 | low | -10 +0, -10 +3, -10 +0 | 955, 1239, 1015 |
+| sonnet55 | low | -10 +3, -10 +3, -0 +3 | 2394, 2110, 2853 |

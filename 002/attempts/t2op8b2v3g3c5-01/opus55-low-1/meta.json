@@ -1,0 +1,14 @@
+{
+ "problem": "t2op8b2v3g3c5-01",
+ "model": "opus55",
+ "model_id": "claude-opus-5-5",
+ "effort": "low",
+ "trial": 1,
+ "prompt": "v1",
+ "harness": "c7a46fb",
+ "started": "2026-10-23T02:29:03+00:00",
+ "seconds": 14.8,
+ "cost_usd": 0.04054000000000001,
+ "output_tokens": 1513,
+ "thinking_tokens": 683
+}

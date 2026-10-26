@@ -1,0 +1,14 @@
+{
+ "problem": "t2op9b3v6s4pnc5x5q4-04",
+ "model": "fable51",
+ "model_id": "claude-fable-5-1",
+ "effort": "high",
+ "trial": 5,
+ "prompt": "v1",
+ "harness": "5ac2bed",
+ "started": "2026-10-25T00:21:58+00:00",
+ "seconds": 29.3,
+ "cost_usd": 0.12504375,
+ "output_tokens": 2360,
+ "thinking_tokens": 1857
+}
