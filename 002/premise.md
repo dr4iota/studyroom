@@ -185,7 +185,15 @@ earlier cases used. Example: `t2op4b2v3s1pg3c5-01`.
   `claude -p --model <m> --effort <e> --tools "" --setting-sources ""`, started from an
   empty temporary directory with a one-line system prompt. The model sees only the
   prompt and a short environment block (date, working directory, model name).
-- **Plan.** Each problem is run on Fable ×1 and on Opus, Sonnet and Haiku ×3, starting
+- **Models.** Plans and run directories name models with their version: `fable51`,
+  `opus55`, `sonnet55`, `haiku55` (`MODELS` in `deduce.py` maps each to its model ID,
+  e.g. `opus55` → `claude-opus-5-5`). A run sends that exact ID and is not recorded if
+  the CLI reports a different model; a new version gets a new name. Runs before pinning
+  (up to 2026-10-25) sent the bare aliases; their recorded `model_id` shows each alias
+  resolved to these same IDs throughout, and their directories were renamed to match.
+  `meta.json` also records the CLI version (`cli`) from then on; earlier runs used
+  Claude Code 2.1.309 or 2.1.310, unrecorded per run.
+- **Plan.** Each problem is run on Fable 5.1 ×1 and on Opus, Sonnet and Haiku 5.5 ×3, starting
   at effort `low`. The CLI cannot turn thinking off, so `low` is the lowest effort
   available. Higher efforts come later.
 - **Grading.** The rows of the last `BEGIN … END` block, compared as a set with the
@@ -193,3 +201,51 @@ earlier cases used. Example: `t2op4b2v3s1pg3c5-01`.
 - **Ladder.** Start from 2 threads, one block and no sync. Add one dimension at a time
   (ops, blocks, given results, copies, sync pairs, barriers, sync inside operations,
   threads) until models break.
+
+## 5. Related work
+
+**Closest match:** Chakraborty, Krishna, Mathur & Pavlogiannis, *How Hard Is
+Weak-Memory Testing?* (POPL 2024). It studies consistency testing, which asks whether
+an observed execution of reads and writes fits a memory model, in the *bounded* setting:
+few threads, few memory locations, few values. That is our regime (2–4 threads, 3
+blocks, values 0–6). For sequential consistency, which our model is, the bounded problem
+is in polynomial time. This is why our exact solver is fast. Most weak memory models
+(release-acquire, causal consistency, POWER) stay NP-complete even when bounded. The
+most recent work in the same line is Govind, Krishna, Sil & Srivathsan, *Verifying
+Sequential Consistency under Bounded Preemptions* (NETYS 2026). It keeps the observed
+execution but bounds context switches, and classifies the problem by writers per
+location: polynomial with one writer, NP-hard with two.
+
+What we add on top of that problem:
+- we ask for the **set of possible outcomes** of a few locations, not yes or no;
+- **copies**: a write carries a value read earlier, so a reordering changes data, not
+  only which write a read sees;
+- **sync lines** at chosen points, as extra ordering constraints;
+- adversarial selection of the question, by refutation depth and stale copies (§2).
+
+**Background:**
+
+| Topic | Reference | Use here |
+|---|---|---|
+| The base problem | Gibbons & Korach, *Testing Shared Memories*, SIAM J. Comput. 26(4), 1997 | Verifying sequential consistency of an observed read/write execution is NP-complete. Our outcome set is this check asked once per candidate combination. |
+| Sync points | Lamport, *Time, Clocks, and the Ordering of Events in a Distributed System*, CACM 1978 | Happens-before: sync lines add edges to a partial order, and executions are its linear extensions. |
+| Copies | Huang, Meredith & Roșu, maximal causal models, PLDI 2014 | Predictive analysis with data dependence: what other executions a trace allows when values flow through reads. |
+| Fine-grained algorithms | Chini & Saivasan, *A Framework for Consistency Algorithms*, FSTTCS 2020 | SC consistency in O*(2^k) for k writes, optimal under ETH. |
+| Prediction | Mathur, Pavlogiannis & Viswanathan, *The Complexity of Dynamic Data Race Prediction*, LICS 2020 | "Does some reordering show X?" is hard in general, with tractable fragments. |
+| Weak memory, single writer | Govind, Krishna, Sil & Srivathsan, *Complexity of Consistency Testing for the Release-Acquire Semantics*, FM 2026 | Polynomial with one writer per location; NP-hard with two. |
+
+Study 001's [`surveys.md`](../001/surveys.md) covers the wider field (linearizability
+checkers, transactional isolation, counting linear extensions).
+
+**LLMs.** We found no published test of LLMs on the outcomes of an interleaved trace. The
+nearest is *DRPBench* (ICML 2026), which asks models whether a program has a data race;
+it does not grade exact outcome sets.
+
+Links:
+[Chakraborty et al. 2024](https://arxiv.org/abs/2311.04302) ·
+[Govind et al., bounded preemptions](https://arxiv.org/abs/2605.10625) ·
+[Govind et al., release-acquire](https://arxiv.org/abs/2604.09589) ·
+[Gibbons & Korach](https://cris.bgu.ac.il/en/publications/testing-shared-memories-2/) ·
+[Chini & Saivasan](https://arxiv.org/abs/2007.11398) ·
+[Mathur et al. 2020](https://arxiv.org/abs/2004.14931) ·
+[DRPBench](https://proceedings.mlr.press/v306/guo26z.html)

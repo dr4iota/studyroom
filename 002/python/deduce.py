@@ -9,7 +9,7 @@ Commands (run from this directory):
     python3 deduce.py gen  [--threads N --ops N --blocks N --values N --syncs N ...]
     python3 deduce.py show PROBLEM
     python3 deduce.py ask  PROBLEM --model M [--effort E] [--trial T]
-    python3 deduce.py run  PROBLEM [--effort E] [--plan fable:1,opus:3,sonnet:3,haiku:3]
+    python3 deduce.py run  PROBLEM [--effort E] [--plan fable51:1,opus55:3,sonnet55:3,haiku55:3]
     python3 deduce.py regrade
     python3 deduce.py report
 """
@@ -847,6 +847,21 @@ def dump(path, obj):
     path.write_text(json.dumps(obj, indent=1) + "\n")
 
 
+# The models under test, pinned: a versioned short name for plans and run directories,
+# and the exact model ID sent to the CLI. A new model version gets a new name.
+MODELS = {
+    "fable51": "claude-fable-5-1",
+    "opus55": "claude-opus-5-5",
+    "sonnet55": "claude-sonnet-5-5",
+    "haiku55": "claude-haiku-5-5",
+}
+
+
+def cli_version():
+    r = subprocess.run(["claude", "--version"], capture_output=True, text=True)
+    return r.stdout.strip()
+
+
 def git_commit():
     r = subprocess.run(["git", "describe", "--always", "--dirty"], cwd=HERE, capture_output=True, text=True)
     return r.stdout.strip()
@@ -961,7 +976,9 @@ def ask(pid, model, effort, trial):
     pf = ATTEMPTS / pid / f"prompt-{prompt_version(p)}.txt"
     if pf.exists() and pf.read_text() != prompt:
         return f"{pf.relative_to(STUDY)}: differs from the prompt now built; not run"
-    cmd = ["claude", "-p", "--model", model, "--effort", effort, "--tools", "",
+    if model not in MODELS:
+        return f"{model}: not a pinned model ({', '.join(MODELS)})"
+    cmd = ["claude", "-p", "--model", MODELS[model], "--effort", effort, "--tools", "",
            "--setting-sources", "", "--no-session-persistence",
            "--system-prompt", "Answer the user's question.", "--output-format", "json"]
     started = datetime.now(timezone.utc).isoformat(timespec="seconds")
@@ -971,6 +988,9 @@ def ask(pid, model, effort, trial):
         return f"{pid} {model}-{effort}-{trial}: claude failed ({r.returncode}): {r.stderr[-500:]}"
     resp = json.loads(r.stdout)
     usage = resp.get("usage", {})
+    used = ",".join(resp.get("modelUsage", {}))
+    if used != MODELS[model]:
+        return f"{pid} {model}-{effort}-{trial}: answered by {used}, not {MODELS[model]}; not recorded"
     d.mkdir(parents=True)
     if not pf.exists():
         pf.write_text(prompt)
@@ -978,7 +998,7 @@ def ask(pid, model, effort, trial):
     dump(d / "response.json", resp)
     (d / "reply.md").write_text(reply)
     dump(d / "meta.json", {
-        "problem": pid, "model": model, "model_id": ",".join(resp.get("modelUsage", {})),
+        "problem": pid, "model": model, "model_id": used, "cli": cli_version(),
         "effort": effort, "trial": trial, "prompt": prompt_version(p), "harness": git_commit(),
         "started": started, "seconds": round(resp.get("duration_ms", 0) / 1000, 1),
         "cost_usd": resp.get("total_cost_usd"), "output_tokens": usage.get("output_tokens"),
@@ -1021,7 +1041,7 @@ def cmd_report(a):
         m, g = json.loads(f.read_text()), json.loads((f.parent / "grade.json").read_text())
         cell = "✓" if g["exact"] else f"−{g['missing']}+{g['extra']}" if g["parsed"] else "∅"
         trials.setdefault((m["problem"], m["effort"], m["model"]), []).append((m["trial"], cell, g["exact"]))
-    order = ["fable", "opus", "sonnet", "haiku"]
+    order = list(MODELS)
     models = sorted({k[2] for k in trials}, key=lambda x: (order.index(x) if x in order else 99, x))
     efforts = sorted({k[1] for k in trials}, key=lambda e: ["low", "medium", "high", "xhigh", "max"].index(e))
     problems = sorted((d for d in PROBLEMS.iterdir() if not d.name.startswith("_")), key=sort_key)
@@ -1129,7 +1149,7 @@ def main(argv=None):
     r = sub.add_parser("run", help="the model plan on one problem")
     r.add_argument("problem")
     r.add_argument("--effort", default="low")
-    r.add_argument("--plan", default="fable:1,opus:3,sonnet:3,haiku:3")
+    r.add_argument("--plan", default="fable51:1,opus55:3,sonnet55:3,haiku55:3")
     r.add_argument("--parallel", type=int, default=2)
     rg = sub.add_parser("regrade", help="add trap data to old problems and regrade all replies")
     rg.add_argument("--traps", action="store_true", help="recompute every problem's trap data")
